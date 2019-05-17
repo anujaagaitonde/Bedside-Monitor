@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CRITICAL PATIENTS</title>
     <link rel="stylesheet" href="css/patient_dashboard.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 <body>
     <div id="mySidenav" class="sidenav">
 
@@ -45,32 +46,16 @@
             </div>
         </div>
 
-        <div class="content">
-            <div class="patient_block">
-                <img src="images/profile_pic.png" class="profile_pic">
-                <div class="patient_id">
-                    <ul>
-                        <li><b>Name: </b>Patient A</li>
-                        <li><b>DOB: </b>DD.MM.YYYY</li>
-                    </ul>
-                </div>
-                <div class="patient_status">
-                    <ul>
-                        <li><b>Abnormality detected: </b>XXX at HH:MM:SS</li>
-                        <li><b>Condition: </b>XXX </li>
-                        <li><b>Connection status: </b>XXX</li>
-                    </ul>
-                 </div>
-                 <div class="unstarred"></div>
-                 <div class = "view_btn"><a href="live_patient.html">VIEW</a></div>
-            </div>
-            <div class="patient_block">
-                    HELLo
-            </div>
+        <div class="content" id="patientlist">
+          
         </div>
     </div>
 
 </body>
 
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
 <script src="scripts/sidebar.js"></script>
+<script src="scripts/userfetch.js"></script>
 </html>
