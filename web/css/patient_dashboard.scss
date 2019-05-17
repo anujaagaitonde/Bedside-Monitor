@@ -117,17 +117,18 @@ body, html {
         top: 175px;
         padding-top: 20px;
         height:100%;
+        overflow-x: auto;
 
         .patient_block {
             position: relative;
-            width: 90%;
-            height: 80px;
+            width: calc(100vw*0.9);
+            max-height: 80px;
             margin: 2% 5% 2% 5%;
             padding: 1% 1% 1% 1%;
             background-color: rgba(5,5,5,0.32);
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            justify-content: space-evenly;
             align-items: flex-start;
             color: #FFF;
 
@@ -144,7 +145,7 @@ body, html {
                 justify-content: center;
 
                 ul {
-                    font-size: 18px;
+                    font-size: 16px;
                     padding-left: 10%;
                     margin: 0;
                     list-style-type: none;
@@ -172,6 +173,20 @@ body, html {
                 height: 40px;
                 align-self: center;
                 cursor: pointer;
+            }
+
+            .view_btn {
+                align-self: center;
+                margin-left: 10px;
+                height: 30px;
+                width: 120px;
+                text-align: center;
+                background: linear-gradient(rgba(51,80,141,255), rgba(96,115,155,1));
+
+                a {
+                    color: #FFF;
+                    font-size: 20px;
+                }
             }
 
         }
@@ -254,6 +269,7 @@ body, html {
     #main .header .header_bottom .link .link_title {font-size: 10px;}
     #main .header {height: 120px;}
     #main .content {top: 120px; padding-top: 10px;}
+    #main .content .patient_block {flex-wrap: wrap; max-height: 600px;}
 }
 
 @media screen and (max-width: 600px) {
@@ -267,5 +283,6 @@ body, html {
     #main .header .header_bottom .link .link_title {font-size: 10px;}
     #main .header {height: 120px;}
     #main .content {top: 120px; padding-top: 10px;}
+    #main .content .patient_block {flex-wrap: wrap; max-height: 600px;}
 }
 

@@ -173,12 +173,13 @@ body a, html a {
   top: 175px;
   padding-top: 20px;
   height: 100%;
+  overflow-x: auto;
 }
 
 #main .content .patient_block {
   position: relative;
-  width: 90%;
-  height: 80px;
+  width: calc(100vw*0.9);
+  max-height: 80px;
   margin: 2% 5% 2% 5%;
   padding: 1% 1% 1% 1%;
   background-color: rgba(5, 5, 5, 0.32);
@@ -189,9 +190,9 @@ body a, html a {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
@@ -220,7 +221,7 @@ body a, html a {
 }
 
 #main .content .patient_block .patient_id ul {
-  font-size: 18px;
+  font-size: 16px;
   padding-left: 10%;
   margin: 0;
   list-style-type: none;
@@ -253,6 +254,23 @@ body a, html a {
       -ms-grid-row-align: center;
       align-self: center;
   cursor: pointer;
+}
+
+#main .content .patient_block .view_btn {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin-left: 10px;
+  height: 30px;
+  width: 120px;
+  text-align: center;
+  background: -webkit-gradient(linear, left top, left bottom, from(#33508d), to(#60739b));
+  background: linear-gradient(#33508d, #60739b);
+}
+
+#main .content .patient_block .view_btn a {
+  color: #FFF;
+  font-size: 20px;
 }
 
 .sidenav {
@@ -370,6 +388,11 @@ body a, html a {
     top: 120px;
     padding-top: 10px;
   }
+  #main .content .patient_block {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    max-height: 600px;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -403,6 +426,11 @@ body a, html a {
   #main .content {
     top: 120px;
     padding-top: 10px;
+  }
+  #main .content .patient_block {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    max-height: 600px;
   }
 }
 /*# sourceMappingURL=patient_dashboard.css.map */
