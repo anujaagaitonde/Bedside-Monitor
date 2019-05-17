@@ -1,0 +1,357 @@
+body, html {
+  font-family: Avenir Next;
+  margin: 0;
+  background-image: url("../images/bg_image.png");
+  background-attachment: fixed;
+}
+
+body a, html a {
+  text-decoration: none;
+}
+
+#main {
+  -webkit-transition: margin-left .5s;
+  transition: margin-left .5s;
+}
+
+#main .header {
+  width: 100%;
+  height: 175px;
+  z-index: 1;
+  position: fixed;
+  background: #3e3b3b;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  color: white;
+}
+
+#main .header .header_top {
+  height: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#main .header .header_top #patient_info {
+  width: 90%;
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+  height: 100%;
+  padding: 3% 10% 0% 0%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#main .header .header_top #patient_info .profile_pic {
+  max-height: 72px;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#main .header .header_top #patient_info .patient_id {
+  height: 100%;
+  width: auto;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#main .header .header_top #patient_info .patient_id ul {
+  font-size: 15px;
+  padding-left: 10%;
+  margin: 0;
+  list-style-type: none;
+  text-align: left;
+}
+
+#main .header .header_top #patient_info .patient_status {
+  height: 100%;
+  width: auto;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#main .header .header_top #patient_info .patient_status ul {
+  font-size: 12px;
+  padding-left: 10%;
+  margin: 0;
+  list-style-type: none;
+  text-align: left;
+}
+
+#main .header .header_top #menu_button_container {
+  width: 10%;
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#main .header .header_top #menu_button_container .menu-btn {
+  max-height: 20px;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  cursor: pointer;
+}
+
+#main .header .header_bottom {
+  height: 20%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#main .header .header_bottom .link {
+  width: 50%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  text-align: center;
+  cursor: pointer;
+}
+
+#main .header .header_bottom .link .link_title {
+  height: 80%;
+  font-size: 100%;
+}
+
+#main .header .header_bottom .link .link_title a {
+  color: #FFF;
+}
+
+#main .header .header_bottom .link #active_link {
+  height: 20%;
+  width: 100%;
+  display: block;
+  background: #33508d;
+}
+
+#main .content {
+  position: absolute;
+  width: 100%;
+  top: 175px;
+  padding-top: 20px;
+  height: 100%;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  color: #3e3b3b;
+}
+
+.sidenav #dr_profile {
+  height: 40%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.sidenav #dr_profile img {
+  max-height: 100px;
+  width: auto;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.sidenav #dr_profile h3 {
+  font-style: bold;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.sidenav a {
+  display: block;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  color: #3e3b3b;
+}
+
+.sidenav a:hover {
+  color: #33508d;
+}
+
+.sidenav .links {
+  height: 50%;
+}
+
+.sidenav #logout {
+  height: 10%;
+  position: absolute;
+  bottom: 10px;
+}
+
+@media screen and (max-height: 600px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav {
+    font-size: 15px;
+  }
+  .sidenav #dr_profile img {
+    max-height: 50px;
+  }
+  .sidenav #logout {
+    bottom: 15px;
+  }
+  #main .header .header_top #patient_info .profile_pic {
+    max-height: 50px;
+  }
+  #main .header .header_top #patient_info .patient_id ul {
+    font-size: 12px;
+  }
+  #main .header .header_top #patient_info .patient_status ul {
+    font-size: 10px;
+  }
+  #main .header .header_top #menu_button_container .menu-btn {
+    max-height: 15px;
+  }
+  #main .header {
+    height: 120px;
+  }
+  #main .content {
+    top: 120px;
+    padding-top: 10px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav {
+    font-size: 15px;
+  }
+  .sidenav #dr_profile img {
+    max-height: 50px;
+  }
+  .sidenav #logout {
+    bottom: 15px;
+  }
+  #main .header .header_top #patient_info .profile_pic {
+    max-height: 50px;
+  }
+  #main .header .header_top #patient_info .patient_id ul {
+    font-size: 12px;
+  }
+  #main .header .header_top #patient_info .patient_status ul {
+    font-size: 10px;
+  }
+  #main .header .header_top #menu_button_container .menu-btn {
+    max-height: 15px;
+  }
+  #main .header {
+    height: 120px;
+  }
+  #main .content {
+    top: 120px;
+    padding-top: 10px;
+  }
+}
+/*# sourceMappingURL=live_patient.css.map */

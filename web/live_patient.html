@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LIVE PATIENT VIEW</title>
+    <link rel="stylesheet" href="css/live_patient.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Side Navigation Bar -->
+    <div id="mySidenav" class="sidenav">
+
+        <!-- Replace with doctor info from DB -->
+        <div id="dr_profile">
+            <img src="images/dr_profile_pic.png" class="dr_profile">
+            <h3>Dr. XXX YYY</h3>
+        </div>
+        <a href="critical_patient_dashboard.html">Patient Dashboard</a>
+        <div id="logout"><a href="#">Logout</a></div>
+    </div>
+
+    <!-- Full screen excluding navigation menu -->
+    <div id="main">
+        <div class="header">
+            <div class = "header_top">
+                <div id="menu_button_container">
+                    <img src="images/menu.png" class="menu-btn" onclick="toggleSidenav()">
+                </div>
+
+                 <!-- Replace all with patient info from DB -->
+                <div id="patient_info"  >
+                    <img src="images/profile_pic.png" class="profile_pic">
+                    
+                    <div class="patient_id">
+                        <ul>
+                            <li><b>Name: </b>Patient A</li>
+                            <li><b>DOB: </b>DD.MM.YYYY</li>
+                        </ul>
+                    </div>
+                    <div class="patient_status">
+                        <ul>
+                            <li><b>Abnormality detected: </b>XXX at HH:MM:SS</li>
+                            <li><b>Condition: </b>XXX </li>
+                            <li><b>Connection status: </b>XXX</li>
+                        </ul>
+                    </div>
+    
+                </div>
+            </div>
+            <div class = "header_bottom">
+                <div class="link">
+                    <div class="link_title"><a href="#">LIVE FEED</a></div>
+                    <div id="active_link"></div>
+                </div>
+                <div class="link">
+                    <div class="link_title"><a href="patient_history.html">HISTORY</a></div>
+                </div>
+    
+            </div>
+        </div>
+
+        <!-- Display graph data from DB-->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <canvas id="tempChart"></canvas>
+                </div>
+                <div class="row">
+                    <canvas id="ecgChart"></canvas>
+                </div>
+                <div class="row">
+                    <canvas id="ppgChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
+<script src="scripts/sidebar.js"></script>
+<script src="scripts/live_grapher.js"></script>
+</html>

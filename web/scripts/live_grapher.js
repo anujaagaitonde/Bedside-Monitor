@@ -1,0 +1,96 @@
+		// Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyB6mXwNEirNupF2wT28lclPJ9YjvFe1eQo",
+            authDomain: "mfmonitor-80a0d.firebaseapp.com",
+            databaseURL: "https://mfmonitor-80a0d.firebaseio.com",
+            projectId: "mfmonitor-80a0d",
+            storageBucket: "mfmonitor-80a0d.appspot.com",
+            messagingSenderId: "171419436747",
+            appId: "1:171419436747:web:e45ee688cbb5c5f0"
+          };
+          firebase.initializeApp(config);
+          const  btnLogout = document.getElementById('logout');
+   
+          btnLogout.addEventListener('click',e=>{
+           firebase.auth().signOut().then(function() {
+             window.location.replace("./loginpage.html");
+             }).catch(function(error) {
+             // An error happened.
+             });
+          });
+   
+   
+                var userUID = "y2MDdji8UOSMG8UPJfboku1wofT2"
+   
+                var RefArray = []
+          function initChart(labels,values,id,title,primarycolor) {
+                    var chartConfig = {
+                            labels: [],
+                            datasets: [
+                                    {
+                                            label: title,
+                                            fill: false,
+                                            lineTension: 0.1,
+                                            backgroundColor: primarycolor,
+                                            borderColor: primarycolor,
+                                            borderCapStyle: 'butt',
+                                            borderDash: [],
+                                            borderDashOffset: 0.0,
+                                            borderJoinStyle: 'miter',
+                                            pointBorderColor: "rgba(75,192,192,1)",
+                                            pointBackgroundColor: "#fff",
+                                            pointBorderWidth: 1,
+                                            pointHoverRadius: 5,
+                                            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                                            pointHoverBorderWidth: 2,
+                                            pointRadius: 1,
+                                            pointHitRadius: 10,
+                                            data: [],
+                                            spanGaps: false,
+                                    }
+                            ]
+                    };
+                        chartConfig.labels = labels
+                        chartConfig.datasets[0].data =values
+               var ctx = document.getElementById(id).getContext("2d");
+               var options = {  maintainAspectRatio: false };
+               RefArray[id] = new Chart(ctx, {
+                   type: "line",
+                   data: chartConfig,
+                   options: options
+               });
+           }
+   
+                   function updateChart(label,value,id){
+                       RefArray[id].data.labels.push(label);
+                       RefArray[id].data.datasets.forEach((dataset) => {
+                               dataset.data.push(value);
+                       });
+                       RefArray[id].update();
+                   }
+   
+           function getChartData() {
+               var templabels = [];
+               var tempvalues = [];
+               var ecglabels = [];
+               var ecgvalues = [];
+               var ppglabels = [];
+               var ppgvalues = [];
+                           initChart(templabels,tempvalues,"tempChart","Temperature Chart","red")
+                           initChart(ecglabels,ecgvalues,"ecgChart","ECG Chart","orange")
+                           initChart(ppglabels,ppgvalues,"ppgChart","PPG Chart","green")
+               var temperatureref = firebase.database().ref("y2MDdji8UOSMG8UPJfboku1wofT2"+"/temperatureSensor");
+               temperatureref.on('child_added', function (ret,prevChildKey) {
+                                   updateChart(prevChildKey,ret.val(),"tempChart")
+               })
+               var ecgref = firebase.database().ref("y2MDdji8UOSMG8UPJfboku1wofT2"+"/ecgSensor");
+               ecgref.on('child_added', function (ret,prevChildKey) {
+                                   updateChart(prevChildKey,ret.val(),"ecgChart")
+               })
+               var ppgref = firebase.database().ref("y2MDdji8UOSMG8UPJfboku1wofT2"+"/ppgSensor");
+               ppgref.on('child_added', function (ret,prevChildKey) {
+                                   updateChart(prevChildKey,ret.val(),"ppgChart")
+               })
+        }
+        window.onload=getChartData()

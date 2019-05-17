@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CRITICAL PATIENTS</title>
+    <link rel="stylesheet" href="css/patient_dashboard.css">
+<body>
+    <div id="mySidenav" class="sidenav">
+
+        <!-- Replace with doctor info from DB -->
+        <div id="dr_profile">
+            <img src="images/dr_profile_pic.png" class="dr_profile">
+            <h3>Dr. XXX YYY</h3>
+        </div>
+        <a href="critical_patient_dashboard.html">Patient Dashboard</a>
+        <div id="logout"><a href="#">Logout</a></div>
+    </div>
+
+    <!-- Full screen excluding navigation menu -->
+    <div id="main">
+        <div class="header">
+            <div class = "header_top">
+                <div id="menu_button_container">
+                    <img src="images/menu.png" class="menu-btn" onclick="toggleSidenav()">
+                </div>
+                <h1>PATIENT DASHBOARD</h1>
+                <div id="search_button_container">
+                    <img src="images/search_btn.png" class="search-btn">
+                </div>
+            </div>
+            <div class = "header_bottom">
+                <div class="link">
+                    <div class="link_title"><a href="critical_patient_dashboard.html">CRITICAL PATIENTS</a></div>
+                    <div id="active_link"></div>
+                </div>
+                <div class="link">
+                    <div class="link_title"><a href="#">HISTORY</a></div>
+                </div>
+                <div class="link">
+                    <div class="link_title"><a href="#">ALL PATIENTS</a></div>
+                </div>
+    
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="patient_block">
+                <img src="images/profile_pic.png" class="profile_pic">
+                <div class="patient_id">
+                    <ul>
+                        <li><b>Name: </b>Patient A</li>
+                        <li><b>DOB: </b>DD.MM.YYYY</li>
+                    </ul>
+                </div>
+                <div class="patient_status">
+                    <ul>
+                        <li><b>Abnormality detected: </b>XXX at HH:MM:SS</li>
+                        <li><b>Condition: </b>XXX </li>
+                        <li><b>Connection status: </b>XXX</li>
+                    </ul>
+                 </div>
+                 <div class="unstarred"></div>
+                 <div class = "view_btn"></div>
+            </div>
+            <div class="patient_block">
+                    HELLo
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script src="scripts/sidebar.js"></script>
+</html>
