@@ -207,6 +207,7 @@ body a, html a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  padding-bottom: 10px;
 }
 
 #main .content .patient_block .patient_id {
@@ -218,6 +219,7 @@ body a, html a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  padding-bottom: 10px;
 }
 
 #main .content .patient_block .patient_id ul {
@@ -237,6 +239,7 @@ body a, html a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  padding-bottom: 10px;
 }
 
 #main .content .patient_block .patient_status ul {
