@@ -28,7 +28,7 @@ function generateHTML(patientInfo, userID) {
                     </ul>
                  </div>
                  <div class="unstarred"></div>
-                 <div class = "view_btn"><a href="live_patient.html">VIEW</a></div>
+                 <div class = "view_btn"><a href="live_patient.html?UserID=${userID}">VIEW</a></div>
             </div>
             `
 }
