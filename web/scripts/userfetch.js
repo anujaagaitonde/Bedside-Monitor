@@ -29,7 +29,7 @@ function generateHTML(patientInfo, userID) {
                 </div>
                 <!-- only top star changes - check-->
                 <div id="star" class="unstarred" onclick="toggleStar()"></div>
-                <div class = "view_btn"><a href="live_patient.html">VIEW</a></div>
+                <div class = "view_btn"><a href="live_patient.html?UserID=${userID}">VIEW</a></div>
             </div>
             `
 }
