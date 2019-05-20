@@ -178,6 +178,13 @@ body, html {
                 cursor: pointer;
             }
 
+            .starred {
+                content: url('../images/star_fill.png');
+                height: 40px;
+                align-self: center;
+                cursor: pointer;
+            }
+
             .view_btn {
                 align-self: center;
                 margin-left: 10px;

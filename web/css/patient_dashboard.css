@@ -259,6 +259,15 @@ body a, html a {
   cursor: pointer;
 }
 
+#main .content .patient_block .starred {
+  content: url("../images/star_fill.png");
+  height: 40px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  cursor: pointer;
+}
+
 #main .content .patient_block .view_btn {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;

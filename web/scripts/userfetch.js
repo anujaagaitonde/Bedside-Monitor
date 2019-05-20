@@ -11,7 +11,7 @@ firebase.initializeApp(config);
 
 function generateHTML(patientInfo, userID) {
     return `
-<div class="patient_block">
+<div class="patient_block" id="patient">
                 <img src="images/profile_pic.png" class="profile_pic">
                 <div class="patient_id">
                     <ul>
@@ -26,9 +26,10 @@ function generateHTML(patientInfo, userID) {
                         <li><b>Condition: </b>${patientInfo.Condition} </li>
                         <li><b>Connection status: </b>XXX</li>
                     </ul>
-                 </div>
-                 <div class="unstarred"></div>
-                 <div class = "view_btn"><a href="live_patient.html">VIEW</a></div>
+                </div>
+                <!-- only top star changes - check-->
+                <div id="star" class="unstarred" onclick="toggleStar()"></div>
+                <div class = "view_btn"><a href="live_patient.html">VIEW</a></div>
             </div>
             `
 }
