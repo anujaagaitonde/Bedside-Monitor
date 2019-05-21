@@ -9,6 +9,16 @@ var config = {
 };
 firebase.initializeApp(config);
 
+function validPatientFilter(listtype,patientInfo){
+  if ((listtype=="patientlistcritical")&&!patientInfo.Critical){
+    return false;
+  } else if ((listtype=="patientliststarred")&&!patientInfo.Starred){
+    return false;
+  }
+  return true;
+
+}
+
 function generateHTML(patientInfo, userID) {
     return `
 <div class="patient_block" id="patient">
@@ -28,16 +38,23 @@ function generateHTML(patientInfo, userID) {
                     </ul>
                 </div>
                 <!-- only top star changes - check-->
-                <div id="star" class="unstarred" onclick="toggleStar()"></div>
+                <div id="star${userID}" class=${(patientInfo.Starred ? "starred" : "unstarred")} onclick="toggleStar(this.id)"></div>
                 <div class = "view_btn"><a href="live_patient.html?UserID=${userID}">VIEW</a></div>
             </div>
             `
 }
+
 let ref = firebase.database().ref("/")
+let listref = document.getElementsByClassName("patientlist")[0]
+listtype = listref.id
+
 ref.on("value", function (snapshot) {
+  listref.innerHTML = ""
     for (var userID in snapshot.val()) {
         let patientInfo = snapshot.val()[userID]['patientInfo']
-        document.getElementById("patientlist").innerHTML += generateHTML(patientInfo, userID);
+        if (validPatientFilter(listref.id,patientInfo)){
+          listref.innerHTML += generateHTML(patientInfo, userID);
+        }
     }
 }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
