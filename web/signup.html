@@ -13,27 +13,29 @@
     <div class="loginbox">
         <div class="toplinks">
             <div class="link">
-                <div class="link_title"><a href="login.html">SIGN IN</a></div>
+                <div class="link_title"><a href="">SIGN IN</a></div>
             </div>
             <div class="link">
                 <div class="link_title"><a href="#">SIGN UP</a></div>
                 <div id ="active_link"></div>
             </div>
         </div>
-        <form action="critical_patient_dashboard.html">
+        <form action="#">
             <img src="images/User_Symbol.png" class="form_icon">
-            <input type="text" name="name" placeholder="Name" required>
+            <input id="doctorname" type="text" name="name" placeholder="Name" required>
             <br>
             <img src="images/email_symbol.png" class="form_icon">
-            <input type="text" name="username" placeholder="Email (Username)" required>
+            <input id="doctoremail" type="text" name="username" placeholder="Email (Username)" required>
             <br>
             <img src="images/Password_Symbol.png" class="form_icon">
-            <input type="password" name="password" placeholder="Password" required><br>
-            <input type="submit" name="submit" value="CONTINUE">
+            <input id="doctorpass" type="password" name="password" placeholder="Password" required><br>
             <img src="images/Password_Symbol.png" class="form_icon">
-            <input type="password" name="confirm_password" placeholder="Confirm Password" required><br>
-            <input type="submit" name="submit" value="CONTINUE">
+            <input id="doctorpassconfirm" type="password" name="confirm_password" placeholder="Confirm Password" required><br>
+            <input onclick="createUser()"  id="confirmbutton" value="CONTINUE">
         </form>
     </div>
 </body>
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
+<script src="scripts/authentication.js"></script>
 </html>

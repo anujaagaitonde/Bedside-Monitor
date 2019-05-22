@@ -124,7 +124,7 @@ body a, html a {
   color: #FFF;
 }
 
-.loginbox form input[type="submit"] {
+.loginbox form #confirmbutton {
   text-align: center;
   background: -webkit-gradient(linear, left top, left bottom, from(#33508d), to(#60739b));
   background: linear-gradient(#33508d, #60739b);

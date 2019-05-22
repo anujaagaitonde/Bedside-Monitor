@@ -20,13 +20,16 @@
                 <div class="link_title"><a href="signup.html">SIGN UP</a></div>
             </div>
         </div>
-        <form action="critical_patient_dashboard.html">
+        <form action="#">
             <img src="images/User_Symbol.png" class="form_icon">
-            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="text" id="EmailInput" name="username" placeholder="Username" required><br>
             <img src="images/Password_Symbol.png" class="form_icon">
-            <input type="password" name="password" placeholder="Password" required><br>
-            <input type="submit" name="submit" value="CONTINUE">
+            <input type="password" id="PasswordInput" name="password" placeholder="Password" required><br>
+            <input onclick="loginUser()" type="submit" id="login_submit" name="submit" value="CONTINUE">
         </form>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
+    <script src="scripts/authentication.js"></script>
 </body>
 </html>

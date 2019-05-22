@@ -1,13 +1,4 @@
-var config = {
-    apiKey: "AIzaSyB6mXwNEirNupF2wT28lclPJ9YjvFe1eQo",
-    authDomain: "mfmonitor-80a0d.firebaseapp.com",
-    databaseURL: "https://mfmonitor-80a0d.firebaseio.com",
-    projectId: "mfmonitor-80a0d",
-    storageBucket: "mfmonitor-80a0d.appspot.com",
-    messagingSenderId: "171419436747",
-    appId: "1:171419436747:web:e45ee688cbb5c5f0"
-};
-firebase.initializeApp(config);
+
 
 function validPatientFilter(listtype,patientInfo){
   if ((listtype=="patientlistcritical")&&!patientInfo.Critical){
@@ -22,26 +13,26 @@ function validPatientFilter(listtype,patientInfo){
 function generateHTML(patientInfo, userID) {
     return `
 <div class="patient_block" id="patient">
-                <img src="images/profile_pic.png" class="profile_pic">
-                <div class="patient_id">
-                    <ul>
-                        <li><b>Name: </b>${patientInfo.Name}</li>
-                        <li><b>DOB: </b>${patientInfo.DOB}</li>
-                    </ul>
-                    <p id="demo"></p>
-                </div>
-                <div class="patient_status">
-                    <ul>
-                        <li><b>Abnormality detected: </b>${patientInfo.Abnormality}</li>
-                        <li><b>Condition: </b>${patientInfo.Condition} </li>
-                        <li><b>Connection status: </b>XXX</li>
-                    </ul>
-                </div>
-                <!-- only top star changes - check-->
-                <div id="star${userID}" class=${(patientInfo.Starred ? "starred" : "unstarred")} onclick="toggleStar(this.id)"></div>
-                <div class = "view_btn"><a href="live_patient.html?UserID=${userID}">VIEW</a></div>
-            </div>
-            `
+  <img src="images/profile_pic.png" class="profile_pic">
+  <div class="patient_id">
+    <ul>
+      <li><b>Name: </b>${patientInfo.Name}</li>
+      <li><b>DOB: </b>${patientInfo.DOB}</li>
+    </ul>
+    <p id="demo"></p>
+  </div>
+  <div class="patient_status">
+    <ul>
+      <li><b>Abnormality detected: </b>${patientInfo.Abnormality}</li>
+      <li><b>Condition: </b>${patientInfo.Condition} </li>
+      <li><b>Connection status: </b>XXX</li>
+    </ul>
+  </div>
+  <!-- only top star changes - check-->
+  <div id="star${userID}" class=${(patientInfo.Starred ? "starred" : "unstarred")} onclick="toggleStar(this.id)"></div>
+  <div class = "view_btn"><a href="live_patient.html?UserID=${userID}">VIEW</a></div>
+</div>
+ `
 }
 
 let ref = firebase.database().ref("/")

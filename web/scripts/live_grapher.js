@@ -1,23 +1,3 @@
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyB6mXwNEirNupF2wT28lclPJ9YjvFe1eQo",
-    authDomain: "mfmonitor-80a0d.firebaseapp.com",
-    databaseURL: "https://mfmonitor-80a0d.firebaseio.com",
-    projectId: "mfmonitor-80a0d",
-    storageBucket: "mfmonitor-80a0d.appspot.com",
-    messagingSenderId: "171419436747",
-    appId: "1:171419436747:web:e45ee688cbb5c5f0"
-};
-firebase.initializeApp(config);
-const btnLogout = document.getElementById('logout');
-
-btnLogout.addEventListener('click', e => {
-    firebase.auth().signOut().then(function () {
-        window.location.replace("./loginpage.html");
-    }).catch(function (error) {
-        // An error happened.
-    });
-});
 
 const urlParams = new URLSearchParams(window.location.search);
 let userUID = urlParams.get('UserID')
