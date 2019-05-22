@@ -2,6 +2,7 @@ body, html {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   background-image: url("../images/bg_image.png");
+  background-size: cover;
   background-attachment: fixed;
 }
 
@@ -200,8 +201,57 @@ body a, html a {
   position: absolute;
   width: 100%;
   top: 175px;
-  padding-top: 20px;
+  bottom: 0;
+  padding: 20px 50px 20px 50px;
+}
+
+#main .content .chartContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
   height: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#main .content .chartContainer .chartRow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  background-color: rgba(5, 5, 5, 0.32);
+  border-radius: 2px;
+  margin: 2px;
+  padding: 5px 20px;
+}
+
+#main .content .chartContainer .chartRow .titlewrap {
+  height: 20%;
+}
+
+#main .content .chartContainer .chartRow .titlewrap h1 {
+  text-align: left;
+  font-size: 1.5em;
+  color: white;
+  position: relative;
+  width: 100%;
+  margin-left: 1%;
+}
+
+#main .content .chartContainer .chartRow .chartwrap {
+  height: 80%;
 }
 
 .sidenav {

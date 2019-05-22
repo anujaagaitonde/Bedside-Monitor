@@ -2,6 +2,7 @@ body, html {
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     background-image: url('../images/bg_image.png');
+    background-size: cover;
     background-attachment: fixed;
 
     a {
@@ -139,10 +140,49 @@ body, html {
         position: absolute;
         width: 100%;
         top: 175px;
-        padding-top: 20px;
-        height:100%;
+        bottom:0;
+        padding: 20px 50px 20px 50px;
+        // background-color: red;
+
+        .chartContainer{
+            display: flex;
+            width:100%;
+            height:100%;
+            flex:1;
+            flex-direction: column;
+
+            .chartRow{
+                display: flex;
+                flex-direction: column;
+                flex:1;
+                background-color: rgba(5,5,5,0.32);
+                border-radius: 2px;
+                margin: 2px;
+                padding: 5px 20px; 
+
+                .titlewrap {
+                    height:20%;
+
+                    h1{
+                        text-align: left;
+                        font-size: 1.5em;
+                        color: white;
+                        position: relative;
+                        width:100%;
+                        margin-left: 1%;
+                    }
+                }
+                
+                .chartwrap {
+                    height: 80%;
+                }
+            }
+
+        }
 
     }
+
+   
 
 
 }

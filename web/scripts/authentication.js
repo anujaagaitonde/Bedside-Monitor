@@ -50,7 +50,7 @@ function createUser() {
     auth
       .createUserWithEmailAndPassword(doctoremail, doctorpass)
       .signInWithEmailAndPassword(doctoremail, doctorpass)
-      .then(function() { window.location.replace("./all_patient_dashboard.html")})
+      .then(function() { window.location.replace("./critical_patient_dashboard.html")})
       .catch(function(error) {
         window.alert(error.message);
       });
