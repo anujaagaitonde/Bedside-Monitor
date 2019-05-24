@@ -41,13 +41,16 @@
         </div>
         <div class="header_bottom">
           <div class="link">
-            <div class="link_title"><a href="#">LIVE FEED</a></div>
+            <div class="link_title">
+              <a id="livebutton" href="">LIVE FEED</a>
+            </div>
             <div id="active_link"></div>
           </div>
           <div class="link">
             <div class="link_title">
-              <a href="patient_history.html">HISTORY</a>
+              <a id="historybutton" href="">HISTORY</a>
             </div>
+            
           </div>
         </div>
       </div>
@@ -57,26 +60,26 @@
         <div class="chartContainer">
           <div class="chartRow">
             <div class="titlewrap">
-                <h1>Temperature</h1>
+              <h1>Temperature</h1>
             </div>
             <div class="chartwrap">
-                <canvas id="tempChart"></canvas>
+              <canvas id="tempChart"></canvas>
             </div>
           </div>
           <div class="chartRow">
             <div class="titlewrap">
-                <h1>ECG</h1>
+              <h1>ECG</h1>
             </div>
             <div class="chartwrap">
-                <canvas id="ecgChart"></canvas>
+              <canvas id="ecgChart"></canvas>
             </div>
           </div>
           <div class="chartRow">
             <div class="titlewrap">
-                <h1>PPG</h1>
+              <h1>PPG</h1>
             </div>
             <div class="chartwrap">
-                <canvas id="ppgChart"></canvas>
+              <canvas id="ppgChart"></canvas>
             </div>
           </div>
         </div>

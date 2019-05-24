@@ -1,15 +1,23 @@
 const urlParams = new URLSearchParams(window.location.search);
 let userUID = urlParams.get("UserID");
 
+var livebutton = document.getElementById('livebutton');
+livebutton.href = "./live_patient.html?UserID=" + userUID
+var historybutton = document.getElementById('historybutton');
+historybutton.href = "./patient_history.html?UserID=" + userUID
+
+
+
 firebase
   .database()
   .ref("/")
-  .on("value", function(snapshot) {
+  .on("value", function (snapshot) {
     let patientInfo = snapshot.val()[userUID]["patientInfo"];
     document.getElementById("patient_info").innerHTML += PatientHTMLGenerator(
       patientInfo
     );
   });
+
 function PatientHTMLGenerator(patientinfo) {
   return `
     <img src="images/profile_pic.png" class="profile_pic">
@@ -125,25 +133,25 @@ function getChartData() {
   var ecgvalues = [];
   var ppglabels = [];
   var ppgvalues = [];
-  initChart(templabels,tempvalues,"tempChart","Temperature Chart","#3cd82c","°C");
+  initChart(templabels, tempvalues, "tempChart", "Temperature Chart", "#3cd82c", "°C");
   initChart(ecglabels, ecgvalues, "ecgChart", "ECG Chart", "#59eaed", "mV");
   initChart(ppglabels, ppgvalues, "ppgChart", "PPG Chart", "#f51a18", "ppg vals");
   var temperatureref = firebase
     .database()
-    .ref("y2MDdji8UOSMG8UPJfboku1wofT2" + "/temperatureSensor");
-  temperatureref.on("child_added", function(ret, prevChildKey) {
+    .ref(userUID + "/temperatureSensor");
+  temperatureref.on("child_added", function (ret, prevChildKey) {
     updateChart(prevChildKey, ret.val(), "tempChart");
   });
   var ecgref = firebase
     .database()
-    .ref("y2MDdji8UOSMG8UPJfboku1wofT2" + "/ecgSensor");
-  ecgref.on("child_added", function(ret, prevChildKey) {
+    .ref(userUID + "/ecgSensor");
+  ecgref.on("child_added", function (ret, prevChildKey) {
     updateChart(prevChildKey, ret.val(), "ecgChart");
   });
   var ppgref = firebase
     .database()
-    .ref("y2MDdji8UOSMG8UPJfboku1wofT2" + "/ppgSensor");
-  ppgref.on("child_added", function(ret, prevChildKey) {
+    .ref(userUID + "/ppgSensor");
+  ppgref.on("child_added", function (ret, prevChildKey) {
     updateChart(prevChildKey, ret.val(), "ppgChart");
   });
 }

@@ -199,11 +199,13 @@ body a, html a {
 
 #main .content {
   position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   width: 100%;
   top: 15%;
   bottom: 0;
   height: auto;
-  margin: 0 auto;
   padding: 20px 50px 20px 50px;
 }
 
@@ -211,7 +213,7 @@ body a, html a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
+  width: calc(100% - 100px);
   height: 100%;
   top: 15%;
   bottom: 0;
@@ -405,4 +407,4 @@ body a, html a {
     padding-top: 10px;
   }
 }
-/*# sourceMappingURL=live_patient.css.map */
+/*# sourceMappingURL=history_patient.css.map */

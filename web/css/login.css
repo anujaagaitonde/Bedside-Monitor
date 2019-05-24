@@ -3,6 +3,7 @@ body, html {
   margin: 0;
   background-image: url("../images/bg_image.png");
   background-attachment: fixed;
+  background-size: cover;
 }
 
 body a, html a {
