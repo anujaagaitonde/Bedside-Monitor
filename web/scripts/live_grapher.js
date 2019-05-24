@@ -91,7 +91,6 @@ function initChart(id, title, primarycolor, yaxislabel) {
           gridLines: {
             color: "#FFFFFF",
             lineWidth: 0.1
-            // display: false
           }
         }
       ],
@@ -102,7 +101,6 @@ function initChart(id, title, primarycolor, yaxislabel) {
             labelString: yaxislabel
           },
           gridLines: {
-            // display: false
             color: "#FFFFFF",
             lineWidth: 0.1
           }
@@ -119,10 +117,38 @@ function initChart(id, title, primarycolor, yaxislabel) {
 }
 
 function updateChart(label, value, id) {
-  RefArray[id].data.labels.push(label);
-  RefArray[id].data.datasets.forEach(dataset => {
-    dataset.data.push(value);
-  });
+  if (RefArray[id].data.labels.length < 500) {
+    RefArray[id].data.labels.push(label);
+    RefArray[id].data.datasets.forEach(dataset => {
+      dataset.data.push(value);
+    });
+  } else {
+    RefArray[id].data.labels.shift(label);
+    RefArray[id].data.datasets.forEach(dataset => {
+      dataset.data.shift(value);
+    });
+  }
+  // console.log(RefArray[id].data)
+  RefArray[id].update();
+}
+function updateChartList(label, value, id) {
+  for (var index in value) {
+    if (RefArray[id].data.datasets[0].data.length < 5000) {
+      RefArray[id].data.labels.push(label + index);
+      RefArray[id].data.datasets.forEach(dataset => {
+        dataset.data.push(...value);
+      });
+    } else {
+
+      // RefArray[id].data.labels.shift(label + index);
+      RefArray[id].data.datasets.forEach(dataset => {
+        dataset.data.shift(...value);
+      });
+
+    }
+
+  }
+
   RefArray[id].update();
 }
 
@@ -130,6 +156,7 @@ function getChartData() {
   initChart("tempChart", "Temperature Chart", "#3cd82c", "°C");
   initChart("ecgChart", "ECG Chart", "#59eaed", "mV");
   initChart("ppgChart", "PPG Chart", "#f51a18", "ppg vals");
+  var limitlist = []
   var temperatureref = firebase
     .database()
     .ref(userUID + "/temperatureSensor");
@@ -146,7 +173,8 @@ function getChartData() {
     .database()
     .ref(userUID + "/ppgSensor");
   ppgref.on("child_added", function (ret, prevChildKey) {
-    updateChart(prevChildKey, ret.val(), "ppgChart");
+    updateChartList(prevChildKey, ret.val(), "ppgChart");
   });
+
 }
 window.onload = getChartData();
