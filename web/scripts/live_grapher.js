@@ -38,7 +38,7 @@ function PatientHTMLGenerator(patientinfo) {
 }
 
 var RefArray = [];
-function initChart(labels, values, id, title, primarycolor, yaxislabel) {
+function initChart(id, title, primarycolor, yaxislabel) {
   var chartConfig = {
     labels: [],
     datasets: [
@@ -67,8 +67,8 @@ function initChart(labels, values, id, title, primarycolor, yaxislabel) {
       }
     ]
   };
-  chartConfig.labels = labels;
-  chartConfig.datasets[0].data = values;
+  chartConfig.labels = [];
+  chartConfig.datasets[0].data = [];
   var ctx = document.getElementById(id).getContext("2d");
   var options = {
     maintainAspectRatio: false,
@@ -127,15 +127,9 @@ function updateChart(label, value, id) {
 }
 
 function getChartData() {
-  var templabels = [];
-  var tempvalues = [];
-  var ecglabels = [];
-  var ecgvalues = [];
-  var ppglabels = [];
-  var ppgvalues = [];
-  initChart(templabels, tempvalues, "tempChart", "Temperature Chart", "#3cd82c", "°C");
-  initChart(ecglabels, ecgvalues, "ecgChart", "ECG Chart", "#59eaed", "mV");
-  initChart(ppglabels, ppgvalues, "ppgChart", "PPG Chart", "#f51a18", "ppg vals");
+  initChart("tempChart", "Temperature Chart", "#3cd82c", "°C");
+  initChart("ecgChart", "ECG Chart", "#59eaed", "mV");
+  initChart("ppgChart", "PPG Chart", "#f51a18", "ppg vals");
   var temperatureref = firebase
     .database()
     .ref(userUID + "/temperatureSensor");
