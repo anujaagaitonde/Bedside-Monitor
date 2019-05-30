@@ -34,6 +34,7 @@ body a, html a {
           transform: translate(-50%, -50%);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  border-radius: 5px;
 }
 
 .loginbox .toplinks {
@@ -52,6 +53,8 @@ body a, html a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .loginbox .toplinks .link {

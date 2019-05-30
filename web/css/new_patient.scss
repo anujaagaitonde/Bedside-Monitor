@@ -1,0 +1,357 @@
+body,
+html {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  background-image: url("../images/bg_image.png");
+  background-attachment: fixed;
+  background-size: cover;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.signbox {
+  width: 700px;
+  height: 400px;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(5, 5, 5, 0.32);
+  color: #fff;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border-radius: 5px;
+
+  h1{
+      text-align: center;
+  }
+  form {
+    margin-top: 20px;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    width: 95%;
+
+    .form_icon {
+      position: absolute;
+      left: 25px;
+      height: 40px;
+      padding-bottom: 5px;
+      box-sizing: border-box;
+    }
+
+    input {
+      margin-bottom: 20px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      border: none;
+      border-bottom: 1px solid #fff;
+      padding-left: 10%;
+      background: transparent;
+      outline: none;
+      font-size: 25px;
+      height: 40px;
+      color: #fff;
+    }
+
+    #confirmbutton {
+      text-align: center;
+      background: linear-gradient(
+        rgba(51, 80, 141, 255),
+        rgba(96, 115, 155, 1)
+      );
+      color: #fff;
+      width: 100%;
+      outline: none;
+      border: none;
+      font-size: 30px;
+      height: 50px;
+      position: absolute;
+      bottom: 2%;
+      left: 0;
+      width: 95%;
+      margin-left: 2.5%;
+      margin-right: 2.5%;
+      cursor: pointer;
+    }
+
+    ::placeholder {
+      color: #fff;
+      opacity: 0.5;
+    }
+
+    :-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      color: #fff;
+      opacity: 0.5;
+    }
+
+    ::-ms-input-placeholder {
+      /* Microsoft Edge */
+      color: #fff;
+      opacity: 0.5;
+    }
+  }
+}
+
+.header {
+  width: 100%;
+  height: 15%;
+  z-index: 1;
+  position: fixed;
+  background: rgba(62, 59, 59, 255);
+  display: flex;
+  flex-direction: column;
+  color: white;
+
+  .header_top {
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+
+    h1 {
+      order: 2;
+      width: 80%;
+      font-size: 50px;
+    }
+
+    #menu_button_container {
+      width: 10%;
+      order: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      .menu-btn {
+        max-height: 20px;
+        align-items: flex-start;
+        cursor: pointer;
+      }
+    }
+
+    #search_button_container {
+      width: 10%;
+      order: 3;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      .search-btn {
+        max-height: 30px;
+        align-items: flex-start;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .header_bottom {
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    .link {
+      width: 33.333%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      cursor: pointer;
+
+      .link_title {
+        height: 80%;
+        font-size: 17px;
+
+        a {
+          color: #fff;
+        }
+      }
+
+      #active_link {
+        height: 20%;
+        width: 100%;
+        display: block;
+        background: rgba(51, 80, 141, 255);
+      }
+    }
+  }
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  transition: 0.5s;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  color: rgba(62, 59, 59, 255);
+
+  #dr_profile {
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      max-height: 100px;
+      width: auto;
+      transition: 0.3s;
+    }
+    h3 {
+      font-style: bold;
+      transition: 0.3s;
+    }
+  }
+
+  a {
+    display: block;
+    transition: 0.3s;
+    color: rgba(62, 59, 59, 255);
+  }
+
+  a:hover {
+    color: rgba(51, 80, 141, 255);
+  }
+
+  .links {
+    height: 50%;
+  }
+
+  #logout {
+    height: 10%;
+    position: absolute;
+    bottom: 10px;
+  }
+}
+
+#main {
+  .content {
+    position: absolute;
+    width: 100%;
+    top: 15%;
+    padding-top: 20px;
+    height: 100%;
+    overflow-x: auto;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+  }
+}
+
+// Responsive scaling for smaller screens
+@media screen and (max-height: 600px) {
+  .loginbox {
+    width: 300px;
+  }
+  .logo {
+    height: 40px;
+  }
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav {
+    font-size: 15px;
+  }
+  .sidenav #dr_profile img {
+    max-height: 50px;
+  }
+  .sidenav #logout {
+    bottom: 15px;
+  }
+  #main .header .header_top #menu_button_container .menu-btn {
+    max-height: 15px;
+  }
+  #main .header .header_top #search_button_container .search-btn {
+    max-height: 15px;
+  }
+  #main .header .header_top h1 {
+    font-size: 20px;
+  }
+  #main .header .header_bottom .link .link_title {
+    font-size: 10px;
+  }
+  #main .header {
+    height: 120px;
+  }
+  #main .content {
+    top: 120px;
+    padding-top: 10px;
+  }
+  #main .content .patient_block {
+    flex-wrap: wrap;
+    max-height: 600px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .loginbox {
+    width: 300px;
+  }
+  .logo {
+    height: 40px;
+  }
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav {
+    font-size: 15px;
+  }
+  .sidenav #dr_profile img {
+    max-height: 50px;
+  }
+  .sidenav #logout {
+    bottom: 15px;
+  }
+  #main .header .header_top #menu_button_container .menu-btn {
+    max-height: 15px;
+  }
+  #main .header .header_top #search_button_container .search-btn {
+    max-height: 15px;
+  }
+  #main .header .header_top h1 {
+    font-size: 20px;
+  }
+  #main .header .header_bottom .link .link_title {
+    font-size: 10px;
+  }
+  #main .header {
+    height: 120px;
+  }
+  #main .content {
+    top: 120px;
+    padding-top: 10px;
+  }
+  #main .content .patient_block {
+    flex-wrap: wrap;
+    max-height: 600px;
+  }
+}

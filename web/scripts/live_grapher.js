@@ -6,12 +6,13 @@ livebutton.href = "./live_patient.html?UserID=" + userUID
 var historybutton = document.getElementById('historybutton');
 historybutton.href = "./patient_history.html?UserID=" + userUID
 
+var temperaturevalue = document.getElementById('temperaturevalue');
 
 
 firebase
   .database()
   .ref("/")
-  .on("value", function (snapshot) {
+  .once("value", function (snapshot) {
     let patientInfo = snapshot.val()[userUID]["patientInfo"];
     document.getElementById("patient_info").innerHTML += PatientHTMLGenerator(
       patientInfo
@@ -20,7 +21,7 @@ firebase
 
 function PatientHTMLGenerator(patientinfo) {
   return `
-    <img src="images/profile_pic.png" class="profile_pic">
+    <img src="${patientinfo.imageURL}" class="profile_pic">
                     
     <div class="patient_id">
         <ul>
@@ -95,6 +96,7 @@ function initChart(id, title, primarycolor, yaxislabel) {
         }
       ],
       yAxes: [
+
         {
           scaleLabel: {
             display: true,
@@ -117,7 +119,7 @@ function initChart(id, title, primarycolor, yaxislabel) {
 }
 
 function updateChart(label, value, id) {
-  if (RefArray[id].data.labels.length < 500) {
+  if (RefArray[id].data.labels.length < 10) {
     RefArray[id].data.labels.push(label);
     RefArray[id].data.datasets.forEach(dataset => {
       dataset.data.push(value);
@@ -133,8 +135,8 @@ function updateChart(label, value, id) {
 }
 function updateChartList(label, value, id) {
   for (var index in value) {
-    if (RefArray[id].data.datasets[0].data.length < 5000) {
-      RefArray[id].data.labels.push(label + index);
+    if (RefArray[id].data.datasets[0].data.length < 125) {
+      RefArray[id].data.labels = [...Array(125).keys()]
       RefArray[id].data.datasets.forEach(dataset => {
         dataset.data.push(...value);
       });
@@ -156,12 +158,12 @@ function getChartData() {
   initChart("tempChart", "Temperature Chart", "#3cd82c", "°C");
   initChart("ecgChart", "ECG Chart", "#59eaed", "mV");
   initChart("ppgChart", "PPG Chart", "#f51a18", "ppg vals");
-  var limitlist = []
   var temperatureref = firebase
     .database()
     .ref(userUID + "/temperatureSensor");
   temperatureref.on("child_added", function (ret, prevChildKey) {
     updateChart(prevChildKey, ret.val(), "tempChart");
+    temperaturevalue.innerHTML = ret.val()
   });
   var ecgref = firebase
     .database()

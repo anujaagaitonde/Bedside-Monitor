@@ -1,9 +1,9 @@
 
 
-function validPatientFilter(listtype,patientInfo){
-  if ((listtype=="patientlistcritical")&&!patientInfo.Critical){
+function validPatientFilter(listtype, patientInfo) {
+  if ((listtype == "patientlistcritical") && !patientInfo.Critical) {
     return false;
-  } else if ((listtype=="patientliststarred")&&!patientInfo.Starred){
+  } else if ((listtype == "patientliststarred") && !patientInfo.Starred) {
     return false;
   }
   return true;
@@ -11,9 +11,11 @@ function validPatientFilter(listtype,patientInfo){
 }
 
 function generateHTML(patientInfo, userID) {
-    return `
+  return `
 <div class="patient_block" id="patient">
-  <img src="images/profile_pic.png" class="profile_pic">
+  <div class="profpicwrap">
+    <img src="${patientInfo.imageURL}" class="profile_pic">
+  </div>
   <div class="patient_id">
     <ul>
       <li><b>Name: </b>${patientInfo.Name}</li>
@@ -29,10 +31,22 @@ function generateHTML(patientInfo, userID) {
     </ul>
   </div>
   <!-- only top star changes - check-->
-  <div id="star${userID}" class=${(patientInfo.Starred ? "starred" : "unstarred")} onclick="toggleStar(this.id)"></div>
-  <div class = "view_btn"><a href="live_patient.html?UserID=${userID}">VIEW</a></div>
+  <div id="starwrap">
+    <div id="star${userID}" class=${(patientInfo.Starred ? "starred" : "unstarred")} onclick="toggleStar(this.id)"></div>
+  </div>
+  <div id="viewbtnwrap">
+    <div class = "view_btn"><a href="live_patient.html?UserID=${userID}">VIEW</a></div>
+  </div>
 </div>
  `
+}
+
+function addPatientHTML(){
+  return `
+    <div class="plusbuttonwrapper">
+      <img src="images/plus.png" class="plusbutton" onclick="location.href = './new_patient.html'">
+    </div>
+  `
 }
 
 let ref = firebase.database().ref("/")
@@ -41,12 +55,13 @@ listtype = listref.id
 
 ref.on("value", function (snapshot) {
   listref.innerHTML = ""
-    for (var userID in snapshot.val()) {
-        let patientInfo = snapshot.val()[userID]['patientInfo']
-        if (validPatientFilter(listref.id,patientInfo)){
-          listref.innerHTML += generateHTML(patientInfo, userID);
-        }
+  for (var userID in snapshot.val()) {
+    let patientInfo = snapshot.val()[userID]['patientInfo']
+    if (validPatientFilter(listref.id, patientInfo)) {
+      listref.innerHTML += generateHTML(patientInfo, userID);
     }
+  }
+  listref.innerHTML += addPatientHTML();
 }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
+  console.log("The read failed: " + errorObject.code);
 });

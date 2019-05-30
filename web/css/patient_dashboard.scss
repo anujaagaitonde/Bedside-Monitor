@@ -107,6 +107,24 @@ html {
     }
   }
 
+  .plusbuttonwrapper {
+    width: 150px;
+    height: 150px;
+    // margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    // background-color: red;
+    // border-radius:100%;
+
+    .plusbutton{
+      width:100%;
+      opacity: 0.8;
+    }
+
+  }
+
   .content {
     position: absolute;
     width: 100%;
@@ -114,34 +132,54 @@ html {
     padding-top: 20px;
     height: 100%;
     overflow-x: auto;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
 
     .patient_block {
       position: relative;
-      width: calc(100vw * 0.9);
+      width: calc(100vw * 0.8);
       max-height: 80px;
-      margin: 2% 5% 2% 5%;
-      padding: 1% 1% 1% 1%;
+      margin: 0.5% 0% 0.5% 0%;
+      padding: 1% 1% 1% 5%;
       background-color: rgba(5, 5, 5, 0.32);
       display: flex;
       flex-direction: row;
-      justify-content: space-evenly;
+      justify-content: flex-start;
       align-items: flex-start;
       color: #fff;
+      border-radius: 5px;
 
-      .profile_pic {
-        max-height: 72px;
-        align-items: flex-start;
+      > div {
+        flex: 3;
+      }
+
+      #starwrap {
+        flex: 1;
+        height: 100%;
+        display: flex;
         justify-content: center;
-        padding-bottom: 10px;
+        align-content: center;
+      }
+      .profpicwrap {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        .profile_pic {
+          max-height: 72px;
+          border-radius: 50%;
+        }
       }
 
       .patient_id {
         height: 100%;
-        width: auto;
-        align-items: flex-start;
-        justify-content: center;
+        display: flex;
+        justify-content: flex-start;
+        align-content: center;
         padding-bottom: 10px;
-
+        flex: 4;
         ul {
           font-size: 16px;
           padding-left: 10%;
@@ -154,8 +192,9 @@ html {
       .patient_status {
         height: 100%;
         width: auto;
-        align-items: flex-start;
-        justify-content: center;
+        display: flex;
+        justify-content: flex-start;
+        align-content: center;
         padding-bottom: 10px;
 
         ul {
@@ -181,20 +220,26 @@ html {
         cursor: pointer;
       }
 
-      .view_btn {
-        align-self: center;
-        margin-left: 10px;
-        height: 30px;
-        width: 120px;
-        text-align: center;
-        background: linear-gradient(
-          rgba(51, 80, 141, 255),
-          rgba(96, 115, 155, 1)
-        );
+      #viewbtnwrap {
+        height: 100%;
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        .view_btn {
+          align-self: center;
+          margin-left: 10px;
+          height: 30px;
+          width: 120px;
+          text-align: center;
+          background: linear-gradient(
+            rgba(51, 80, 141, 255),
+            rgba(96, 115, 155, 1)
+          );
 
-        a {
-          color: #fff;
-          font-size: 20px;
+          a {
+            color: #fff;
+            font-size: 20px;
+          }
         }
       }
     }
