@@ -15,6 +15,7 @@ html a {
 #main {
   -webkit-transition: margin-left 0.5s;
   transition: margin-left 0.5s;
+  /* Safari */
 }
 
 #main .header {
@@ -31,6 +32,16 @@ html a {
       -ms-flex-direction: column;
           flex-direction: column;
   color: white;
+}
+
+#main .header .link_button {
+  opacity: 0.4;
+  color: red;
+}
+
+#main .header .active {
+  opacity: 1;
+  font-size: 1.5em;
 }
 
 #main .header .header_top {
@@ -209,6 +220,9 @@ html a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 #main .content .patient_block {
@@ -368,6 +382,37 @@ html a {
 #main .content .patient_block #viewbtnwrap .view_btn a {
   color: #fff;
   font-size: 20px;
+}
+
+#main .loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 
 .sidenav {

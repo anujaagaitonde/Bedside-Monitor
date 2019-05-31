@@ -22,7 +22,7 @@ function loginUser() {
   //Sign in
   auth
     .signInWithEmailAndPassword(email, pass)
-    .then(e => window.location.replace("./critical_patient_dashboard.html"))
+    .then(e => window.location.replace("./all_patient_dashboard.html"))
     .catch(e => window.alert(e));
 }
 function logoutUser() {
@@ -49,7 +49,7 @@ function createUser() {
   } else {
     auth
       .createUserWithEmailAndPassword(doctoremail, doctorpass)
-      .then(function() { window.location.replace("./critical_patient_dashboard.html")})
+      .then(function() { window.location.replace("./all_patient_dashboard.html")})
       .catch(function(error) {
         window.alert(error.message);
       });

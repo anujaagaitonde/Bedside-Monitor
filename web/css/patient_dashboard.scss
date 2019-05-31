@@ -24,6 +24,16 @@ html {
     flex-direction: column;
     color: white;
 
+    .link_button {
+      opacity: 0.4;
+      color: red;
+    }
+
+    .active {
+      opacity: 1;
+      font-size:1.5em;
+    }
+
     .header_top {
       height: 80%;
       display: flex;
@@ -118,11 +128,10 @@ html {
     // background-color: red;
     // border-radius:100%;
 
-    .plusbutton{
-      width:100%;
+    .plusbutton {
+      width: 100%;
       opacity: 0.8;
     }
-
   }
 
   .content {
@@ -135,6 +144,7 @@ html {
     flex-direction: column;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
 
     .patient_block {
       position: relative;
@@ -244,6 +254,27 @@ html {
       }
     }
   }
+
+  .loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 }
 
 .sidenav {
