@@ -56,11 +56,11 @@ def calculate_HR(IR, lowcut, highcut, fs=100.0, order=5):
     dataset_HR= ChebyshevII(IR,lowcut,highcut,fs,order=order)
     #hrw1 = 0.05 #One-sided window size, as proportion of the sampling frequency
     #dataset_HR = pd.rolling_mean(dataset_HR, window=int(hrw1*fs)) #Calculate moving average
-    plt.figure()
-    plt.plot(dataset_HR)
-    plt.title("ChebyshevII output of IR Signal order=4 for HR\n ")
+    #plt.figure()
+    #plt.plot(dataset_HR)
+    #plt.title("ChebyshevII output of IR Signal order=4 for HR\n ")
     #plt.savefig('figures/Figure01.png')
-    plt.show()
+    #plt.show()
 
     #Calculate moving average with 0.75s in both directions, then append do dataset
     hrw = 0.75 #One-sided window size, as proportion of the sampling frequency
@@ -98,13 +98,13 @@ def calculate_HR(IR, lowcut, highcut, fs=100.0, order=5):
             newpeaklist.append(peaklist[i])
             newybeat.append(ybeat[i])
     
-    plt.figure()
-    plt.title("Detected Peaks in IR Signal for Heart Rate")
+    #plt.figure()
+    #plt.title("Detected Peaks in IR Signal for Heart Rate")
 ##    #plt.xlim(2600,2800)
 ##    plt.ylim(-600,600)
-    plt.plot(dataset_HR, alpha=0.5, color='blue') #Plot semi-transparent HR
-    plt.plot(mov_avg, color ='green') #Plot moving average
-    plt.scatter(newpeaklist, newybeat, color='red') #Plot detected peaks
+    #plt.plot(dataset_HR, alpha=0.5, color='blue') #Plot semi-transparent HR
+    #plt.plot(mov_avg, color ='green') #Plot moving average
+    #plt.scatter(newpeaklist, newybeat, color='red') #Plot detected peaks
     #plt.savefig('figures/Figure02.png')
     #plt.show()
 
@@ -121,15 +121,15 @@ def calculate_HR(IR, lowcut, highcut, fs=100.0, order=5):
     
     print('heart rate (beats/min) = ',heart_rate)
     #hr_peaktime = [time[x] for x in newpeaklist] # peak time for heart rate
-    plt.figure()
-    plt.plot(heart_rate)
-    plt.title("Plot of Heart Rate")
-    plt.xlabel("Peaks")
-    plt.ylabel("HR (beats/min)")
+    #plt.figure()
+    #plt.plot(heart_rate)
+    #plt.title("Plot of Heart Rate")
+    #plt.xlabel("Peaks")
+    #plt.ylabel("HR (beats/min)")
     #plt.savefig(netid+'_figures/'+netid+'_'+activity_name+'_HR.png')
     
     print("the mean of heart rate is {} beats/min.\n".format(np.mean(heart_rate)))
-    plt.show()
+    #plt.show()
     return (heart_rate)
 
 
@@ -139,16 +139,16 @@ def calculate_RR(IR, lowcut, highcut, fs=100, order=5):
 
 
     '''
-    plt.figure()
-    plt.plot(IR)
-    plt.title("IR Signal for RR")
+    #plt.figure()
+    #plt.plot(IR)
+    #plt.title("IR Signal for RR")
     
     dataset_RR = butter_bandpass_filter(IR, lowcut, highcut, fs, order=order) # 0.210, 0.333, 5
     #dataset_RR=IR
 
-    plt.figure()
-    plt.plot(dataset_RR)
-    plt.title("Bandpass-Filtered 5th-Order IR Signal for RR")
+    #plt.figure()
+    #plt.plot(dataset_RR)
+    #plt.title("Bandpass-Filtered 5th-Order IR Signal for RR")
     #plt.savefig('figures/Figure04.png')
     #plt.show()
 
@@ -198,38 +198,38 @@ def calculate_RR(IR, lowcut, highcut, fs=100, order=5):
     #rr_peaktime = rr_peaktime[1:]
     print('respiration rate (breaths/min) = ',respiration_rate)
 
-    plt.figure()
-    plt.title("Detected Peaks in IR Signal for Respiration Rate ")
-    plt.plot(dataset_RR, alpha=0.5, color='blue') #Plot semi-transparent HR
-    plt.plot(mov_avg, color ='green') #Plot moving average
-    plt.scatter(peaklist, ybeat, color='red') #Plot detected peaks
+    #plt.figure()
+    #plt.title("Detected Peaks in IR Signal for Respiration Rate ")
+    #plt.plot(dataset_RR, alpha=0.5, color='blue') #Plot semi-transparent HR
+    #plt.plot(mov_avg, color ='green') #Plot moving average
+    #plt.scatter(peaklist, ybeat, color='red') #Plot detected peaks
     #plt.savefig('figures/Figure05.png')
     #plt.show()
 
-    plt.figure()
-    plt.plot(respiration_rate)
-    plt.title("Plot of Respiration Rate")
-    plt.xlabel("Peaks")
-    plt.ylabel("RR (breaths/min)")
+    #plt.figure()
+    #plt.plot(respiration_rate)
+    #plt.title("Plot of Respiration Rate")
+    #plt.xlabel("Peaks")
+    #plt.ylabel("RR (breaths/min)")
  
 
     print("the mean of respiration rate is {} breaths/min.\n".format(np.mean(respiration_rate)))
-    plt.show()
+    #plt.show()
     return (respiration_rate)
 
 
 def calculate_SPO2(IR, RED, lc_ir, hc_ir, lc_red, hc_red, fs=50, order=5, pk_min = 1, pk_max = -1):
 
-    plt.figure()
-    plt.plot(IR)
-    plt.title("IR Signal for SPO2")
+    #plt.figure()
+    #plt.plot(IR)
+    #plt.title("IR Signal for SPO2")
 
     #This function calculates real-time SPO2 from given IR and RED readings
     #plt.ion()
     dataset_IR = butter_bandpass_filter(IR, lc_ir, hc_ir, fs, order=order) #1.1, 2.2, 5
-    plt.figure()
-    plt.plot(dataset_IR)
-    plt.title("Bandpass-Filtered 5th-Order IR Signal for SPO2")
+    #plt.figure()
+    #plt.plot(dataset_IR)
+    #plt.title("Bandpass-Filtered 5th-Order IR Signal for SPO2")
     #plt.savefig('figures/Figure07.png')
     #plt.show()
 
@@ -316,9 +316,9 @@ def calculate_SPO2(IR, RED, lc_ir, hc_ir, lc_red, hc_red, fs=50, order=5, pk_min
     newpeaklist=peaklist[pk_min:pk_max]
     
     dataset_RED = butter_bandpass_filter(RED, lc_red, hc_red, fs, order=order) #1.1, 2.2, 5
-    plt.figure(1)
-    plt.plot(dataset_RED)
-    plt.title("Bandpass-Filtered 5th-Order RED Signal for SPO2")
+    #plt.figure(1)
+    #plt.plot(dataset_RED)
+    #plt.title("Bandpass-Filtered 5th-Order RED Signal for SPO2")
     #plt.savefig('figures/Figure08.png')
     #plt.show()
 
@@ -402,22 +402,22 @@ def calculate_SPO2(IR, RED, lc_ir, hc_ir, lc_red, hc_red, fs=50, order=5, pk_min
 
     RED_newpeaklist=RED_peaklist[pk_min:pk_max]
     
-    plt.figure(2)
-    plt.ylim(-500, 500)
-    plt.xlim(2000, 2100)
-    plt.title("Detected Peaks in IR and RED Signals for SPO2")
-    line_RED,= plt.plot(dataset_RED,label='RED')
-    plt.scatter(RED_peaklist, RED_peak, color='r')
-    plt.scatter(RED_minlist, RED_min, color='b')
-    plt.scatter(RED_newpeaklist, DC_RED,  color='g')
-    line_IR,=plt.plot(dataset_IR,label='IR')
-    plt.scatter(peaklist, IR_peak, color='y')
-    plt.scatter(minlist, IR_min, color='m')
+    #plt.figure(2)
+    #plt.ylim(-500, 500)
+    #plt.xlim(2000, 2100)
+    #plt.title("Detected Peaks in IR and RED Signals for SPO2")
+    #line_RED,= plt.plot(dataset_RED,label='RED')
+    #plt.scatter(RED_peaklist, RED_peak, color='r')
+    #plt.scatter(RED_minlist, RED_min, color='b')
+    #plt.scatter(RED_newpeaklist, DC_RED,  color='g')
+    #line_IR,=plt.plot(dataset_IR,label='IR')
+    #plt.scatter(peaklist, IR_peak, color='y')
+    #plt.scatter(minlist, IR_min, color='m')
     #plt.scatter(newpeaklist, DC_IR,  color='k')
-    plt.legend(handles=[line_RED, line_IR])
+    #plt.legend(handles=[line_RED, line_IR])
     #plt.savefig('figures/Figure09.png')
     #plt.draw()
-    plt.show
+    #plt.show
     spo2=[]
 
     for i in range(len(DC_IR)):
@@ -425,7 +425,7 @@ def calculate_SPO2(IR, RED, lc_ir, hc_ir, lc_red, hc_red, fs=50, order=5, pk_min
         spo2.append(-45.060*r*r + 30.354 *r + 94.845)
 
     #spo2_peaktime = [time[x] for x in minlist]
-    print('SPO2 before = ',spo2)
+    #print('SPO2 before = ',spo2)
     spo2 = spo2[4:]
     #spo2_peaktime = spo2_peaktime[4:]
     new_spo2 = [sp for sp in spo2 if sp > 94]
@@ -433,11 +433,11 @@ def calculate_SPO2(IR, RED, lc_ir, hc_ir, lc_red, hc_red, fs=50, order=5, pk_min
     #new_spo2 = new_spo2[1:]
     
     print('SPO2 (%) = ',new_spo2)
-    plt.figure(3)
-    plt.plot(new_spo2)
-    plt.title("Plot of SPO2")
-    plt.xlabel("Peaks")
-    plt.ylabel("SPO2 (%)")
+    #plt.figure(3)
+    #plt.plot(new_spo2)
+    #plt.title("Plot of SPO2")
+    #plt.xlabel("Peaks")
+    #plt.ylabel("SPO2 (%)")
     #plt.savefig(netid+'_figures/'+netid+'_'+activity_name+'_SPO2.png')
     #plt.draw()
     print("the mean of SPO2 for is {}%.\n".format(np.mean(new_spo2)))

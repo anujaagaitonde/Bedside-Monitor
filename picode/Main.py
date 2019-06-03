@@ -2,7 +2,7 @@
 
 import threading
 import time
-
+import numpy as np
 #libraries for firebase
 import pyrebase
 import datetime
@@ -13,95 +13,89 @@ import glob
 from read_temp import read_temp_init,read_temp_raw,read_temp
 
 #libraries required for PPG Sensor
-import max30102_doug
+import max30102_copy as max30102
 import hrcalc
 import matplotlib.pyplot as plt
+import PPG_algorithms as ppg
+
+#Import GUI
+import gui_copy
+import matplotlib.animation as animation
+
+
+#Declaring Global Variables
 exitFlag = 0
 
-
+temparray=[27.5]
+hrarray=[77]
+spo2array=[97.5]
+x_ecg=[]
+y_ecg=[]
+y_ppgir=[]
+y_ppgred=[]
+x_ppg=[]
+ppgred=[]
+y_resp=[]
+x_resp=[]
+resparray=[55]
 
 class TempThread (threading.Thread):
+   global temparray
    def __init__(self, threadID, name):
       threading.Thread.__init__(self)
       self.threadID = threadID
       self.name = name
    def run(self):
+      global temparray
       print ("Starting " + self.name)
       read_temp_init()
       print("Temp Sensor Initialised")
       while True:
-          temp = str(read_temp())
-          print(temp)
-          db.child("/"+user['localId']+"/temperatureSensor/"+str(round(time.time()*1000))).set(str(temp))
-          time.sleep(0.5)
+         temp=read_temp()
+         temparray.extend([temp])
+         print(temparray)
+         print(str(temp))
+         db.child("/"+user['localId']+"/temperatureSensor/"+str(round(time.time()*1000))).set(str(temp))
+         time.sleep(0.5)
       #print_time(self.name, 5, self.counter)
       print ("Exiting " + self.name)
 
 class PPGThread (threading.Thread):
+   global x_ppg,y_ppgir,y_ppgred,spo2array,hrarray,resparray
    def __init__(self, threadID, name):
       threading.Thread.__init__(self)
       self.threadID = threadID
       self.name = name
    def run(self):
+      global x_ppg,y_ppgir,y_ppgred,hrarray,spo2array,resparray
       print ("Starting " + self.name)
-      m=max30102_doug.MAX30102() #sensor initilisation
-      nread=25 #number of readings taken every second
-      #plt.ion()
-      #x1=0
-      #x2=100
+      m=max30102.MAX30102() #sensor initilisation
+      nread=300 #number of readings taken every second
       print("PPG Sensor Initialised")
       while True:
-          ppgir=[]
-          ppgred=[]
+          start=time.time()*1000
           red, ir = m.read_sequential(nread)
-          ppgir.extend(ir)
-          ppgred.extend(red)
+          y_ppgir.extend(ir)
+          y_ppgred.extend(red)
+          x_ppg.extend(np.arange(start,start+3000,10))
           print("ir taken 1")
           db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ir)
           print("ir pushed 1")
-          #axes=plt.gca()
-          #axes.set_ylim([100000,120000])
-          #axes.set_xlim([x1,x2])
-          #plt.plot(ppgir)
-          #plt.draw()
-          #plt.pause(0.001)
-          #print( "the time is:" +str(time.time()) )
-          red, ir = m.read_sequential(nread)
-          ppgir.extend(ir)
-          ppgred.extend(red)
-          print("ir taken 2")
-          db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ir)
-          print("ir pushed 2")
-          red, ir = m.read_sequential(nread)
-          ppgir.extend(ir)
-          ppgred.extend(red)
-          #plt.plot(ppgir)
-          #plt.draw()
-          #plt.pause(0.001)
-          print("ir taken 3")
-          db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ir)
-          print("ir pushed 3")
-          red, ir = m.read_sequential(nread)
-          ppgir.extend(ir)
-          ppgred.extend(red)
-          #plt.plot(ppgir)
-          #plt.draw()
-          #plt.pause(0.001)
-          print("ir taken 4" )
-          db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ir)
-          print("ir pushed 4")
-          #plt.plot(ppgir)
-          #plt.draw()
-          #plt.pause(0.001)
-          hr, hrvalid, spo2, spo2valid = hrcalc.calc_hr_and_spo2(ppgir[:100], ppgred[:100])
-          print("calculated spo2")
+          hr_maxim, hrvalid, spo2, spo2valid = hrcalc.calc_hr_and_spo2(y_ppgir[:100], y_ppgred[:100])
+          hr=np.mean(ppg.calculate_HR(y_ppgir,20.00,2.50,fs=100.0,order=1))
+          #spo2_stanford=ppg.calculate_SPO2(ppgir,ppgred,20.00,2.5,20.00,2.5,fs=100,order=1)
+          rr_stanford=ppg.calculate_RR(y_ppgir,20.00,2.50,fs=100,order=1)
+          print("calculated spo2 ")
           db.child("/"+user['localId']+"/spo2Sensor/"+str(round(time.time()*1000))).set(spo2)
           print("Pushed spo2 to Firebase")
-          print("SPO2: {}".format(spo2))
-          #x1=x1+100
-          #x2=x2+100
-          #time.sleep(0.001)
-      #print_time(self.name, 5, self.counter)
+          #print("SPO2_MAXIM: {}".format(spo2_maxim))
+          #print("SPO2_STANFORD: {}".format(spo2_stanford))
+          #print("HR_MAXIM: {}".format(hr_maxim))
+          print("HR_STANFORD: {}".format(hr))
+          print("RR_STANFORD: {}".format(rr_stanford))
+          spo2array.extend([spo2])
+          hrarray.extend([hr])
+          resparray.extend([np.mean(rr_stanford)])
       print ("Exiting " + self.name)
 
 class ECGThread (threading.Thread):
@@ -110,10 +104,30 @@ class ECGThread (threading.Thread):
       self.threadID = threadID
       self.name = name
    def run(self):
+      global y_ecg,x_ecg
       print ("Starting " + self.name)
       while True:
           print("ECGThread")
+          y_ecg.extend([3])
+          x_ecg.extend([time.time()*1000])
           time.sleep(1)      
+      #print_time(self.name, 5, self.counter)
+      print ("Exiting " + self.name)
+
+class GUIThread (threading.Thread):
+   def __init__(self, threadID, name):
+      threading.Thread.__init__(self)
+      self.threadID = threadID
+      self.name = name
+   def run(self):
+      print ("Starting " + self.name)
+      while True:
+          print("GUIThread")
+          g=gui_copy.GUI("Omar Muttawa",'010100',"XXX YYY")
+          print("GUI Initilised")
+         
+          ani = animation.FuncAnimation(g.fig_ecg, g.animate, fargs = (hrarray[-1],spo2array[-1],temparray[-1],resparray[-1],x_ecg,y_ecg,x_ppg,y_ppgir,x_resp,y_resp), interval=1000) # animate graph every 1000 ms
+          g.root.mainloop()
       #print_time(self.name, 5, self.counter)
       print ("Exiting " + self.name)
 
@@ -140,21 +154,18 @@ auth = firebase.auth()
 user = auth.sign_in_with_email_and_password(email, password)
 print("Connected to Firebase")
 
- 
-# Finds the correct device file that holds the temperature data
-base_dir = '/sys/bus/w1/devices/'
-device_folder = glob.glob(base_dir + '28*')[0]
-device_file = device_folder + '/w1_slave'
-
 
 # Create new threads
 thread1 = TempThread(1, "TempThread")
 thread2 = PPGThread(2, "PPGThread")
-thread3 = ECGThread(2, "ECGThread")
+thread3 = ECGThread(3, "ECGThread")
+thread4 = GUIThread(4, "GUIThread")
+
 
 # Start new Threads
 thread1.start()
 thread2.start()
 thread3.start()
+thread4.start()
 
 print ("Exiting Main Thread")

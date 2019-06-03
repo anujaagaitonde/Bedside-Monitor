@@ -49,7 +49,7 @@ class PPGThread (threading.Thread):
       print ("Starting " + self.name)
       m=max30102.MAX30102() #sensor initilisation
       #time.sleep(10)
-      nread=2000 #number of readings taken every second
+      nread=500 #number of readings taken every second
       #plt.ion()
       #x1=0
       #x2=100
@@ -64,13 +64,12 @@ class PPGThread (threading.Thread):
           print("ir taken 1")
           db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ir)
           print("ir pushed 1")
-          ppgir=np.asarray(ppgir)
-          np.savetxt("ppg_data.csv",ppgir,delimiter=",")
-          #ppgir.transpose()
+          #ppgir=np.asarray(ppgir)
+          #np.savetxt("ppg_data.csv",ppgir,delimiter=",")
           #hr, hrvalid, spo2, spo2valid = hrcalc.calc_hr_and_spo2(ppgir[:100], ppgred[:100])
-          #spo2new=ppg.calculate_SPO2(ppgir,ppgred,0.0,50.0,0.0,50.0,fs=100,order=1)
-          rr=ppg.calculate_RR(ppgir,20.00,2.50,fs=100,order=1)
-          #hr=ppg.calculate_HR(ppgir,20.00,2.50,fs=100.0,order=4)
+          #spo2new=ppg.calculate_SPO2(ppgir,ppgred,20.00,2.5,20.00,2.5,fs=100,order=1)
+          #rr=ppg.calculate_RR(ppgir,20.00,2.50,fs=100,order=1)
+          hr=ppg.calculate_HR(ppgir,20.00,2.50,fs=100.0,order=1)
           #print("calculated spo2")
           #db.child("/"+user['localId']+"/spo2Sensor/"+str(round(time.time()*1000))).set(spo2)
           #print("Pushed spo2 to Firebase")
