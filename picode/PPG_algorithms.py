@@ -119,7 +119,7 @@ def calculate_HR(IR, lowcut, highcut, fs=100.0, order=5):
     for i in range(len(hr_interval)):
         heart_rate.append(60000/hr_interval[i])
     
-    print('heart rate (beats/min) = ',heart_rate)
+    #print('heart rate (beats/min) = ',heart_rate)
     #hr_peaktime = [time[x] for x in newpeaklist] # peak time for heart rate
     #plt.figure()
     #plt.plot(heart_rate)
@@ -128,7 +128,7 @@ def calculate_HR(IR, lowcut, highcut, fs=100.0, order=5):
     #plt.ylabel("HR (beats/min)")
     #plt.savefig(netid+'_figures/'+netid+'_'+activity_name+'_HR.png')
     
-    print("the mean of heart rate is {} beats/min.\n".format(np.mean(heart_rate)))
+    #print("the mean of heart rate is {} beats/min.\n".format(np.mean(heart_rate)))
     #plt.show()
     return (heart_rate)
 
@@ -196,7 +196,7 @@ def calculate_RR(IR, lowcut, highcut, fs=100, order=5):
         respiration_rate.append(60000/rr_interval[i])
     respiration_rate = respiration_rate[1:]
     #rr_peaktime = rr_peaktime[1:]
-    print('respiration rate (breaths/min) = ',respiration_rate)
+    #print('respiration rate (breaths/min) = ',respiration_rate)
 
     #plt.figure()
     #plt.title("Detected Peaks in IR Signal for Respiration Rate ")
@@ -213,7 +213,7 @@ def calculate_RR(IR, lowcut, highcut, fs=100, order=5):
     #plt.ylabel("RR (breaths/min)")
  
 
-    print("the mean of respiration rate is {} breaths/min.\n".format(np.mean(respiration_rate)))
+    #print("the mean of respiration rate is {} breaths/min.\n".format(np.mean(respiration_rate)))
     #plt.show()
     return (respiration_rate)
 
@@ -432,7 +432,7 @@ def calculate_SPO2(IR, RED, lc_ir, hc_ir, lc_red, hc_red, fs=50, order=5, pk_min
     #new_spo2_peaktime = [spo2_peaktime[i] for i, sp in enumerate(spo2) if sp > 94]
     #new_spo2 = new_spo2[1:]
     
-    print('SPO2 (%) = ',new_spo2)
+    #print('SPO2 (%) = ',new_spo2)
     #plt.figure(3)
     #plt.plot(new_spo2)
     #plt.title("Plot of SPO2")
@@ -440,8 +440,8 @@ def calculate_SPO2(IR, RED, lc_ir, hc_ir, lc_red, hc_red, fs=50, order=5, pk_min
     #plt.ylabel("SPO2 (%)")
     #plt.savefig(netid+'_figures/'+netid+'_'+activity_name+'_SPO2.png')
     #plt.draw()
-    print("the mean of SPO2 for is {}%.\n".format(np.mean(new_spo2)))
-    plt.show()
+    #print("the mean of SPO2 for is {}%.\n".format(np.mean(new_spo2)))
+    #plt.show()
     
     
     return (new_spo2)

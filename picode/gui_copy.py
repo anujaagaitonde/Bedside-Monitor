@@ -88,19 +88,19 @@ class GUI():
         for tick in ax.get_yticklabels():
             tick.set_fontsize(6)
     # Update graph
-    def plotter(self,id, ax, xar, yar):
+    def plotter(self,id, ax,yar):
         ax.cla()
         if id == 'e':
             self.format_axis('e', ax)
-            ax.plot(xar, yar, color="green")
+            ax.plot(yar, color="green")
             self.graph_ecg.draw()
         elif id == 'p':
             self.format_axis('p', ax)
-            ax.plot(xar, yar, color="yellow")
+            ax.plot(yar, color="yellow")
             self.graph_ppg.draw()
         else: 
             self.format_axis('r', ax)
-            ax.plot(xar, yar, color="blue")
+            ax.plot(yar, color="blue")
             self.graph_resp.draw()
     # Set critical flag when report issue button is pressed - send this info to DB
     def report(self):
@@ -108,7 +108,7 @@ class GUI():
         critical_time = dt.datetime.utcnow()
 
     # Update graph in real time
-    def animate(self,i,hr,spo2,temp,resp,x_ecg,y_ecg,x_ppg,y_ppgir,x_resp,y_resp):
+    def animate(self,i,hr,spo2,temp,resp,y_ecg,y_ppgir,y_resp):
         print("animating")
         if self.connected:
            self.connection_status = tk.Label(self.root, text = "Connected", fg="green", bg="black")
@@ -117,27 +117,27 @@ class GUI():
            self.connection_status = tk.Label(self.root, text = "Disconnected", fg="red", bg="black")
            self.connection_status.grid(row=0, column=2)
         # Heart Rate
-        self.hr_info2 = tk.Label(self.root, text = str(hr), fg="green", bg="black", font=("Arial", 40))
-        print("GUIheartrate: {}".format(hr))
+        self.hr_info2 = tk.Label(self.root, text = str(hr[-1]), fg="green", bg="black", font=("Arial", 40))
+        print("GUIheartrate: {}".format(hr[-1]))
         self.hr_info2.grid(row=2, column=2)
         # SpO2
-        self.spo2_info2 = tk.Label(self.root, text = str(spo2), fg="yellow", bg="black", font=("Arial", 40))
-        print("GUIspo2: {}".format(spo2))
+        self.spo2_info2 = tk.Label(self.root, text = str(spo2[-1]), fg="yellow", bg="black", font=("Arial", 40))
+        print("GUIspo2: {}".format(spo2[-1]))
         self.spo2_info2.grid(row=5, column=2)
         # Temperature
-        self.temp_info2 = tk.Label(self.root, text = str(temp), fg="red", bg="black", font=("Arial", 40))
-        print("GUItemp: {}".format(temp))
+        self.temp_info2 = tk.Label(self.root, text = str(temp[-1]), fg="red", bg="black", font=("Arial", 40))
+        print("GUItemp: {}".format(temp[-1]))
         self.temp_info2.grid(row=8, column=2)
         # Respiration Rate
-        self.resp_info2 = tk.Label(self.root, text = str(resp), fg="blue", bg="black", font=("Arial", 40))
-        print("GUIrr: {}".format(resp))
+        self.resp_info2 = tk.Label(self.root, text = str(resp[-1]), fg="blue", bg="black", font=("Arial", 40))
+        print("GUIrr: {}".format(resp[-1]))
         self.resp_info2.grid(row=11, column=2)
         # Produce ECG plot
-        self.plotter('e', self.ax_ecg, x_ecg[-20:], y_ecg[-20:])
+        self.plotter('e', self.ax_ecg, y_ecg[-20:])
         # Produce PPG plot
-        self.plotter('p', self.ax_ppg, x_ppg[-300:], y_ppgir[-300:])
+        self.plotter('p', self.ax_ppg, y_ppgir[-100:])
         # Produce respiration plot
-        self.plotter('r', self.ax_resp, x_resp[-20:], y_resp[-20:])
+        self.plotter('r', self.ax_resp, y_resp[-20:])
 
 #ani = animation.FuncAnimation(fig_ecg, animate, fargs = (), interval=1000) # animate graph every 1000 ms
 
