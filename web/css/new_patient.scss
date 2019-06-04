@@ -13,7 +13,7 @@ html {
 
 .signbox {
   width: 700px;
-  height: 400px;
+  height: 450px;
   margin: 0;
   padding: 0;
   background-color: rgba(5, 5, 5, 0.32);
@@ -70,6 +70,7 @@ html {
       width: 100%;
       outline: none;
       border: none;
+      border-radius: 5px;
       font-size: 30px;
       height: 50px;
       position: absolute;

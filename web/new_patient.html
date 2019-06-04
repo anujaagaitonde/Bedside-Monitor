@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MFMonitor - All Patients</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/new_patient.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 <body>
@@ -42,13 +43,19 @@
 
 
             <div class="signbox">
-                <h1 >Patient Sign-Up Form</h1>
+                <h1>Sign Up a new Patient</h1>
                 <form action="#">
+                    <img src="images/User_Symbol.png" class="form_icon">
                     <input id="patientname" type="text" name="name" placeholder="Patient Name" required>
-                    <input id="patientdob" type="text" name="name" placeholder="Patient Date of Birth" required>
+                    <img src="images/User_Symbol.png" class="form_icon">
+                    <input id="patientdob" type="text" name="name" placeholder="Patient D.O.B (DDMMYYYY format)" required>
+                    <img src="images/User_Symbol.png" class="form_icon">
                     <input id="patientcondition" type="text" name="name" placeholder="Patient Condition" required>
+                    <img src="images/User_Symbol.png" class="form_icon">
                     <input id="patientimageurl" type="text" name="name" placeholder="Patient Image Url" required>
+                    <img src="images/User_Symbol.png" class="form_icon">
                     <input id="deviceid" type="text" name="name" placeholder="Device ID" required>
+                    <img src="images/User_Symbol.png" class="form_icon">
                     <input onclick="addUser()"  id="confirmbutton" value="CONTINUE">
                 </form>
             </div>

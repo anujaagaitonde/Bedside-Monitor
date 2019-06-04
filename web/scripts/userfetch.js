@@ -48,11 +48,11 @@ listtype = listref.id
 
 patients = {};
 
-//function run on load
+//function run on page load
 (function () {
   ref.once("value", function (snapshot) {
     listref.innerHTML = ""
-    
+
     for (var userID in snapshot.val()) {
       let patientInfo = snapshot.val()[userID]['patientInfo']
       patients[userID] = patientInfo
@@ -78,7 +78,7 @@ ref.on("value", function (snapshot) {
 
 
 function showTab(evt, patienttype) {
-  activetab=patienttype;
+  activetab = patienttype;
   var i, tabcontent, tablinks;
 
   tabcontent = document.getElementsByClassName("patientlist");
@@ -113,9 +113,9 @@ function showTab(evt, patienttype) {
       currenttab.innerHTML += generateHTML(Object.values(patients)[userID], Object.keys(patients)[userID]);
     }
   }
-  try{
+  try {
     evt.currentTarget.className += " active";
   } catch{
-    
+
   }
 }

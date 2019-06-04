@@ -135,6 +135,7 @@ body a, html a {
   color: #FFF;
   width: 100%;
   outline: none;
+  border-radius: 5px;
   border: none;
   font-size: 30px;
   height: 50px;
