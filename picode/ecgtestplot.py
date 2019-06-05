@@ -13,10 +13,10 @@ import numpy as np
 # Start SPI connection
 spi = spidev.SpiDev() # Created an object
 spi.open(0,0)	
+spi.max_speed_hz = 1350000
 
 # Read MCP3008 data
 def analogInput(channel):
-  spi.max_speed_hz = 1350000
   adc = spi.xfer2([1,(8+channel)<<4,0])
   data = ((adc[1]&3) << 8) + adc[2]
   return data
@@ -39,22 +39,26 @@ def calcresp(ecgarray,rpeaks):
     return edr
 plt.ion()
 ecgarray=[]
+filteredarray=[]
 edr=[]
-
 x1=0
-x2=50000
+x2=900
 while True:
-    ecgarray=[]
-    for i in range(50000):
+    #ecgarray=[]
+  for j in range(1):
+    for i in range(900):
       output = analogInput(0)
       ecgarray.append(output)
-      #sleep(0.000333)
-    ts,filtered, rpeaks, templates_ts , templates ,heart_rate_ts , heart_rate = ecg(ecgarray, 3000, False)
-    edr.extend(calcresp(filtered,rpeaks))
-    #axes=plt.gca()
-    #axes.set_xlim([x1,x2])
-    plt.plot(edr)
+      sleep(0.00333)
+    ts,filtered, rpeaks, templates_ts , templates ,heart_rate_ts , heart_rate = ecg(ecgarray, 300, False)
+    print(np.mean(heart_rate))
+    #edr.extend(calcresp(filtered,rpeaks))
+    filteredarray.extend(filtered)
+    axes=plt.gca()
+    axes.set_xlim([x1,x2])
+    plt.plot(filteredarray)
+    #plt.plot(ecgarray)
     plt.draw()
     plt.pause(0.0003)
-    x1=x1+50000
-    x2=x2+50000
+  x1=x1+900
+  x2=x2+900

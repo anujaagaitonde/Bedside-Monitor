@@ -18,6 +18,9 @@ import hrcalc
 import matplotlib.pyplot as plt
 import PPG_algorithms as ppg
 
+#libraries required for ECG
+import ecg_lib as ecg
+
 #Import GUI
 import gui_copy
 import matplotlib.animation as animation
@@ -72,32 +75,32 @@ class PPGThread (threading.Thread):
       while True:
           #start=time.time()*1000
           for i in range(5):
-             start=time.time()*1000
-             red, ir = m.read_sequential(nread)
-             y_ppgir.extend(ir)
-             y_ppgred.extend(red)
-             end=time.time()*1000
-             print(start)
-             x_ppg.extend(np.arange(start,end+1,round((end-start)/100)))
+             #start=time.time()*1000
+             #red, ir = m.read_sequential(nread)
+             #y_ppgir.extend(ir)
+             #y_ppgred.extend(red)
+             #end=time.time()*1000
+             #print(start)
+             #x_ppg.extend(np.arange(start,end+1,round((end-start)/100)))
              print("ir taken {}".format(i))
-             db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ir)
-             print("ir pushed {}".format(i))
-          
-          hr_maxim, hrvalid, spo2, spo2valid = hrcalc.calc_hr_and_spo2(y_ppgir[-500:], y_ppgred[-500:])
-          hr=np.mean(ppg.calculate_HR(y_ppgir[-500:],20.00,2.50,fs=100.0,order=1))
+             time.sleep(0.10)
+             #db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ir)
+             #print("ir pushed {}".format(i))
+          #hr_maxim, hrvalid, spo2, spo2valid = hrcalc.calc_hr_and_spo2(y_ppgir[-500:], y_ppgred[-500:])
+          #hr=np.mean(ppg.calculate_HR(y_ppgir[-500:],20.00,2.50,fs=100.0,order=1))
           #spo2_stanford=ppg.calculate_SPO2(ppgir,ppgred,20.00,2.5,20.00,2.5,fs=100,order=1)
-          rr_stanford=ppg.calculate_RR(y_ppgir[-500:],20.00,2.50,fs=100,order=1)
-          print("calculated spo2 ")
-          db.child("/"+user['localId']+"/spo2Sensor/"+str(round(time.time()*1000))).set(spo2)
-          print("Pushed spo2 to Firebase")
+          #rr_stanford=ppg.calculate_RR(y_ppgir[-500:],20.00,2.50,fs=100,order=1)
+          #print("calculated spo2 ")
+          #db.child("/"+user['localId']+"/spo2Sensor/"+str(round(time.time()*1000))).set(spo2)
+          #print("Pushed spo2 to Firebase")
           #print("SPO2_MAXIM: {}".format(spo2_maxim))
           #print("SPO2_STANFORD: {}".format(spo2_stanford))
           #print("HR_MAXIM: {}".format(hr_maxim))
-          print("HR_STANFORD: {}".format(hr))
-          print("RR_STANFORD: {}".format(rr_stanford))
-          spo2array.extend([round(spo2)])
-          hrarray.extend([round(hr)])
-          resparray.extend([round(np.mean(rr_stanford))])
+          #print("HR_STANFORD: {}".format(hr))
+          #sprint("RR_STANFORD: {}".format(rr_stanford))
+          #spo2array.extend([round(spo2)])
+          #hrarray.extend([round(hr)])
+          #resparray.extend([round(np.mean(rr_stanford))])
       print ("Exiting " + self.name)
 
 class ECGThread (threading.Thread):
@@ -106,13 +109,14 @@ class ECGThread (threading.Thread):
       self.threadID = threadID
       self.name = name
    def run(self):
+      e=ecg.ECG()
       global y_ecg,x_ecg
       print ("Starting " + self.name)
       while True:
-          print("ECGThread")
-          y_ecg.extend([3])
-          x_ecg.extend([time.time()*1000])
-          time.sleep(1)      
+         #ecgraw=e.read_store(300,600)
+         #y_ecg.extend(e.read_store(300,600))
+         print("ECG")
+         time.sleep(0.5)
       #print_time(self.name, 5, self.counter)
       print ("Exiting " + self.name)
 
@@ -123,11 +127,11 @@ class GUIThread (threading.Thread):
       self.name = name
    def run(self):
       print ("Starting " + self.name)
+      g=gui_copy.GUI("Omar Muttawa",'010100',"XXX YYY")
       while True:
           print("GUIThread")
-          g=gui_copy.GUI("Omar Muttawa",'010100',"XXX YYY")
           print("GUI Initilised")
-          ani = animation.FuncAnimation(g.fig_ecg, g.animate, fargs = (hrarray,spo2array,temparray,resparray,y_ecg,y_ppgir,y_resp), interval=10) # animate graph every 1000 ms
+          ani = animation.FuncAnimation(g.fig_ecg, g.animate, fargs = (hrarray,spo2array,temparray,resparray,y_ecg,y_ppgir,y_resp), interval=500) # animate graph every 1000 ms
           g.root.mainloop()
       #print_time(self.name, 5, self.counter)
       print ("Exiting " + self.name)
@@ -157,10 +161,11 @@ print("Connected to Firebase")
 
 
 # Create new threads
-thread1 = TempThread(1, "TempThread")
+thread4 = GUIThread(1, "GUIThread")
 thread2 = PPGThread(2, "PPGThread")
 thread3 = ECGThread(3, "ECGThread")
-thread4 = GUIThread(4, "GUIThread")
+thread1 = TempThread(4, "TempThread")
+
 
 
 # Start new Threads

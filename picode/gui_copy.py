@@ -118,24 +118,24 @@ class GUI():
            self.connection_status.grid(row=0, column=2)
         # Heart Rate
         self.hr_info2 = tk.Label(self.root, text = str(hr[-1]), fg="green", bg="black", font=("Arial", 40))
-        print("GUIheartrate: {}".format(hr[-1]))
+        #print("GUIheartrate: {}".format(hr[-1]))
         self.hr_info2.grid(row=2, column=2)
         # SpO2
         self.spo2_info2 = tk.Label(self.root, text = str(spo2[-1]), fg="yellow", bg="black", font=("Arial", 40))
-        print("GUIspo2: {}".format(spo2[-1]))
+        #print("GUIspo2: {}".format(spo2[-1]))
         self.spo2_info2.grid(row=5, column=2)
         # Temperature
         self.temp_info2 = tk.Label(self.root, text = str(temp[-1]), fg="red", bg="black", font=("Arial", 40))
-        print("GUItemp: {}".format(temp[-1]))
+        #print("GUItemp: {}".format(temp[-1]))
         self.temp_info2.grid(row=8, column=2)
         # Respiration Rate
         self.resp_info2 = tk.Label(self.root, text = str(resp[-1]), fg="blue", bg="black", font=("Arial", 40))
-        print("GUIrr: {}".format(resp[-1]))
+        #print("GUIrr: {}".format(resp[-1]))
         self.resp_info2.grid(row=11, column=2)
         # Produce ECG plot
-        self.plotter('e', self.ax_ecg, y_ecg[-20:])
+        self.plotter('e', self.ax_ecg, y_ecg[-50:])
         # Produce PPG plot
-        self.plotter('p', self.ax_ppg, y_ppgir[-100:])
+        self.plotter('p', self.ax_ppg, y_ppgir[-17:])
         # Produce respiration plot
         self.plotter('r', self.ax_resp, y_resp[-20:])
 
