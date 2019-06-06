@@ -4,10 +4,10 @@ from matplotlib.figure import Figure
 import matplotlib.animation as animation
 import datetime as dt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
+import math
 
 class GUI():
-    def __init__(self, patient_name, dob_str, doctor_name):
+    def __init__(self, patient_name, dob_str, doctor_name,ecgthread,ppgthread,rrthread):
         self.root = tk.Tk()
         self.root.configure(bg = "black")
         self.root.geometry("800x480")
@@ -50,27 +50,48 @@ class GUI():
         self.resp_info1.grid(row=10, column=2)
         self.resp_info2.grid(row=11, column=2)
         self.resp_info3.grid(row=12, column=2)
+        #Graphs Initilisation
+        self.ecg_len=200
+        self.ppg_len=200
+        self.rr_len=200
+        self.x_rr1=0
+        self.x_ecg=list(range(0,self.ecg_len))
+        self.x_ppg=list(range(0,self.ppg_len))
+        self.x_rr=list(range(0,self.rr_len))
+        #print(xs)
+        self.y_ecg=[0]*self.ecg_len
+        self.y_ppg=[0]*self.ppg_len
+        self.y_rr=[0]*self.rr_len
         # ECG Graph pane
         self.fig_ecg = Figure(figsize=(6.7,1.3), constrained_layout=True)
         self.ax_ecg = self.fig_ecg.add_subplot(111)
         self.format_axis('e', self.ax_ecg)
         self.graph_ecg = FigureCanvasTkAgg(self.fig_ecg, master=self.root)
         self.graph_ecg.get_tk_widget().grid(row=1, column=0, columnspan=2, rowspan=4)
+        self.ecg_line, =self.ax_ecg.plot(self.x_ecg, self.y_ecg, color="#59eaed")
+        self.ax_ecg.set_ylim([400,700])
         # PPG Graph pane
         self.fig_ppg = Figure(figsize=(6.7,1.3), constrained_layout=True)
         self.ax_ppg = self.fig_ppg.add_subplot(111)
         self.format_axis('p', self.ax_ppg)
         self.graph_ppg = FigureCanvasTkAgg(self.fig_ppg, master=self.root)
         self.graph_ppg.get_tk_widget().grid(row=5, column=0, columnspan=2, rowspan=4)
+        self.ppg_line, =self.ax_ppg.plot(self.x_ppg, self.y_ppg, color="#f51a18")
+        self.ax_ppg.set_ylim([200000,300000])
         # Respiration Graph pane
         self.fig_resp = Figure(figsize=(6.7,1.3), constrained_layout=True)
         self.ax_resp = self.fig_resp.add_subplot(111)
         self.format_axis('r', self.ax_resp)
         self.graph_resp = FigureCanvasTkAgg(self.fig_resp, master=self.root)
         self.graph_resp.get_tk_widget().grid(row=9, column=0, columnspan=2, rowspan=4)
+        self.rr_line, =self.ax_resp.plot(self.x_rr, self.y_rr, color="#3cd82c")
+        self.ax_resp.set_ylim([-2,2])
         # Report issue button
         self.report_button = tk.Button(self.root, text="REPORT ISSUE", command=self.report, width=70, height=2, fg="white", highlightbackground="black", bg="gray", activebackground="red")
         self.report_button.grid(row = 13, column=0, columnspan = 2, sticky='E')
+        self.ecg_thread=ecgthread
+        self.ppg_thread=ppgthread
+        self.rr_thread=rrthread
     # Apply appropriate formatting to axes
     def format_axis(self,id, ax):
         if id == 'e':
@@ -87,57 +108,115 @@ class GUI():
             tick.set_fontsize(6)
         for tick in ax.get_yticklabels():
             tick.set_fontsize(6)
-    # Update graph
-    def plotter(self,id, ax,yar):
-        ax.cla()
-        if id == 'e':
-            self.format_axis('e', ax)
-            ax.plot(yar, color="green")
-            self.graph_ecg.draw()
-        elif id == 'p':
-            self.format_axis('p', ax)
-            ax.plot(yar, color="yellow")
-            self.graph_ppg.draw()
-        else: 
-            self.format_axis('r', ax)
-            ax.plot(yar, color="blue")
-            self.graph_resp.draw()
+
     # Set critical flag when report issue button is pressed - send this info to DB
     def report(self):
         critical = True
         critical_time = dt.datetime.utcnow()
+    def animateecg(self,i,ys):
 
-    # Update graph in real time
-    def animate(self,i,hr,spo2,temp,resp,y_ecg,y_ppgir,y_resp):
-        print("animating")
-        if self.connected:
-           self.connection_status = tk.Label(self.root, text = "Connected", fg="green", bg="black")
-           self.connection_status.grid(row=0, column=2)
-        else:
-           self.connection_status = tk.Label(self.root, text = "Disconnected", fg="red", bg="black")
-           self.connection_status.grid(row=0, column=2)
-        # Heart Rate
-        self.hr_info2 = tk.Label(self.root, text = str(hr[-1]), fg="green", bg="black", font=("Arial", 40))
-        #print("GUIheartrate: {}".format(hr[-1]))
-        self.hr_info2.grid(row=2, column=2)
-        # SpO2
-        self.spo2_info2 = tk.Label(self.root, text = str(spo2[-1]), fg="yellow", bg="black", font=("Arial", 40))
-        #print("GUIspo2: {}".format(spo2[-1]))
-        self.spo2_info2.grid(row=5, column=2)
-        # Temperature
-        self.temp_info2 = tk.Label(self.root, text = str(temp[-1]), fg="red", bg="black", font=("Arial", 40))
-        #print("GUItemp: {}".format(temp[-1]))
-        self.temp_info2.grid(row=8, column=2)
-        # Respiration Rate
-        self.resp_info2 = tk.Label(self.root, text = str(resp[-1]), fg="blue", bg="black", font=("Arial", 40))
-        #print("GUIrr: {}".format(resp[-1]))
-        self.resp_info2.grid(row=11, column=2)
+        global x_ecg
+
+        # Read data into arrays
+        #xar.append(dt.datetime.utcnow())
+        ys.append(self.ecg_thread.get_y_ecg()) 
+        #y_ppg.append(x)
+        #y_resp.append(x**3)
+
+        # Limit arrays to store only the most recent 20 readings
+        #xar = xar[-200:]
+        ys = ys[-self.ecg_len:]
+        #y_ppg = y_ppg[-100:]
+        #y_resp = y_resp[-100:]
+
+        # remove - just for RT testing
+        #self.x_ecg += 1
+        #if (x_ecg/(2*math.pi))==1:
+        #x_ecg=0
+        #print("helooo")
+        self.ecg_line.set_ydata(ys)
+        #print("wassp")
+        #ppg_line.set_ydata(y_ppg)
+        #rr_line.set_ydata(y_resp)
+        return self.ecg_line,
         # Produce ECG plot
-        self.plotter('e', self.ax_ecg, y_ecg[-50:])
+        #plotter('e', ax_ecg, xar, y_ecg)
+
         # Produce PPG plot
-        self.plotter('p', self.ax_ppg, y_ppgir[-17:])
+        #plotter('p', ax_ppg, xar, y_ppg)
+
         # Produce respiration plot
-        self.plotter('r', self.ax_resp, y_resp[-20:])
+        #plotter('r', ax_resp, xar, y_resp)
+
+    def animateppg(self,i,ys):
+
+        global x_ppg
+
+        # Read data into arrays
+        #xar.append(dt.datetime.utcnow())
+        ys.append(self.ppg_thread.get_y_ppg()) 
+        #ys.append(math.sin(x_ppg/2*math.pi)) 
+        #y_ppg.append(x)
+        #y_resp.append(x**3)
+
+        # Limit arrays to store only the most recent 20 readings
+        #xar = xar[-200:]
+        ys = ys[-self.ppg_len::]
+        #y_ppg = y_ppg[-100:]
+        #y_resp = y_resp[-100:]
+
+        # remove - just for RT testing
+        #self.x_ppg += 1
+        #if (x_ppg/(2*math.pi))==1:
+            #x_ppg=0
+        #print("helooo")
+        self.ppg_line.set_ydata(ys)
+        #print("wassp")
+        #ppg_line.set_ydata(y_ppg)
+        #rr_line.set_ydata(y_resp)
+        return self.ppg_line,
+        # Produce ECG plot
+        #plotter('e', ax_ecg, xar, y_ecg)
+
+        # Produce PPG plot
+        #plotter('p', ax_ppg, xar, y_ppg)
+
+        # Produce respiration plot
+        #plotter('r', ax_resp, xar, y_resp)
+    def animaterr(self,i,ys):
+
+        global x_resp
+
+        # Read data into arrays
+        #xar.append(dt.datetime.utcnow())
+        ys.append(math.sin(self.x_rr1/2*math.pi)) 
+        #y_ppg.append(x)
+        #y_resp.append(x**3)
+
+        # Limit arrays to store only the most recent 20 readings
+        #xar = xar[-200:]
+        ys = ys[-self.rr_len:]
+        #y_ppg = y_ppg[-100:]
+        #y_resp = y_resp[-100:]
+
+        # remove - just for RT testing
+        self.x_rr1 += 1
+        if (self.x_rr1/(2*math.pi))==1:
+            self.x_rr1=0
+        #print("helooo")
+        self.rr_line.set_ydata(ys)
+        #print("wassp")
+        #ppg_line.set_ydata(y_ppg)
+        #rr_line.set_ydata(y_resp)
+        return self.rr_line,
+        # Produce ECG plot
+        #plotter('e', ax_ecg, xar, y_ecg)
+
+        # Produce PPG plot
+        #plotter('p', ax_ppg, xar, y_ppg)
+
+        # Produce respiration plot
+        #plotter('r', ax_resp, xar, y_resp)
 
 #ani = animation.FuncAnimation(fig_ecg, animate, fargs = (), interval=1000) # animate graph every 1000 ms
 
