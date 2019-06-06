@@ -138,28 +138,61 @@ html {
     height: auto;
     margin: 0 auto;
     padding: 20px 50px 20px 50px;
-    display:flex;
+    display: flex;
     flex-direction: row;
+    // background-color: red;
 
-    .livestats{
-        width:20%;
-        height:100%;
-        display: flex;
-        flex-direction: column;
+    .loader {
+      border: 10px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 10px solid grey;
+      margin: auto;
+      position: fixed; /* or absolute */
+      top: 50%;
+      left: 47.5%;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite; /* Safari */
+      animation: spin 2s linear infinite;
+    }
 
-        div{
-            flex:1;
-            padding:5%;
-            background-color: rgba(5, 5, 5, 0.32);
-            margin:2px;
-            border-radius: 2px;
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
 
-        }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
 
-        p{
-            font-size: 5em;
-            text-align: center;
-        }
+    .livestats {
+      width: 20%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      div {
+        flex: 1;
+        padding: 5%;
+        background-color: rgba(5, 5, 5, 0.32);
+        margin: 2px;
+        border-radius: 2px;
+      }
+
+      p {
+        font-size: 5em;
+        text-align: center;
+      }
     }
 
     .chartContainer {

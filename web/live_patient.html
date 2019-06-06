@@ -37,7 +37,6 @@
           </div>
 
           <div id="patient_info"></div>
-          
         </div>
         <div class="header_bottom">
           <div class="link">
@@ -56,7 +55,9 @@
 
       <!-- Display graph data from DB-->
       <div class="content">
-        <div class="chartContainer">
+        <div class="loader"></div>
+
+        <div class="chartContainer" style="display: none">
           <div class="chartRow">
             <div class="titlewrap">
               <h1>Temperature</h1>
@@ -82,7 +83,7 @@
             </div>
           </div>
         </div>
-        <div class="livestats">
+        <div class="livestats" style="display: none">
           <div>
             <h2>SpO2</h2>
             <p id="spo2value">99</p>

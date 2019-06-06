@@ -388,9 +388,9 @@ html a {
 }
 
 #main .loader {
-  border: 5px solid #f3f3f3;
+  border: 10px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 5px solid grey;
+  border-top: 10px solid grey;
   margin: auto;
   width: 120px;
   height: 120px;

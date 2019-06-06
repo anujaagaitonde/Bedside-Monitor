@@ -82,7 +82,8 @@ async function main(){
       labels: ['Time', 'ppg']
     });
 }
-main();
+main().then(() => {document.getElementsByClassName("loader")[0].style.display = "none";
+document.getElementsByClassName("chartContainer")[0].style.display = "flex"});
 
 
 

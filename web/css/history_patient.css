@@ -1,18 +1,20 @@
-body, html {
-  font-family: 'Montserrat', sans-serif;
+body,
+html {
+  font-family: "Montserrat", sans-serif;
   margin: 0;
   background-image: url("../images/bg_image.png");
   background-size: cover;
   background-attachment: fixed;
 }
 
-body a, html a {
+body a,
+html a {
   text-decoration: none;
 }
 
 #main {
-  -webkit-transition: margin-left .5s;
-  transition: margin-left .5s;
+  -webkit-transition: margin-left 0.5s;
+  transition: margin-left 0.5s;
 }
 
 #main .header {
@@ -187,7 +189,7 @@ body a, html a {
 }
 
 #main .header .header_bottom .link .link_title a {
-  color: #FFF;
+  color: #fff;
 }
 
 #main .header .header_bottom .link #active_link {
@@ -338,6 +340,42 @@ body a, html a {
   height: 10%;
   position: absolute;
   bottom: 10px;
+}
+
+.loader {
+  border: 10px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 10px solid grey;
+  margin: auto;
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  left: 45%;
+  top: 50%;
+  -webkit-animation: spin 2s linear infinite;
+  /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 
 @media screen and (max-height: 600px) {

@@ -133,15 +133,14 @@ function updateChart(label, value, id) {
   // console.log(RefArray[id].data)
   RefArray[id].update();
 }
-function updateChartList(label, value, id) {
+function updateChartList(label, value, id,displaylength) {
   for (var index in value) {
-    if (RefArray[id].data.datasets[0].data.length < 125) {
-      RefArray[id].data.labels = [...Array(125).keys()]
+    if (RefArray[id].data.datasets[0].data.length < displaylength) {
+      RefArray[id].data.labels = [...Array(displaylength).keys()]
       RefArray[id].data.datasets.forEach(dataset => {
         dataset.data.push(...value);
       });
     } else {
-
       // RefArray[id].data.labels.shift(label + index);
       RefArray[id].data.datasets.forEach(dataset => {
         dataset.data.shift(...value);
@@ -161,22 +160,33 @@ function getChartData() {
   var temperatureref = firebase
     .database()
     .ref(userUID + "/temperatureSensor");
-  temperatureref.on("child_added", function (ret, prevChildKey) {
-    updateChart(prevChildKey, ret.val(), "tempChart");
-    temperaturevalue.innerHTML = ret.val()
-  });
   var ecgref = firebase
     .database()
     .ref(userUID + "/ecgSensor");
-  ecgref.on("child_added", function (ret, prevChildKey) {
-    updateChart(prevChildKey, ret.val(), "ecgChart");
-  });
   var ppgref = firebase
     .database()
     .ref(userUID + "/ppgSensor");
-  ppgref.on("child_added", function (ret, prevChildKey) {
-    updateChartList(prevChildKey, ret.val(), "ppgChart");
+
+  temperatureref.once("value", function (snapshot) {
+    var last500 = Object.values(snapshot.val()).slice(-500)
+    updateChartList(1, last500, "tempChart",50);
+    document.getElementsByClassName("loader")[0].style.display = "none";
+    document.getElementsByClassName("chartContainer")[0].style.display = "flex";
+    document.getElementsByClassName("livestats")[0].style.display = "flex";
   });
 
+  ppgref.once("value", function (snapshot) {
+    var last500 = Object.values(snapshot.val()).slice(-5).reduce((acc, val) => acc.concat(val))
+    updateChartList(1, last500, "ppgChart",125);
+  });
+
+  temperatureref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
+    updateChart(prevChildKey, ret.val(), "tempChart");
+  });
+ 
+  ppgref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
+    updateChartList(prevChildKey, ret.val(), "ppgChart",125);
+  });
 }
 window.onload = getChartData();
+
