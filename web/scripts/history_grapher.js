@@ -43,6 +43,20 @@ function dateFormatter(unix_timestamp){
   return date;
 }
 
+function filtergaps(raw) {
+  for (var i in raw) {
+    try {
+      var diff = raw[parseInt(i)][0] - raw[parseInt(i) + 1][0]
+      if (Math.abs(diff) > 50000) {
+        raw[parseInt(i)][1] = Number.NaN
+      }
+    } catch {
+      console.log("index error")
+    }
+  }
+  return raw;
+}
+
 function getData(sensor) {
   var ref = firebase
     .database()
@@ -54,10 +68,12 @@ function getData(sensor) {
       var data = Object.keys(input).map(function (key) {
         return [dateFormatter(Number(key)), parseInt(input[key])];
       });
-      resolve(data)
+      resolve(filtergaps(data))
     })
   })
 }
+
+
 
 async function main(){
   var tempdata = await getData("temperatureSensor");
@@ -67,18 +83,25 @@ async function main(){
     {
       drawPoints: true,
       showRoller: false,
-      labels: ['Time', 'Temperature']
+      strokeWidth: 1,
+      color:"#3cd82c",
+      labels: ['Time', 'Temperature'],
+      connectSeparatedPoints: false
     });
   var g1 = new Dygraph(document.getElementById("spO2Chart"), spo2data,
     {
       drawPoints: true,
       showRoller: false,
+      strokeWidth: 1,
+      color: "#59eaed",
       labels: ['Time', 'Spo2']
     });
   var g2 = new Dygraph(document.getElementById("ppgChart"), ppgdata,
     {
       drawPoints: true,
       showRoller: false,
+      strokeWidth: 1,
+      color: "#f51a18",
       labels: ['Time', 'ppg']
     });
 }
