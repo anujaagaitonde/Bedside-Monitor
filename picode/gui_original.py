@@ -195,7 +195,7 @@ def animateppg(i,ys):
 
     # Read data into arrays
     #xar.append(dt.datetime.utcnow())
-    ys.append(math.sin(x_ppg/2*math.pi)) 
+    ys.extend(math.sin(x_ppg/2*math.pi)) 
     #y_ppg.append(x)
     #y_resp.append(x**3)
 

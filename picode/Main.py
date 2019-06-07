@@ -82,7 +82,7 @@ class PPGThread (threading.Thread):
           #start=time.time()*1000
           for i in range(5):
              #start=time.time()*1000
-             #red, ir = m.read_sequential(nread)
+             red, ir = m.read_sequential(nread)
              #y_ppgir.extend(ir)
              #y_ppgred.extend(red)
              #end=time.time()*1000
@@ -90,7 +90,7 @@ class PPGThread (threading.Thread):
              #x_ppg.extend(np.arange(start,end+1,round((end-start)/100)))
              #print("ir taken {}".format(i))
              time.sleep(0.10)
-             #db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ir)
+             db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ir)
              #print("ir pushed {}".format(i))
           #hr_maxim, hrvalid, spo2, spo2valid = hrcalc.calc_hr_and_spo2(y_ppgir[-500:], y_ppgred[-500:])
           #hr=np.mean(ppg.calculate_HR(y_ppgir[-500:],20.00,2.50,fs=100.0,order=1))
@@ -120,9 +120,17 @@ class ECGThread (threading.Thread):
       global y_ecg,x_ecg
       print ("Starting " + self.name)
       while True:
+         ecgarray=[]
+         for i in range(900):
+            output=e.analogInput(0)
+            ecgarray.append(output)
+            time.sleep(0.00333)
+         filtered_butter=e.realtime_butter(ecgarray,35,0,300,5)
+         outputarray=filtered_butter.tolist()
          #ecgraw=e.read_store(300,600)
+         db.child("/"+user['localId']+"/ecgSensor/"+str(round(time.time()*1000))).set(outputarray)
          #y_ecg.extend(e.read_store(300,600))
-         print("ECG")
+         #print("ECG")
          time.sleep(0.5)
       #print_time(self.name, 5, self.counter)
       print ("Exiting " + self.name)
@@ -168,7 +176,7 @@ print("Connected to Firebase")
 
 
 # Create new threads
-thread4 = GUIThread(1, "GUIThread")
+#thread4 = GUIThread(1, "GUIThread")
 thread2 = PPGThread(2, "PPGThread")
 thread3 = ECGThread(3, "ECGThread")
 thread1 = TempThread(4, "TempThread")
@@ -179,6 +187,6 @@ thread1 = TempThread(4, "TempThread")
 thread1.start()
 thread2.start()
 thread3.start()
-thread4.start()
+#thread4.start()
 
 print ("Exiting Main Thread")

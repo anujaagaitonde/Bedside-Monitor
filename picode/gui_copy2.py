@@ -83,8 +83,8 @@ class GUI():
         self.fig_resp = Figure(figsize=(6.7,1.3), constrained_layout=True)
         self.ax_resp = self.fig_resp.add_subplot(111)
         self.format_axis('r', self.ax_resp)
-        self.graph_resp = FigureCanvasTkAgg(self.fig_resp, master=self.root)
-        self.graph_resp.get_tk_widget().grid(row=9, column=0, columnspan=2, rowspan=4)
+        self.graph = FigureCanvasTkAgg(self.fig_resp, master=self.root)
+        self.graph.get_tk_widget().grid(row=9, column=0, columnspan=2, rowspan=4)
         self.rr_line, =self.ax_resp.plot(self.x_rr, self.y_rr, color="#3cd82c")
         self.ax_resp.set_ylim([-2,2])
         # Report issue button
@@ -120,113 +120,31 @@ class GUI():
     def report(self):
         critical = True
         critical_time = dt.datetime.utcnow()
-    def animateecg(self,i,ys):
+        
+    def animate(self, i, y_ecg, y_ppg, y_resp):
 
         global x_ecg
-        # Read data into arrays
-        #xar.append(dt.datetime.utcnow())
-        ys.extend(self.ecgfiltq.get()) 
-        #y_ppg.append(x)
-        #y_resp.append(x**3)
-
-        # Limit arrays to store only the most recent 20 readings
-        #xar = xar[-200:]
-        ys = ys[-self.ecg_len:]
-        #y_ppg = y_ppg[-100:]
-        #y_resp = y_resp[-100:]
-
-        # remove - just for RT testing
-        #self.x_ecg += 1
-        #if (x_ecg/(2*math.pi))==1:
-        #x_ecg=0
-        #print("helooo")
-        self.ecg_line.set_ydata(ys)
-        #print("wassp")
-        #ppg_line.set_ydata(y_ppg)
-        #rr_line.set_ydata(y_resp)
-        return self.ecg_line,
-        # Produce ECG plot
-        #plotter('e', ax_ecg, xar, y_ecg)
-
-        # Produce PPG plot
-        #plotter('p', ax_ppg, xar, y_ppg)
-
-        # Produce respiration plot
-        #plotter('r', ax_resp, xar, y_resp)
-
-    def animateppg(self,i,ys):
+        y_ecg.extend(self.ecgfiltq.get()) 
+        y_ecg = y_ecg[-self.ecg_len:]
+        self.ecg_line.set_ydata(y_ecg)
 
         global x_ppg
-        # Read data into arrays
-        #xar.append(dt.datetime.utcnow())
-        #print(self.PPGirq.get())
-        ys.extend(self.PPGirq.get()) 
-        #ys.append(math.sin(x_ppg/2*math.pi)) 
-        #y_ppg.append(x)
-        #y_resp.append(x**3)
-
-        # Limit arrays to store only the most recent 20 readings
-        #xar = xar[-200:]
-        ys = ys[-self.ppg_len:]
-        #y_ppg = y_ppg[-100:]
-        #y_resp = y_resp[-100:]
-
-        # remove - just for RT testing
-        #self.x_ppg += 1
-        #if (x_ppg/(2*math.pi))==1:
-            #x_ppg=0
-        #print("helooo")
-        self.ppg_line.set_ydata(ys)
-        #print("wassp")
-        #ppg_line.set_ydata(y_ppg)
-        #rr_line.set_ydata(y_resp)
-        return self.ppg_line,
-        # Produce ECG plot
-        #plotter('e', ax_ecg, xar, y_ecg)
-
-        # Produce PPG plot
-        #plotter('p', ax_ppg, xar, y_ppg)
-
-        # Produce respiration plot
-        #plotter('r', ax_resp, xar, y_resp)
-    def animater(self,i,ys):
+        y_ppg.extend(self.PPGirq.get()) 
+        y_ppg = y_ppg[-self.ppg_len:]
+        self.ppg_line.set_ydata(y_ppg)
 
         global x_resp
-
-        #temp=self.Tempq.get()
-        #self.temp_info2 = tk.Label(self.root, text = str(temp), fg="red", bg="black", font=("Arial", 40))
-        #self.temp_info2.grid(row=8, column=2)
-
-        # Read data into arrays
-        #xar.append(dt.datetime.utcnow())
-        ys.append(math.sin(self.x_rr1/2*math.pi)) 
-        #y_ppg.append(x)
-        #y_resp.append(x**3)
-
-        # Limit arrays to store only the most recent 20 readings
-        #xar = xar[-200:]
-        ys = ys[-self.rr_len:]
-        #y_ppg = y_ppg[-100:]
-        #y_resp = y_resp[-100:]
-
-        # remove - just for RT testing
+        y_resp.append(math.sin(self.x_rr1/2*math.pi)) 
+        y_resp = y_resp[-self.rr_len:]
         self.x_rr1 += 1
         if (self.x_rr1/(2*math.pi))==1:
             self.x_rr1=0
-        #print("helooo")
-        self.rr_line.set_ydata(ys)
-        #print("wassp")
-        #ppg_line.set_ydata(y_ppg)
-        #rr_line.set_ydata(y_resp)
-        return self.rr_line,
-        # Produce ECG plot
-        #plotter('e', ax_ecg, xar, y_ecg)
+        self.rr_line.set_ydata(y_resp)
 
-        # Produce PPG plot
-        #plotter('p', ax_ppg, xar, y_ppg)
 
-        # Produce respiration plot
-        #
+        return self.ecg_line, self.ppg_line, self.rr_line,
+
+
     def animatesp02(self):
         spo2=self.spo2q.get()
         self.spo2_info2 = tk.Label(self.root, text = "98.7", fg="yellow", bg="black", font=("Arial", 40))

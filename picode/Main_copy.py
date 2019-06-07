@@ -11,7 +11,7 @@ import datetime
 #libraries for TEMP Sensor
 import os
 import glob
-from read_temp import read_temp_init,read_temp_raw,read_temp
+#from read_temp import read_temp_init,read_temp_raw,read_temp
 
 #libraries required for PPG Sensor
 import max30102_copy as max30102
@@ -49,7 +49,7 @@ class PPGThread (threading.Thread):
       print ("Starting " + self.name)
       m=max30102.MAX30102() #sensor initilisation
       #time.sleep(10)
-      nread=500 #number of readings taken every second
+      nread=2000 #number of readings taken every second
       #plt.ion()
       #x1=0
       #x2=100
@@ -64,8 +64,10 @@ class PPGThread (threading.Thread):
           print("ir taken 1")
           db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ir)
           print("ir pushed 1")
-          #ppgir=np.asarray(ppgir)
-          #np.savetxt("ppg_data.csv",ppgir,delimiter=",")
+          ppgir=np.asarray(ppgir)
+          np.savetxt("ppgir_data.csv",ppgir,delimiter=",")
+          ppgred=np.asarray(ppgred)
+          np.savetxt("ppgred_data.csv",ppgred,delimiter=",")
           #hr, hrvalid, spo2, spo2valid = hrcalc.calc_hr_and_spo2(ppgir[:100], ppgred[:100])
           #spo2new=ppg.calculate_SPO2(ppgir,ppgred,20.00,2.5,20.00,2.5,fs=100,order=1)
           #rr=ppg.calculate_RR(ppgir,20.00,2.50,fs=100,order=1)
@@ -118,18 +120,18 @@ print("Connected to Firebase")
 
  
 # Finds the correct device file that holds the temperature data
-base_dir = '/sys/bus/w1/devices/'
-device_folder = glob.glob(base_dir + '28*')[0]
-device_file = device_folder + '/w1_slave'
+#base_dir = '/sys/bus/w1/devices/'
+#device_folder = glob.glob(base_dir + '28*')[0]
+#device_file = device_folder + '/w1_slave'
 
 
 # Create new threads
-thread1 = TempThread(1, "TempThread")
+#thread1 = TempThread(1, "TempThread")
 thread2 = PPGThread(2, "PPGThread")
 thread3 = ECGThread(2, "ECGThread")
 
 # Start new Threads
-thread1.start()
+#thread1.start()
 thread2.start()
 thread3.start()
 

@@ -26,12 +26,12 @@ def butter_bandpass(lowcut, highcut, fs, order=1):
     nyq = 0.5 * fs
     low = lowcut / nyq
     high = highcut / nyq
-    print(low)
-    print(high)
+    #print(low)
+    #print(high)
     b, a = butter(order, low, btype='lowpass')
     return b, a
 
-def butter_bandpass_filter(data, lowcut, highcut, fs, order=1):
+def butter_bandpass_filter(data, lowcut, highcut,b,a, fs, order=1):
     '''
     This function constructs bandpass filtered signal
     '''
