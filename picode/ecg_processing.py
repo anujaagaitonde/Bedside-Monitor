@@ -25,7 +25,7 @@ import tools as st
 import plotting, utils
 
 
-def ecg(signal=None, sampling_rate, show=True,corr_rpeaks=True,calc_heartrate=False):
+def ecg(signal=None, sampling_rate=1000, show=True,corr_rpeaks=True,calc_heartrate=False):
     """Process a raw ECG signal and extract relevant signal features using
     default parameters.
 
