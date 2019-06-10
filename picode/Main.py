@@ -153,6 +153,7 @@ class GUIThread (threading.Thread):
 
 
 #Firebase configuration and sign in
+
 config = {
     apiKey: "AIzaSyDFZ2WAZae-55_UK9KN_b9EbSAhhS-PTD8",
     authDomain: "bedsidemonitor.firebaseapp.com",
