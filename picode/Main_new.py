@@ -163,13 +163,13 @@ class GUIThread (threading.Thread):
 #Firebase configuration and sign in
 
    config = {
-      apiKey: "AIzaSyDFZ2WAZae-55_UK9KN_b9EbSAhhS-PTD8",
-      authDomain: "bedsidemonitor.firebaseapp.com",
-      databaseURL: "https://bedsidemonitor.firebaseio.com",
-      projectId: "bedsidemonitor",
-      storageBucket: "bedsidemonitor.appspot.com",
-      messagingSenderId: "680750955239",
-      appId: "1:680750955239:web:35f53ec6bc0227b6"
+       "apiKey": "AIzaSyDFZ2WAZae-55_UK9KN_b9EbSAhhS-PTD8",
+       "authDomain": "bedsidemonitor.firebaseapp.com",
+       "databaseURL": "https://bedsidemonitor.firebaseio.com",
+       "projectId": "bedsidemonitor",
+       "storageBucket": "bedsidemonitor.appspot.com",
+       "messagingSenderId": "680750955239",
+       "appId": "1:680750955239:web:35f53ec6bc0227b6"
    }
 
 email="test@test.com"
