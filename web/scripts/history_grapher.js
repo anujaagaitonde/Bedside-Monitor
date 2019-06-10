@@ -65,10 +65,14 @@ function getData(sensor) {
     ref.once("value", function (ret) {
       input = ret.val()
     }).then(() => {
-      var data = Object.keys(input).map(function (key) {
-        return [dateFormatter(Number(key)), parseInt(input[key])];
-      });
-      resolve(filtergaps(data))
+      try {
+        var data = Object.keys(input).map(function (key) {
+          return [dateFormatter(Number(key)), parseInt(input[key])];
+        });
+        resolve(filtergaps(data))
+      } catch {
+        resolve([])
+      }
     })
   })
 }

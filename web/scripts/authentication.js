@@ -16,13 +16,12 @@ const auth = firebase.auth();
 
 //Add login Click event
 function loginUser() {
-  const btnLogin = document.getElementById("login_submit");
   const email = document.getElementById("EmailInput").value;
   const pass = document.getElementById("PasswordInput").value;
   //Sign in
   auth
     .signInWithEmailAndPassword(email, pass)
-    .then(e => window.location.replace("./all_patient_dashboard.html"))
+    .then(() => window.location.replace("./all_patient_dashboard.html"))
     .catch(e => window.alert(e));
 }
 function logoutUser() {
@@ -56,4 +55,12 @@ function createUser() {
   }
 }
 
-
+firebase
+  .database()
+  .ref("/")
+  .once("value", function (snapshot) {
+    let patientInfo = snapshot.val()[userUID]["patientInfo"];
+    document.getElementById("patient_info").innerHTML += PatientHTMLGenerator(
+      patientInfo
+    );
+  });

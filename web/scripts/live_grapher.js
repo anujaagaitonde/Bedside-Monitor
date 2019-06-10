@@ -168,16 +168,24 @@ function getChartData() {
     .ref(userUID + "/ppgSensor");
 
   temperatureref.once("value", function (snapshot) {
-    var last500 = Object.values(snapshot.val()).slice(-500)
-    updateChartList(1, last500, "tempChart",50);
+    try {
+      var last500 = Object.values(snapshot.val()).slice(-500)
+      updateChartList(1, last500, "tempChart", 50);
+    } catch {
+
+    }
+    
     document.getElementsByClassName("loader")[0].style.display = "none";
     document.getElementsByClassName("chartContainer")[0].style.display = "flex";
     document.getElementsByClassName("livestats")[0].style.display = "flex";
   });
 
   ppgref.once("value", function (snapshot) {
-    var last500 = Object.values(snapshot.val()).slice(-5).reduce((acc, val) => acc.concat(val))
-    updateChartList(1, last500, "ppgChart",125);
+    try{
+      var last500 = Object.values(snapshot.val()).slice(-5).reduce((acc, val) => acc.concat(val))
+      updateChartList(1, last500, "ppgChart", 125);
+    } catch {}
+  
   });
 
   temperatureref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
