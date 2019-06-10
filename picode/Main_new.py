@@ -159,15 +159,16 @@ class GUIThread (threading.Thread):
       #print_time(self.name, 5, self.counter)
       print ("Exiting " + self.name)
 
+
 #Firebase configuration and sign in
 config = {
-    "apiKey": "AIzaSyB6mXwNEirNupF2wT28lclPJ9YjvFe1eQo",
-    "authDomain": "mfmonitor-80a0d.firebaseapp.com",
-    "databaseURL": "https://mfmonitor-80a0d.firebaseio.com",
-    "projectId": "mfmonitor-80a0d",
-    "storageBucket": "mfmonitor-80a0d.appspot.com",
-    "messagingSenderId": "171419436747",
-    "appId": "1:171419436747:web:e45ee688cbb5c5f0"
+    apiKey: "AIzaSyDFZ2WAZae-55_UK9KN_b9EbSAhhS-PTD8",
+    authDomain: "bedsidemonitor.firebaseapp.com",
+    databaseURL: "https://bedsidemonitor.firebaseio.com",
+    projectId: "bedsidemonitor",
+    storageBucket: "bedsidemonitor.appspot.com",
+    messagingSenderId: "680750955239",
+    appId: "1:680750955239:web:35f53ec6bc0227b6"
 }
 
 email="test@test.com"
