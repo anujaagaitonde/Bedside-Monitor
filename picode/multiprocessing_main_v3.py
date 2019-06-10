@@ -69,13 +69,13 @@ def PPGprocess (PPGirq,PPGredq,hrq,rrq,spo2q,db,user):
    while True:
       ppgir=PPGirq.get()
       ppgred=PPGredq.get()
-      db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ppgir)
-      hr=ppg.calculate_HR(ppgir,20.00,2.50,fs=100.0,order=1)
-      rr=ppg.calculate_RR(ppgir,20.00,2.50,fs=100.0,order=1)
+      #db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ppgir)
+      #hr=ppg.calculate_HR(ppgir,20.00,2.50,fs=100.0,order=1)
+      #rr=ppg.calculate_RR(ppgir,20.00,2.50,fs=100.0,order=1)
       #spo2=ppg.calculate_SPO2(ppgir,ppgred,20.00,2.5,20.00,2.5,fs=100,order=1)
-      hrq.put(hr)
-      rrq.put(rrq)
-      #spo2q.put(spo2)
+      hrq.put(40)
+      rrq.put(50)
+      spo2q.put(21) #spo2
       time.sleep(1)
 
 def ECGprocess(ecgfiltq, db, user):
@@ -96,7 +96,7 @@ def ECGprocess(ecgfiltq, db, user):
       filtered_butter=e.realtime_butter(ecgarray,35,0,300,5)
       outputarray=filtered_butter.tolist()
       db.child("/"+user['localId']+"/ecgSensor/"+str(round(time.time()*1000))).set(outputarray)
-      ecgfiltq.put(filtered_butter)
+      ecgfiltq.put(filtered_butter) #filtered_butter
       #time.sleep(1)
 
 
@@ -118,7 +118,6 @@ if __name__=='__main__':
    firebase = pyrebase.initialize_app(config)
    db = firebase.database()
    auth = firebase.auth()
-
    user = auth.sign_in_with_email_and_password(email, password)
    print("Connected to Firebase")
 
