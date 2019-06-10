@@ -25,7 +25,7 @@ import tools as st
 import plotting, utils
 
 
-def ecg(signal=None, sampling_rate=1000., show=True):
+def ecg(signal=None, sampling_rate, show=True,corr_rpeaks=True,calc_heartrate=False):
     """Process a raw ECG signal and extract relevant signal features using
     default parameters.
 
@@ -77,32 +77,36 @@ def ecg(signal=None, sampling_rate=1000., show=True):
 
     # segment
     rpeaks, = hamilton_segmenter(signal=filtered, sampling_rate=sampling_rate)
-
-    # correct R-peak locations
-    rpeaks, = correct_rpeaks(signal=filtered,
-                             rpeaks=rpeaks,
-                             sampling_rate=sampling_rate,
-                             tol=0.05)
-
-    # extract templates
-    templates, rpeaks = extract_heartbeats(signal=filtered,
-                                           rpeaks=rpeaks,
-                                           sampling_rate=sampling_rate,
-                                           before=0.2,
-                                           after=0.4)
-
-    # compute heart rate
-    hr_idx, hr = st.get_heart_rate(beats=rpeaks,
-                                   sampling_rate=sampling_rate,
-                                   smooth=True,
-                                   size=3)
-
+    
     # get time vectors
     length = len(signal)
     T = (length - 1) / sampling_rate
     ts = np.linspace(0, T, length, endpoint=True)
-    ts_hr = ts[hr_idx]
-    ts_tmpl = np.linspace(-0.2, 0.4, templates.shape[1], endpoint=False)
+    
+    if corr_rpeaks:
+        # correct R-peak locations
+        rpeaks, = correct_rpeaks(signal=filtered,
+                             rpeaks=rpeaks,
+                             sampling_rate=sampling_rate,
+                             tol=0.05)
+
+    if calc_heartrate:
+        # extract templates
+        templates, rpeaks = extract_heartbeats(signal=filtered,
+                                           rpeaks=rpeaks,
+                                           sampling_rate=sampling_rate,
+                                           before=0.2,
+                                           after=0.4)
+        # compute heart rate
+        hr_idx, hr = st.get_heart_rate(beats=rpeaks,
+                                   sampling_rate=sampling_rate,
+                                   smooth=True,
+                                   size=3)
+        #get time vectors
+        ts_hr = ts[hr_idx]
+        ts_tmpl = np.linspace(-0.2, 0.4, templates.shape[1], endpoint=False)
+
+
 
     # plot
     if show:
@@ -118,12 +122,15 @@ def ecg(signal=None, sampling_rate=1000., show=True):
                           show=True)
 
     # output
-    args = (ts, filtered, rpeaks, ts_tmpl, templates, ts_hr, hr)
-    names = ('ts', 'filtered', 'rpeaks', 'templates_ts', 'templates',
+    if calc_heartrate:
+        args = (ts, filtered, rpeaks, ts_tmpl, templates, ts_hr, hr)
+        names = ('ts', 'filtered', 'rpeaks', 'templates_ts', 'templates',
              'heart_rate_ts', 'heart_rate')
-
-    return utils.ReturnTuple(args, names)
-
+        return utils.ReturnTuple(args, names)
+    else:
+        args = (ts, filtered, rpeaks)
+        names = ('ts', 'filtered', 'rpeaks')
+        return utils.ReturnTuple(args, names)
 
 def _extract_heartbeats(signal=None, rpeaks=None, before=200, after=400):
     """Extract heartbeat templates from an ECG signal, given a list of
