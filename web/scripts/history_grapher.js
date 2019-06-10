@@ -75,6 +75,7 @@ function getData(sensor) {
 
 
 
+
 async function main(){
   var tempdata = await getData("temperatureSensor");
   var spo2data = await getData("spo2Sensor");
