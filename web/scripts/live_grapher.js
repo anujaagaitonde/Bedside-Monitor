@@ -73,6 +73,9 @@ function initChart(id, title, primarycolor, yaxislabel) {
   var ctx = document.getElementById(id).getContext("2d");
   var options = {
     maintainAspectRatio: false,
+    animation: {
+      duration: 0
+    },
     tooltips: {
       enabled: false
     },
@@ -193,7 +196,7 @@ function getChartData() {
   });
  
   ppgref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
-    updateChartList(prevChildKey, ret.val(), "ppgChart",125);
+    updateChartList(prevChildKey, ret.val(), "ppgChart",500);
   });
 }
 window.onload = getChartData();

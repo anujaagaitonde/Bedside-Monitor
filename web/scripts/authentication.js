@@ -57,10 +57,12 @@ function createUser() {
 
 firebase
   .database()
-  .ref("/")
-  .once("value", function (snapshot) {
-    let patientInfo = snapshot.val()[userUID]["patientInfo"];
-    document.getElementById("patient_info").innerHTML += PatientHTMLGenerator(
-      patientInfo
-    );
+  .ref("/critical")
+  .on("child_changed", function (ret,prevChildKey) {
+    var criticalUserID= ret.ref.key
+    var date = new Date(parseInt(Object.values(ret.val())[0]))
+    var eventType = Object.keys(ret.val())[0]
+    if (window.confirm("A critical " + eventType +" event has occured at time:\n "+date + "\nGo to Live View?")){
+      window.location.replace("./live_patient.html?UserID="+criticalUserID)
+    }
   });
