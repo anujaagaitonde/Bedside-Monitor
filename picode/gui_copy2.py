@@ -97,6 +97,7 @@ class GUI():
         self.PPGirq=PPGirq
         self.PPGredq=PPGredq
         self.hrq=hrq
+        self.rrq=rrq
         self.spo2q=spo2q
         self.ecgfiltq=ecgfiltq
         # Apply appropriate formatting to axes
@@ -120,6 +121,17 @@ class GUI():
     def report(self):
         critical = True
         critical_time = dt.datetime.utcnow()
+
+    def updateDigital(self):
+        spo2=self.spo2q.get()
+        self.spo2_info2.configure(text=str(spo2))
+        hr=self.hrq.get()
+        self.hr_info2.configure(text=str(hr))
+        temp=self.Tempq.get()
+        self.temp_info2.configure(text=str(temp))
+        rr=self.rrq.get()
+        self.resp_info2.configure(text=str(rr))
+        
         
     def animate(self, i, y_ecg, y_ppg, y_resp):
 
@@ -129,7 +141,9 @@ class GUI():
         self.ecg_line.set_ydata(y_ecg)
 
         global x_ppg
-        y_ppg.extend(self.PPGirq.get()) 
+        qsize = self.PPGirq.qsize()
+        for i in range(qsize):
+            y_ppg.extend(self.PPGirq.get()) 
         y_ppg = y_ppg[-self.ppg_len:]
         self.ppg_line.set_ydata(y_ppg)
 
@@ -140,27 +154,10 @@ class GUI():
         if (self.x_rr1/(2*math.pi))==1:
             self.x_rr1=0
         self.rr_line.set_ydata(y_resp)
+        self.updateDigital()
 
 
         return self.ecg_line, self.ppg_line, self.rr_line,
-
-
-    def animatesp02(self):
-        spo2=self.spo2q.get()
-        self.spo2_info2 = tk.Label(self.root, text = "98.7", fg="yellow", bg="black", font=("Arial", 40))
-        self.spo2_info2.grid(row=5, column=2)
-    def animatehr(self):
-        hr=self.hrq.get()
-        self.hr_info2 = tk.Label(self.root, text = "65" , fg="green", bg="black", font=("Arial", 40))
-        self.hr_info2.grid(row=2, column=2)
-    def animatetemp(self):
-        temp=self.Tempq.get()
-        self.temp_info2.configure(text=str(temp))
-        #sc.enter(3000, 1, g.animatetemp, (sc,))
-    def animaterr(self):
-        rr=self.rrq.get()
-        self.resp_info2 = tk.Label(self.root, text = "20", fg="blue", bg="black", font=("Arial", 40))
-        self.resp_info2.grid(row=11, column=2)
         
         
 #ani = animation.FuncAnimation(fig_ecg, animate, fargs = (), interval=1000) # animate graph every 1000 ms
