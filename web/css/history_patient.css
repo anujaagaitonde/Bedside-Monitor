@@ -2,9 +2,7 @@ body,
 html {
   font-family: "Montserrat", sans-serif;
   margin: 0;
-  background-image: url("../images/bg_image.png");
-  background-size: cover;
-  background-attachment: fixed;
+  background-color: #d2d6d9;
 }
 
 body a,
@@ -22,19 +20,7 @@ html a {
   height: 15%;
   z-index: 1;
   position: fixed;
-  background: #3e3b3b;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  color: white;
-}
-
-#main .header .header_top {
-  height: 80%;
+  background: #d2d6d9;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -42,18 +28,61 @@ html a {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  color: black;
 }
 
-#main .header .header_top #patient_info {
-  width: 90%;
-  -webkit-box-ordinal-group: 3;
-      -ms-flex-order: 2;
-          order: 2;
+#main .header .header_left {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   height: 100%;
-  padding: 3% 10% 0% 0%;
+  line-height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+#main .header .header_left .titlewrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+}
+
+#main .header .header_left .titlewrap h1 {
+  color: white;
+  margin: auto;
+  line-height: 100%;
+  vertical-align: middle;
+  font-size: 5em;
+}
+
+#main .header .header_left #patient_info {
+  min-width: 30%;
+  height: 80%;
+  padding-top: 1%;
+  background-color: white;
+  border-bottom-right-radius: 5px;
+  -webkit-box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+          box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+  border-bottom-left-radius: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -67,19 +96,23 @@ html a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  position: absolute;
+  margin-left: 35%;
+  margin-right: 35%;
 }
 
-#main .header .header_top #patient_info .profile_pic {
-  max-height: 72px;
+#main .header .header_left #patient_info .profile_pic {
+  max-height: 80px;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  border-radius: 50%;
 }
 
-#main .header .header_top #patient_info .patient_id {
+#main .header .header_left #patient_info .patient_id {
   height: 100%;
   width: auto;
   -webkit-box-align: start;
@@ -90,7 +123,37 @@ html a {
           justify-content: center;
 }
 
-#main .header .header_top #patient_info .patient_id ul {
+#main .header .header_left #patient_info .patient_id #patientname {
+  font-size: 1.5em;
+  font-weight: 700;
+  line-height: 120%;
+}
+
+#main .header .header_left #patient_info .patient_id ul {
+  font-size: 15px;
+  padding-left: 10%;
+  margin: 0;
+  list-style-type: none;
+  text-align: left;
+  line-height: 120%;
+}
+
+#main .header .header_left #patient_info .patient_id ul li {
+  padding-bottom: 10px;
+}
+
+#main .header .header_left #patient_info .patient_status {
+  height: 100%;
+  width: auto;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#main .header .header_left #patient_info .patient_status ul {
   font-size: 15px;
   padding-left: 10%;
   margin: 0;
@@ -98,30 +161,8 @@ html a {
   text-align: left;
 }
 
-#main .header .header_top #patient_info .patient_status {
-  height: 100%;
-  width: auto;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-#main .header .header_top #patient_info .patient_status ul {
-  font-size: 12px;
-  padding-left: 10%;
-  margin: 0;
-  list-style-type: none;
-  text-align: left;
-}
-
-#main .header .header_top #menu_button_container {
+#main .header .header_left #menu_button_container {
   width: 10%;
-  -webkit-box-ordinal-group: 2;
-      -ms-flex-order: 1;
-          order: 1;
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -138,7 +179,7 @@ html a {
           justify-content: center;
 }
 
-#main .header .header_top #menu_button_container .menu-btn {
+#main .header .header_left #menu_button_container .menu-btn {
   max-height: 20px;
   -webkit-box-align: start;
       -ms-flex-align: start;
@@ -146,8 +187,10 @@ html a {
   cursor: pointer;
 }
 
-#main .header .header_bottom {
-  height: 20%;
+#main .header .header_right {
+  width: 35%;
+  right: 0;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -155,17 +198,18 @@ html a {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding-right: 5%;
 }
 
-#main .header .header_bottom .link {
-  width: 50%;
-  height: 100%;
+#main .header .header_right .link {
+  width: 25%;
+  height: 40%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -183,16 +227,17 @@ html a {
   cursor: pointer;
 }
 
-#main .header .header_bottom .link .link_title {
+#main .header .header_right .link .link_title {
   height: 80%;
   font-size: 100%;
 }
 
-#main .header .header_bottom .link .link_title a {
-  color: #fff;
+#main .header .header_right .link .link_title a {
+  color: black;
+  font-size: 16px;
 }
 
-#main .header .header_bottom .link #active_link {
+#main .header .header_right .link #active_link {
   height: 20%;
   width: 100%;
   display: block;
@@ -204,18 +249,26 @@ html a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   width: 100%;
   top: 15%;
   bottom: 0;
   height: auto;
   padding: 20px 50px 20px 50px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 #main .content .chartContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: calc(100% - 100px);
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
   height: 100%;
   top: 15%;
   bottom: 0;
@@ -236,9 +289,11 @@ html a {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  background-color: rgba(5, 5, 5, 0.32);
-  border-radius: 2px;
-  margin: 2px;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+          box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  margin: 8px;
   padding: 5px 20px;
 }
 
@@ -257,6 +312,43 @@ html a {
 
 #main .content .chartContainer .chartRow .chartwrap {
   height: 80%;
+}
+
+#main .content #criticalTimes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 100%;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+          box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  padding: 1%;
+}
+
+#main .content #criticalTimes button {
+  border-radius: 6px;
+  border: 1px solid #d83526;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 76px;
+  margin: 5px;
+  text-decoration: none;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #fe1a00), to(#ce0100));
+  background: linear-gradient(to bottom, #fe1a00 5%, #ce0100 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100',GradientType=0);
+  background-color: #fe1a00;
+  padding-bottom: 5%;
 }
 
 .sidenav {

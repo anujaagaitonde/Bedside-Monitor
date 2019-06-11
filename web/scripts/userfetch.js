@@ -7,11 +7,11 @@ function generateHTML(patientInfo, userID) {
   return `
 <div class="patient_block" id="patient">
   <div class="profpicwrap">
-    <img src="${patientInfo.imageURL}" class="profile_pic">
+    <img src="${patientInfo.imageURL}" class="profile_pic ${patientInfo.Critical ? "critical" : ""} ">
   </div>
   <div class="patient_id">
     <ul>
-      <li><b>Name: </b>${patientInfo.Name}</li>
+      <li><b>${patientInfo.Name} ${patientInfo.Critical ? " - <font color=\"red\"> Critical</font> " : ""}  </b></li>
       <li><b>DOB: </b>${patientInfo.DOB}</li>
     </ul>
     <p id="demo"></p>
@@ -19,8 +19,8 @@ function generateHTML(patientInfo, userID) {
   <div class="patient_status">
     <ul>
       <li><b>Abnormality detected: </b>${patientInfo.Abnormality}</li>
-      <li><b>Condition: </b>${patientInfo.Condition} </li>
-      <li><b>Connection status: </b>XXX</li>
+      <li><b>Condition: </b>${patientInfo.Condition} </li> 
+      ${patientInfo.Critical ? "<li class=\"critical\"><b>Critical </b></li>" : ""} 
     </ul>
   </div>
   <!-- only top star changes - check-->
@@ -54,8 +54,11 @@ patients = {};
     listref.innerHTML = ""
 
     for (var userID in snapshot.val()) {
-      let patientInfo = snapshot.val()[userID]['patientInfo']
-      patients[userID] = patientInfo
+      if (userID != "critical"){
+        let patientInfo = snapshot.val()[userID]['patientInfo']
+        patients[userID] = patientInfo
+      }
+
     }
     document.getElementsByClassName("loader")[0].style.display = "none";
     showTab(null, "patientlistall")
@@ -65,16 +68,16 @@ patients = {};
 })();
 
 
-ref.on("value", function (snapshot) {
-  listref.innerHTML = ""
-  for (var userID in snapshot.val()) {
-    let patientInfo = snapshot.val()[userID]['patientInfo']
-    patients[userID] = patientInfo
-  }
-  showTab(null, activetab)
-}, function (errorObject) {
-  console.log("The read failed: " + errorObject.code);
-});
+// ref.on("value", function (snapshot) {
+//   listref.innerHTML = ""
+//   for (var userID in snapshot.val()) {
+//     let patientInfo = snapshot.val()[userID]['patientInfo']
+//     patients[userID] = patientInfo
+//   }
+//   showTab(null, activetab)
+// }, function (errorObject) {
+//   console.log("The read failed: " + errorObject.code);
+// });
 
 
 function showTab(evt, patienttype) {

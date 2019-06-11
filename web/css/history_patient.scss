@@ -1,11 +1,11 @@
+$shadow-color: lighten(#5f5f5f, 10%);
+$background-color: #d2d6d9;
+
 body,
 html {
   font-family: "Montserrat", sans-serif;
   margin: 0;
-  background-image: url("../images/bg_image.png");
-  background-size: cover;
-  background-attachment: fixed;
-  
+  background-color: #d2d6d9;
 
   a {
     text-decoration: none;
@@ -20,34 +20,85 @@ html {
     height: 15%;
     z-index: 1;
     position: fixed;
-    background: rgba(62, 59, 59, 255);
+    background: $background-color;
     display: flex;
-    flex-direction: column;
-    color: white;
+    flex-direction: row;
+    justify-content: space-between;
+    color: black;
 
-    .header_top {
-      height: 80%;
+    .header_left {
+      flex: 1;
+      height: 100%;
+      line-height: 100%;
       display: flex;
       flex-direction: row;
-      justify-content: center;
+      justify-content: flex-start;
 
+      .titlewrap {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        top: 50%;
+        left: 50%;
+        width: 40%;
+        h1 {
+          color: white;
+          margin: auto;
+          line-height: 100%;
+          vertical-align: middle;
+          font-size: 5em;
+        }
+      }
       #patient_info {
-        width: 90%;
-        order: 2;
-        height: 100%;
-        padding: 3% 10% 0% 0%;
+        min-width: 30%;
+        height: 80%;
+        padding-top: 1%;
+        background-color: white;
+        border-bottom-right-radius: 5px;
+        box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+        border-bottom-left-radius: 5px;
         display: flex;
         flex-direction: row;
         align-items: flex-start;
         justify-content: center;
+        position: absolute;
+        margin-left: 35%;
+        margin-right: 35%;
 
         .profile_pic {
-          max-height: 72px;
+          max-height: 80px;
           align-items: flex-start;
           justify-content: center;
+          border-radius: 50%;
         }
 
         .patient_id {
+          height: 100%;
+          width: auto;
+          align-items: flex-start;
+          justify-content: center;
+
+          #patientname {
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 120%;
+          }
+
+          ul {
+            font-size: 15px;
+            padding-left: 10%;
+            margin: 0;
+            list-style-type: none;
+            text-align: left;
+            line-height: 120%;
+
+            li {
+              padding-bottom: 10px;
+            }
+          }
+        }
+
+        .patient_status {
           height: 100%;
           width: auto;
           align-items: flex-start;
@@ -61,26 +112,10 @@ html {
             text-align: left;
           }
         }
-
-        .patient_status {
-          height: 100%;
-          width: auto;
-          align-items: flex-start;
-          justify-content: center;
-
-          ul {
-            font-size: 12px;
-            padding-left: 10%;
-            margin: 0;
-            list-style-type: none;
-            text-align: left;
-          }
-        }
       }
 
       #menu_button_container {
         width: 10%;
-        order: 1;
         height: 100%;
         display: flex;
         flex-direction: row;
@@ -95,16 +130,19 @@ html {
       }
     }
 
-    .header_bottom {
-      height: 20%;
+    .header_right {
+      width: 35%;
+      right: 0;
+      height: 100%;
       display: flex;
       flex-direction: row;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
+      padding-right: 5%;
 
       .link {
-        width: 50%;
-        height: 100%;
+        width: 25%;
+        height: 40%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -117,7 +155,8 @@ html {
           font-size: 100%;
 
           a {
-            color: #fff;
+            color: black;
+            font-size: 16px;
           }
         }
 
@@ -134,15 +173,17 @@ html {
   .content {
     position: absolute;
     display: flex;
+    flex-direction: row;
     width: 100%;
     top: 15%;
     bottom: 0;
     height: auto;
     padding: 20px 50px 20px 50px;
+    box-sizing: border-box;
 
     .chartContainer {
       display: flex;
-      width: calc(100% - 100px);
+      flex: 4;
       height: 100%;
       top: 15%;
       bottom: 0;
@@ -152,9 +193,10 @@ html {
         display: flex;
         flex-direction: column;
         flex: 1;
-        background-color: rgba(5, 5, 5, 0.32);
-        border-radius: 2px;
-        margin: 2px;
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        margin: 8px;
         padding: 5px 20px;
 
         .titlewrap {
@@ -173,6 +215,34 @@ html {
         .chartwrap {
           height: 80%;
         }
+      }
+    }
+
+    #criticalTimes {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 1);
+      box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+      padding:1%;
+
+      button {
+        border-radius: 6px;
+        border: 1px solid #d83526;
+        display: inline-block;
+        cursor: pointer;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px 76px;
+        margin: 5px;
+        text-decoration: none;
+        background: linear-gradient(to bottom, #fe1a00 5%, #ce0100 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100',GradientType=0);
+        background-color: #fe1a00;
+        padding-bottom: 5%;
       }
     }
   }
@@ -237,38 +307,38 @@ html {
     bottom: 10px;
   }
 }
-  .loader {
-    border: 10px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 10px solid grey;
-    margin: auto;
-    width: 120px;
-    height: 120px;
-    position: absolute;
-    left:45%;
-    top:50%;
-    -webkit-animation: spin 2s linear infinite; /* Safari */
-    animation: spin 2s linear infinite;
-  }
+.loader {
+  border: 10px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 10px solid grey;
+  margin: auto;
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  left: 45%;
+  top: 50%;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
 
-  /* Safari */
-  @-webkit-keyframes spin {
-    0% {
-      -webkit-transform: rotate(0deg);
-    }
-    100% {
-      -webkit-transform: rotate(360deg);
-    }
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
   }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
 
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 // Responsive scaling for smaller screens
 @media screen and (max-height: 600px) {
   .sidenav {

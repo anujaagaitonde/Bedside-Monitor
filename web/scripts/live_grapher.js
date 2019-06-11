@@ -25,7 +25,7 @@ function PatientHTMLGenerator(patientinfo) {
                     
     <div class="patient_id">
         <ul>
-            <li><b>Name: </b>${patientinfo.Name}</li>
+            <li id="patientname"></b>${patientinfo.Name}</li>
             <li><b>DOB: </b>${patientinfo.DOB}</li>
         </ul>
     </div>
@@ -33,6 +33,7 @@ function PatientHTMLGenerator(patientinfo) {
         <ul>
             <li><b>Abnormality detected: </b>${patientinfo.Abnormality}</li>
             <li><b>Condition: </b>${patientinfo.Condition} </li>
+            <li><b>Contact Number: </b>028362391723 </li>
         </ul>
     </div>
     `;
@@ -64,7 +65,7 @@ function initChart(id, title, primarycolor, yaxislabel) {
         pointHitRadius: 10,
         data: [],
         spanGaps: false,
-        borderWidth: 6
+        borderWidth: 1
       }
     ]
   };
