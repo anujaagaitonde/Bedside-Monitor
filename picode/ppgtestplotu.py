@@ -31,7 +31,7 @@ def realtime_butter(data,lowcut,highcut,fs,order=1):
 
 # Parameters
 x_len = 400         # Number of points to display
-y_range = [26000, 28000]  # Range of possible Y values to display
+y_range = [0, 28000]  # Range of possible Y values to display
 
 
 

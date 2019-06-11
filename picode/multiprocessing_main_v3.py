@@ -16,8 +16,8 @@ import glob
 #from read_temp import read_temp_init,read_temp_raw,read_temp
 
 #libraries required for PPG Sensor
-import max30102_copy as max30102
-#import hrcalc
+import max30102_doug as max30102
+import hrcalc
 import matplotlib.pyplot as plt
 import PPG_algorithms as ppg
 import numpy as np
@@ -26,7 +26,6 @@ import gui_copy2 as gui
 import matplotlib.animation as animation
 
 import ecg_lib as ecg
-from scipy.signal  import detrend 
 
 exitFlag = 0
 
@@ -52,13 +51,9 @@ def PPGTempread (PPGirq,PPGredq,PPGirguiq,Tempq,db,user):
           red, ir = m.read_sequential(nread)
           ppgir.extend(ir)
           ppgred.extend(red)
-          #print("ir taken 1")
-          db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ir)
-          #print("ir pushed 1")
           PPGirq.put(ir)
           PPGirguiq.put(ir)
           PPGredq.put(red)
-          #time.sleep(1)
 
           #temp = str(read_temp())
           #print(temp)
@@ -66,17 +61,34 @@ def PPGTempread (PPGirq,PPGredq,PPGirguiq,Tempq,db,user):
           Tempq.put(37)
           #print_time(self.name, 5, self.counter)
           
-def PPGprocess (PPGirq,PPGredq,hrq,rrq,spo2q,db,user):
+def PPGprocess (PPGirq,PPGredq,prq,rrq,spo2q,db,user):
+   ppgirprocess = []
    while True:
-      ppgir=PPGirq.get()
-      ppgred=PPGredq.get()
+      ppgir = []
+      ppgred = []
+      qsizeir = PPGirq.qsize()
+      for i in range(qsizeir):
+          ppgir.extend(PPGirq.get())
+      ppgirprocess.extend(ppgir)
+      qsizered = PPGredq.qsize()
+      for i in range(qsizered):
+          ppgred.extend(PPGredq.get())
       #db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ppgir)
-      #hr=ppg.calculate_HR(ppgir,20.00,2.50,fs=100.0,order=1)
+      if len(ppgirprocess) > 700:
+         pr=ppg.calculate_HR(ppgirprocess,20.00,2.50,fs=100.0)
+         if pr > 30 and pr < 150:
+            ppgirprocess = ppgirprocess[-700:]
+            prq.put(pr)
+         else:
+            ppgirprocess = []
+            prq.put(-1)
       #rr=ppg.calculate_RR(ppgir,20.00,2.50,fs=100.0,order=1)
-      #spo2=ppg.calculate_SPO2(ppgir,ppgred,20.00,2.5,20.00,2.5,fs=100,order=1)
-      hrq.put(40)
+      _, _, spo2, spo2_valid=hrcalc.calc_hr_and_spo2(ppgir,ppgred)
+      if spo2_valid:
+         spo2q.put(spo2)
+      else:
+         spo2q.put(-1)
       rrq.put(50)
-      spo2q.put(21) #spo2
       time.sleep(1)
 
 def ECGprocess(ecgfiltq, db, user):
@@ -129,6 +141,7 @@ if __name__=='__main__':
    PPGirq=manager.Queue()
    PPGredq=manager.Queue()
    PPGirguiq=manager.Queue()
+   prq=manager.Queue()
    hrq=manager.Queue()
    rrq=manager.Queue()
    spo2q=manager.Queue()
@@ -137,12 +150,12 @@ if __name__=='__main__':
 
    #guiprocessp=pool.apply_async(GUIprocess, ("Omar Muttawa",'010100',"XXX YYY",Tempq,PPGirq,PPGredq,hrq,rrq,spo2q,ecgrawq,ecgfiltq))
    ppgtempread=pool.apply_async(PPGTempread, (PPGirq,PPGredq,PPGirguiq,Tempq,db,user))
-   ppgprocessp=pool.apply_async(PPGprocess, (PPGirq,PPGredq,hrq,rrq,spo2q,db,user))
+   ppgprocessp=pool.apply_async(PPGprocess, (PPGirq,PPGredq,prq,rrq,spo2q,db,user))
    ecgprocess=pool.apply_async(ECGprocess, (ecgfiltq,db,user))
    #guiprocessp=pool.apply_async(GUIprocess, ("Omar Muttawa",'010100',"XXX YYY",Tempq,PPGirq,PPGredq,hrq,rrq,spo2q,ecgrawq,ecgfiltq))   
    print("GUI entered")
    #g=gui.GUI("Omar Muttawa",'010100',"XXX YYY",Tempq,PPGirguiq,PPGredq,hrq,rrq,spo2q,ecgfiltq)
-   g=gui.GUI("Omar Muttawa",'010100',"XXX YYY",Tempq,PPGirguiq,PPGredq,hrq,rrq,spo2q,ecgfiltq)
+   g=gui.GUI("Omar Muttawa",'010100',"XXX YYY",Tempq,PPGirguiq,PPGredq,prq,hrq,rrq,spo2q,ecgfiltq)
    print("GUI Initilised")
    ani1 = animation.FuncAnimation(g.fig_ecg, g.animate, fargs = (g.y_ecg, g.y_ppg, g.y_rr,), interval=0,blit=True) # animate graph every 20 ms
    g.root.mainloop()

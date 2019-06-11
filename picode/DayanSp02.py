@@ -4,7 +4,7 @@
 # def calculate_SPO2(IR, RED, lc_ir, hc_ir, lc_red, hc_red, fs=50, order=5, pk_min=1, pk_max=-1):
 # def calc_hr_and_spo2(ir_data, red_data):
 
-import PPG_algorithms as ppg
+# import PPG_algorithms as ppg
 import hrcalc
 import pandas as pd
 import os
