@@ -149,7 +149,7 @@ function buttonHTMLGenerator(inputdate){
 }
 async function main(){
   var tempdata = await getData("temperatureSensor");
-  var spo2data = await getData("spo2Sensor");
+  var ecgdata = await getData("ecgSensor");
   var ppgdata = await getData("ppgSensor");
    g = new Dygraph(document.getElementById("tempChart"), tempdata,
     {
@@ -160,14 +160,14 @@ async function main(){
       labels: ['Time', 'Temperature'],
       connectSeparatedPoints: false
     });
-  g1 = new Dygraph(document.getElementById("spO2Chart"), spo2data,
+  g1 = new Dygraph(document.getElementById("spO2Chart"), ecgdata,
     {
       drawPoints: true,
       showRoller: false,
       animatedZooms: true,
       strokeWidth: 1,
       color: "#59eaed",
-      labels: ['Time', 'Spo2']
+      labels: ['Time', 'ecg']
     });
   g2 = new Dygraph(document.getElementById("ppgChart"), ppgdata,
     {
