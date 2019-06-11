@@ -7,6 +7,7 @@ import time
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import math
 import sched
+import queue
 
 class GUI():
     def __init__(self, patient_name, dob_str, doctor_name,Tempq,PPGirq,PPGredq,hrq,rrq,spo2q,ecgfiltq):
@@ -140,14 +141,26 @@ class GUI():
 
 
     def updateDigital(self):
-        spo2=self.spo2q.get()
-        self.spo2_info2.configure(text=str(spo2))
-        hr=self.hrq.get()
-        self.hr_info2.configure(text=str(hr))
-        temp=self.Tempq.get()
-        self.temp_info2.configure(text=str(temp))
-        rr=self.rrq.get()
-        self.resp_info2.configure(text=str(rr))
+        try:
+            spo2=self.spo2q.get_nowait()
+            self.spo2_info2.configure(text=str(spo2))
+        except Queue.Empty:
+            pass
+        try:
+            hr=self.hrq.get_nowait()
+            self.hr_info2.configure(text=str(hr))
+        except Queue.Empty:
+            pass
+        try:
+            temp=self.Tempq.get_nowait()
+            self.temp_info2.configure(text=str(temp))
+        except Queue.Empty:
+            pass
+        try:
+            rr=self.rrq.get_nowait()
+            self.resp_info2.configure(text=str(rr))
+        except Queue.Empty:
+            pass
         
     def set_fullscreen(self, event=None):
         self.root.attributes('-fullscreen', True)

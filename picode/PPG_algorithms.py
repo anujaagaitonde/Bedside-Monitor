@@ -8,7 +8,7 @@
 #----------------------------------------------------------------------------- 
 
 import numpy as np
-from scipy.signal import butter, lfilter, freqz,cheby2,sosfilt
+from scipy.signal import butter, lfilter, freqz,cheby2,sosfilt,sosfilt_zi
 import matplotlib.pyplot as plt
 import scipy as sc
 from scipy.interpolate import interp1d
@@ -31,7 +31,7 @@ def butter_bandpass(lowcut, highcut, fs, order=1):
     b, a = butter(order, low, btype='lowpass')
     return b, a
 
-def butter_bandpass_filter(data, lowcut, highcut,b,a, fs, order=1):
+def butter_bandpass_filter(data, lowcut, highcut, fs, order=1):
     '''
     This function constructs bandpass filtered signal
     '''
@@ -45,22 +45,26 @@ def ChebyshevII(data, lowcut, highcut, fs, order=4,attenuation=20):
     nlowcut=(lowcut/fn)
     nhighcut=(highcut/fn)
     parameters=cheby2(order,attenuation,[nlowcut, nhighcut],btype="bandpass",analog=True,output='sos')
+    # zi = sosfilt_zi(parameters)
+    # # print(zi)
     output=sosfilt(parameters,data)
+    # print(output)
+    # print(zf)
     return output
 
-def calculate_HR(IR, lowcut, highcut, fs=100.0, order=5):
+def calculate_HR(IR, lowcut, highcut, fs=100.0, order=6):
     '''
     This function calculates real-time heart rate from given IR readings
     '''
-    #dataset_HR = butter_bandpass_filter(IR, lowcut, highcut, fs, order=order) #1.1, 2.0, 5
+    # dataset_HR = butter_bandpass_filter(IR, lowcut, highcut, fs, order=order) #1.1, 2.0, 5
     dataset_HR= ChebyshevII(IR,lowcut,highcut,fs,order=order)
-    #hrw1 = 0.05 #One-sided window size, as proportion of the sampling frequency
-    #dataset_HR = pd.rolling_mean(dataset_HR, window=int(hrw1*fs)) #Calculate moving average
-    #plt.figure()
-    #plt.plot(dataset_HR)
-    #plt.title("ChebyshevII output of IR Signal order=4 for HR\n ")
-    #plt.savefig('figures/Figure01.png')
-    #plt.show()
+    # hrw1 = 0.05 #One-sided window size, as proportion of the sampling frequency
+    # dataset_HR = pd.rolling_mean(dataset_HR, window=int(hrw1*fs)) #Calculate moving average
+    # plt.figure()
+    # plt.plot(dataset_HR)
+    # plt.title("ChebyshevII output of IR Signal order=4 for HR\n ")
+    # plt.savefig('figures/Figure01.png')
+    # plt.show()
 
     #Calculate moving average with 0.75s in both directions, then append do dataset
     hrw = 0.75 #One-sided window size, as proportion of the sampling frequency
@@ -74,7 +78,7 @@ def calculate_HR(IR, lowcut, highcut, fs=100.0, order=5):
     window = []
     peaklist = []
     newpeaklist = []
-    newybeat = []
+    # newybeat = []
     listpos = 0 #We use a counter to move over the different data columns
     for datapoint in dataset_HR:
         rollingmean = hart_rollingmean[listpos] #Get local mean
@@ -84,53 +88,56 @@ def calculate_HR(IR, lowcut, highcut, fs=100.0, order=5):
         elif (datapoint > rollingmean): #If signal comes above local mean, mark ROI
             window.append(datapoint)
             listpos += 1
-            
+
         else: #If signal drops below local mean -> determine highest point
             maximum = max(window)
-            beatposition = listpos - len(window) + (window.index(max(window))) #Notate the position of the point on the X-axis
+            beatposition = listpos - len(window) + (window.index(maximum)) #Notate the position of the point on the X-axis
             peaklist.append(beatposition) #Add detected peak to list
             window = [] #Clear marked ROI
             listpos += 1
-    ybeat = [dataset_HR[x] for x in peaklist] #Get the y-value of all peaks for plotting purposes
+    # ybeat = [dataset_HR[x] for x in peaklist] #Get the y-value of all peaks for plotting purposes
 
     for i in range(len(peaklist)):
         if (peaklist[i]>100):
             newpeaklist.append(peaklist[i])
-            newybeat.append(ybeat[i])
+            # newybeat.append(ybeat[i])
     
-    #plt.figure()
-    #plt.title("Detected Peaks in IR Signal for Heart Rate")
-##    #plt.xlim(2600,2800)
-##    plt.ylim(-600,600)
-    #plt.plot(dataset_HR, alpha=0.5, color='blue') #Plot semi-transparent HR
-    #plt.plot(mov_avg, color ='green') #Plot moving average
-    #plt.scatter(newpeaklist, newybeat, color='red') #Plot detected peaks
-    #plt.savefig('figures/Figure02.png')
-    #plt.show()
+    # plt.figure()
+    # plt.title("Detected Peaks in IR Signal for Heart Rate")
+    # plt.xlim(0,2000)
+    # plt.ylim(44000,47000)
+    # plt.plot(dataset_HR, alpha=0.5, color='blue') #Plot semi-transparent HR
+    # plt.plot(mov_avg, color ='green') #Plot moving average
+    # plt.scatter(newpeaklist, newybeat, color='red') #Plot detected peaks
+    # print(newybeat)
+    # # plt.savefig('figures/Figure02.png')
+    # plt.show()
 
-    hr_interval= []
+    # hr_interval = []
     cnt = 0
-    heart_rate = []
+    # heart_rate = []
+    sum = 0
     while (cnt < (len(newpeaklist)-1)):
         RR_interval = (newpeaklist[cnt+1] - newpeaklist[cnt]) #Calculate distance between beats in # of samples
-        ms_dist = ((1.0*RR_interval / fs) * 1000.0) #Convert sample distances to ms distances
-        hr_interval.append(ms_dist) #Append to list
+        ms_dist = (1.0*RR_interval / fs) #Convert sample distances to ms distances
+        # hr_interval.append(ms_dist) #Append to list
         cnt += 1
-    for i in range(len(hr_interval)):
-        heart_rate.append(60000/hr_interval[i])
-    
-    #print('heart rate (beats/min) = ',heart_rate)
-    #hr_peaktime = [time[x] for x in newpeaklist] # peak time for heart rate
-    #plt.figure()
-    #plt.plot(heart_rate)
-    #plt.title("Plot of Heart Rate")
-    #plt.xlabel("Peaks")
-    #plt.ylabel("HR (beats/min)")
-    #plt.savefig(netid+'_figures/'+netid+'_'+activity_name+'_HR.png')
-    
-    #print("the mean of heart rate is {} beats/min.\n".format(np.mean(heart_rate)))
-    #plt.show()
-    return (heart_rate)
+        sum += 60/ms_dist
+    # for i in range(len(hr_interval)):
+        # heart_rate.append(60/hr_interval[i])
+    hr = sum/cnt
+    # print('heart rate (beats/min) = ',heart_rate)
+    # hr_peaktime = [time[x] for x in newpeaklist] # peak time for heart rate
+    # plt.figure()
+    # plt.plot(heart_rate)
+    # plt.title("Plot of Heart Rate")
+    # plt.xlabel("Peaks")
+    # plt.ylabel("HR (beats/min)")
+    # plt.savefig(netid+'_figures/'+netid+'_'+activity_name+'_HR.png')
+    #
+    # print("the mean of heart rate is {} beats/min.\n".format(np.mean(heart_rate)))
+    # plt.show()
+    return (hr)
 
 
 def calculate_RR(IR, lowcut, highcut, fs=100, order=5):
@@ -217,8 +224,6 @@ def calculate_RR(IR, lowcut, highcut, fs=100, order=5):
     #plt.show()
     return (respiration_rate)
 
-
-#again calculate this from ppg_ir and ppg_red 
 
 def calculate_SPO2(IR, RED, lc_ir, hc_ir, lc_red, hc_red, fs=50, order=5, pk_min = 1, pk_max = -1):
 
