@@ -110,13 +110,13 @@ if __name__=='__main__':
    #Firebase configuration and sign in
 
    config = {
-       "apiKey": "AIzaSyDFZ2WAZae-55_UK9KN_b9EbSAhhS-PTD8",
-       "authDomain": "bedsidemonitor.firebaseapp.com",
-       "databaseURL": "https://bedsidemonitor.firebaseio.com",
-       "projectId": "bedsidemonitor",
-       "storageBucket": "bedsidemonitor.appspot.com",
-       "messagingSenderId": "680750955239",
-       "appId": "1:680750955239:web:35f53ec6bc0227b6"
+       "apiKey": "AIzaSyB3OD82TJeIDHOwiys2Cy_iD8wj5KxBvwU",
+       "authDomain": "mfbedside.firebaseapp.com",
+       "databaseURL": "https://mfbedside.firebaseio.com",
+       "projectId": "mfbedside",
+       "storageBucket": "mfbedside.appspot.com",
+       "messagingSenderId": "477689150813",
+       "appId": "1:477689150813:web:3e2c87dc310d4576"
    }
    email="test@test.com"
    password="password"
