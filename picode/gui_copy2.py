@@ -123,14 +123,18 @@ class GUI():
         critical_time = dt.datetime.utcnow()
 
     def updateDigital(self):
-        spo2=self.spo2q.get()
-        self.spo2_info2.configure(text=str(spo2))
-        hr=self.hrq.get()
-        self.hr_info2.configure(text=str(hr))
-        temp=self.Tempq.get()
-        self.temp_info2.configure(text=str(temp))
-        rr=self.rrq.get()
-        self.resp_info2.configure(text=str(rr))
+        spo2=self.spo2q.get_nowait()
+        if spo2:
+            self.spo2_info2.configure(text=str(spo2))
+        hr=self.hrq.get_nowait()
+        if hr:
+            self.hr_info2.configure(text=str(hr))
+        temp=self.Tempq.get_nowait()
+        if temp:
+            self.temp_info2.configure(text=str(temp))
+        rr=self.rrq.get_nowait()
+        if rr:
+            self.resp_info2.configure(text=str(rr))
         
         
     def animate(self, i, y_ecg, y_ppg, y_resp):
