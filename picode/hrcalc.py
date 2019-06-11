@@ -18,18 +18,14 @@ BUFFER_SIZE = SAMPLE_FREQ*MA_SIZE
 #calculated from ppgir_data.csv and ppgred_data.csv
 
 
-
-
-
 def calc_hr_and_spo2(ir_data, red_data):
     """
     By detecting  peaks of PPG cycle and corresponding AC/DC
     of red/infra-red signal, the an_ratio for the SPO2 is computed.
     """
-  
+
     # get dc mean
     ir_mean = int(np.mean(ir_data))
-
 
     # remove DC mean and inver signal
     # this lets peak detecter detect valley
@@ -45,7 +41,6 @@ def calc_hr_and_spo2(ir_data, red_data):
     # #calculates a moving average of 15 - this is a smoothing filter to help work out peaks
     x = np.convolve(x, np.ones(15), 'valid') / 15
 
-
     # #calculates a moving average of 15 - this is a smoothing filter to help work out peaks
     # red_data = red_data.flatten()
     # red_data = np.convolve(red_data, np.ones(15), 'valid') / 15
@@ -60,7 +55,6 @@ def calc_hr_and_spo2(ir_data, red_data):
     n_peaks = len(ir_valley_locs)
 
     # ir_valley_locs, n_peaks = find_peaks(x, BUFFER_SIZE, n_th, 4, 15)
-
 
     peak_interval_sum = 0
     if n_peaks >= 2:
@@ -108,13 +102,19 @@ def calc_hr_and_spo2(ir_data, red_data):
                     red_dc_max = red_data[i]
                     red_dc_max_index = i
 
-            red_ac = int((red_data[ir_valley_locs[k+1]] - red_data[ir_valley_locs[k]]) * (red_dc_max_index - ir_valley_locs[k]))
-            red_ac = red_data[ir_valley_locs[k]] + int(red_ac / (ir_valley_locs[k+1] - ir_valley_locs[k]))
-            red_ac = red_data[red_dc_max_index] - red_ac  # subtract linear DC components from raw
+            red_ac = int((red_data[ir_valley_locs[k+1]] - red_data[ir_valley_locs[k]]) * (
+                red_dc_max_index - ir_valley_locs[k]))
+            red_ac = red_data[ir_valley_locs[k]] + \
+                int(red_ac / (ir_valley_locs[k+1] - ir_valley_locs[k]))
+            # subtract linear DC components from raw
+            red_ac = red_data[red_dc_max_index] - red_ac
 
-            ir_ac = int((ir_data[ir_valley_locs[k+1]] - ir_data[ir_valley_locs[k]]) * (ir_dc_max_index - ir_valley_locs[k]))
-            ir_ac = ir_data[ir_valley_locs[k]] + int(ir_ac / (ir_valley_locs[k+1] - ir_valley_locs[k]))
-            ir_ac = ir_data[ir_dc_max_index] - ir_ac  # subtract linear DC components from raw
+            ir_ac = int((ir_data[ir_valley_locs[k+1]] - ir_data[ir_valley_locs[k]])
+                        * (ir_dc_max_index - ir_valley_locs[k]))
+            ir_ac = ir_data[ir_valley_locs[k]] + \
+                int(ir_ac / (ir_valley_locs[k+1] - ir_valley_locs[k]))
+            # subtract linear DC components from raw
+            ir_ac = ir_data[ir_dc_max_index] - ir_ac
 
             nume = red_ac * ir_dc_max
             denom = ir_ac * red_dc_max
@@ -137,18 +137,18 @@ def calc_hr_and_spo2(ir_data, red_data):
             ratio_ave = ratio[mid_index]
 
     q, w = pearsonr(ir_data.astype('float'), red_data.astype('float'))
-    print(q,w)
+    print(q, w)
     # print(len(ir_data))
     # print(len(red_data))
     # why 184?
     # print("ratio average: ", ratio_ave)
     if ratio_ave > 2 and ratio_ave < 184:
         # -45.060 * ratioAverage * ratioAverage / 10000 + 30.354 * ratioAverage / 100 + 94.845
-        spo2 = -45.060 * (ratio_ave**2) / 10000.0 + 30.054 * ratio_ave / 100.0 + 94.845
+        spo2 = -45.060 * (ratio_ave**2) / 10000.0 + \
+            30.054 * ratio_ave / 100.0 + 94.845
         spo2_valid = True
     else:
         spo2 = -999
         spo2_valid = False
 
     return hr, hr_valid, spo2, spo2_valid
-
