@@ -83,16 +83,17 @@ class MAX30102():
         # FIFO_RD_PTR[4:0]
         self.bus.write_i2c_block_data(self.address, REG_FIFO_RD_PTR, [0x00])
 
-        # 0b 0100 1111
-        # sample avg = 4, fifo rollover = false, fifo almost full = 17
-        self.bus.write_i2c_block_data(self.address, REG_FIFO_CONFIG, [0x4f])
+        # 0b 0000 1111
+        # sample avg = 1, fifo rollover = false, fifo almost full = 17
+        self.bus.write_i2c_block_data(self.address, REG_FIFO_CONFIG, [0x0f])
 
         # 0x02 for read-only, 0x03 for SpO2 mode, 0x07 multimode LED
         self.bus.write_i2c_block_data(self.address, REG_MODE_CONFIG, [led_mode])
-        # 0b 0010 0111
-        # SPO2_ADC range = 4096nA, SPO2 sample rate = 100Hz, LED pulse-width = 411uS
-        self.bus.write_i2c_block_data(self.address, REG_SPO2_CONFIG, [0x27])
 
+        # 0b 0110 0111
+        # SPO2_ADC range = 16384nA, SPO2 sample rate = 100Hz, LED pulse-width = 411uS
+        self.bus.write_i2c_block_data(self.address, REG_SPO2_CONFIG, [0x67])
+        
         # choose value for ~7mA for LED1
         self.bus.write_i2c_block_data(self.address, REG_LED1_PA, [0x24])
         # choose value for ~7mA for LED2

@@ -2,7 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import find_peaks
+
 from scipy.stats import pearsonr
 
 # 25 samples per second (in algorithm.h)
@@ -17,6 +17,79 @@ BUFFER_SIZE = SAMPLE_FREQ*MA_SIZE
 
 #calculated from ppgir_data.csv and ppgred_data.csv
 
+def find_peaks(x, height=None, threshold=None, distance=None,prominence=None, width=None, wlen=None, rel_height=0.5,plateau_size=None):
+    x = _arg_x_as_expected(x)
+    if distance is not None and distance < 1:
+        raise ValueError('`distance` must be greater or equal to 1')
+
+    peaks, left_edges, right_edges = _local_maxima_1d(x)
+    properties = {}
+
+    if plateau_size is not None:
+        # Evaluate plateau size
+        plateau_sizes = right_edges - left_edges + 1
+        pmin, pmax = _unpack_condition_args(plateau_size, x, peaks)
+        keep = _select_by_property(plateau_sizes, pmin, pmax)
+        peaks = peaks[keep]
+        properties["plateau_sizes"] = plateau_sizes
+        properties["left_edges"] = left_edges
+        properties["right_edges"] = right_edges
+        properties = {key: array[keep] for key, array in properties.items()}
+
+    if height is not None:
+        # Evaluate height condition
+        peak_heights = x[peaks]
+        hmin, hmax = _unpack_condition_args(height, x, peaks)
+        keep = _select_by_property(peak_heights, hmin, hmax)
+        peaks = peaks[keep]
+        properties["peak_heights"] = peak_heights
+        properties = {key: array[keep] for key, array in properties.items()}
+
+    if threshold is not None:
+        # Evaluate threshold condition
+        tmin, tmax = _unpack_condition_args(threshold, x, peaks)
+        keep, left_thresholds, right_thresholds = _select_by_peak_threshold(
+            x, peaks, tmin, tmax)
+        peaks = peaks[keep]
+        properties["left_thresholds"] = left_thresholds
+        properties["right_thresholds"] = right_thresholds
+        properties = {key: array[keep] for key, array in properties.items()}
+
+    if distance is not None:
+        # Evaluate distance condition
+        keep = _select_by_peak_distance(peaks, x[peaks], distance)
+        peaks = peaks[keep]
+        properties = {key: array[keep] for key, array in properties.items()}
+
+    if prominence is not None or width is not None:
+        # Calculate prominence (required for both conditions)
+        wlen = _arg_wlen_as_expected(wlen)
+        properties.update(zip(
+            ['prominences', 'left_bases', 'right_bases'],
+            _peak_prominences(x, peaks, wlen=wlen)
+        ))
+
+    if prominence is not None:
+        # Evaluate prominence condition
+        pmin, pmax = _unpack_condition_args(prominence, x, peaks)
+        keep = _select_by_property(properties['prominences'], pmin, pmax)
+        peaks = peaks[keep]
+        properties = {key: array[keep] for key, array in properties.items()}
+
+    if width is not None:
+        # Calculate widths
+        properties.update(zip(
+            ['widths', 'width_heights', 'left_ips', 'right_ips'],
+            _peak_widths(x, peaks, rel_height, properties['prominences'],
+                         properties['left_bases'], properties['right_bases'])
+        ))
+        # Evaluate width condition
+        wmin, wmax = _unpack_condition_args(width, x, peaks)
+        keep = _select_by_property(properties['widths'], wmin, wmax)
+        peaks = peaks[keep]
+        properties = {key: array[keep] for key, array in properties.items()}
+
+    return peaks, properties
 
 def calc_hr_and_spo2(ir_data, red_data):
     """

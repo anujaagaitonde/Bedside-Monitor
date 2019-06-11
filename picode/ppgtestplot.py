@@ -5,7 +5,7 @@ from time import sleep	# To add delay
 
 import matplotlib.pyplot as plt
 from scipy.signal import detrend
-import max30102_copy as max30102
+import max30102_doug as max30102
 from scipy.signal import butter, lfilter, freqz,cheby2,sosfilt,lfilter_zi
 import numpy as np
 import matplotlib.animation as animation
@@ -31,7 +31,7 @@ def realtime_butter(data,lowcut,highcut,fs,order=1):
 
 # Parameters
 x_len = 400         # Number of points to display
-y_range = [30000, 32000]  # Range of possible Y values to display
+y_range = [0, 60000]  # Range of possible Y values to display
 
 
 
@@ -68,6 +68,7 @@ def animate(i, ys):
     global x
     ecgarray=[]
     red, ir = m.read_sequential(nread)
+    #ir=detrend(ir)
     filtered_butter=realtime_butter(ir,40,2.50,100,1)
     #ts,filtered, rpeaks, templates_ts , templates ,heart_rate_ts , heart_rate = ecg(ecgarray, 300, False)
     ys.extend(filtered_butter)
@@ -85,6 +86,7 @@ def animate(i, ys):
 
     # Update line with new Y values
     line.set_ydata(ys)
+    ax.set_ylim([min(ys), max(ys)])
     return line,
 # Set up plot to call animate() function periodically
 ani = animation.FuncAnimation(fig,

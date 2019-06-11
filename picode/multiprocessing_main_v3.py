@@ -17,7 +17,7 @@ import glob
 
 #libraries required for PPG Sensor
 import max30102_copy as max30102
-import hrcalc
+#import hrcalc
 import matplotlib.pyplot as plt
 import PPG_algorithms as ppg
 import numpy as np
@@ -26,6 +26,7 @@ import gui_copy2 as gui
 import matplotlib.animation as animation
 
 import ecg_lib as ecg
+from scipy.signal  import detrend 
 
 exitFlag = 0
 

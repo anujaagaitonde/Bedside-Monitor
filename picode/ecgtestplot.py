@@ -58,7 +58,7 @@ def calcresp(ecgarray,rpeaks):
 
 # Parameters
 x_len = 400         # Number of points to display
-y_range = [350, 650]  # Range of possible Y values to display
+y_range = [0, 800]  # Range of possible Y values to display
 
 
 
@@ -93,7 +93,7 @@ edr=[]
 def animate(i, ys):
     global x
     ecgarray=[]
-    for i in range(6000):
+    for i in range(600):
     # Read temperature (Celsius) from TMP102
     #temp_c = round(tmp102.read_temp(), 2)
     #for i in range(100):
@@ -101,12 +101,12 @@ def animate(i, ys):
       ecgarray.append(output)
       sleep(0.00333)
     ecgarray2=np.asarray(ecgarray)
-    np.savetxt("ecg_data.csv",ecgarray2,delimiter=",")
+    #np.savetxt("ecg_data.csv",ecgarray2,delimiter=",")
     print("Done")
     filtered_butter=realtime_butter(ecgarray,35,0,300,5)
     #ts,filtered, rpeaks, templates_ts , templates ,heart_rate_ts , heart_rate = ecg(ecgarray, 300, False)
     ys.extend(filtered_butter)
-    ecgarray
+    #ecgarray
     #ys.append(math.sin(x/2*math.pi)) 
 
     # Add y to list
