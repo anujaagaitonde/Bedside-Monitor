@@ -6,6 +6,7 @@ import datetime as dt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import math
 import sched
+import queue
 
 class GUI():
     def __init__(self, patient_name, dob_str, doctor_name,Tempq,PPGirq,PPGredq,hrq,rrq,spo2q,ecgfiltq):
@@ -123,18 +124,26 @@ class GUI():
         critical_time = dt.datetime.utcnow()
 
     def updateDigital(self):
-        spo2=self.spo2q.get_nowait()
-        if spo2:
+        try:
+            spo2=self.spo2q.get_nowait()
             self.spo2_info2.configure(text=str(spo2))
-        hr=self.hrq.get_nowait()
-        if hr:
+        except Queue.Empty:
+            pass
+        try:
+            hr=self.hrq.get_nowait()
             self.hr_info2.configure(text=str(hr))
-        temp=self.Tempq.get_nowait()
-        if temp:
+        except Queue.Empty:
+            pass
+        try:
+            temp=self.Tempq.get_nowait()
             self.temp_info2.configure(text=str(temp))
-        rr=self.rrq.get_nowait()
-        if rr:
+        except Queue.Empty:
+            pass
+        try:
+            rr=self.rrq.get_nowait()
             self.resp_info2.configure(text=str(rr))
+        except Queue.Empty:
+            pass
         
         
     def animate(self, i, y_ecg, y_ppg, y_resp):
