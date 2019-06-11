@@ -226,7 +226,7 @@ html {
       background-color: rgba(255, 255, 255, 1);
       box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
       border-radius: 10px;
-      padding:1%;
+      padding: 1%;
 
       button {
         border-radius: 6px;
@@ -280,6 +280,7 @@ html {
       max-height: 100px;
       width: auto;
       transition: 0.3s;
+      border-radius: 50%;
     }
     h3 {
       font-style: bold;
@@ -291,6 +292,7 @@ html {
     display: block;
     transition: 0.3s;
     color: rgba(62, 59, 59, 255);
+    margin-top: 20%;
   }
 
   a:hover {

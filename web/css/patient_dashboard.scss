@@ -11,6 +11,8 @@ html {
   }
 }
 
+
+
 #main {
   transition: margin-left 0.5s;
 
@@ -347,6 +349,7 @@ html {
       max-height: 100px;
       width: auto;
       transition: 0.3s;
+      border-radius:50%;
     }
     h3 {
       font-style: bold;
@@ -358,6 +361,7 @@ html {
     display: block;
     transition: 0.3s;
     color: rgba(62, 59, 59, 255);
+    margin-top: 20%;
   }
 
   a:hover {

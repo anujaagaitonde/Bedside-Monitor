@@ -509,6 +509,7 @@ html a {
   width: auto;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  border-radius: 50%;
 }
 
 .sidenav #dr_profile h3 {
@@ -522,6 +523,7 @@ html a {
   -webkit-transition: 0.3s;
   transition: 0.3s;
   color: #3e3b3b;
+  margin-top: 20%;
 }
 
 .sidenav a:hover {

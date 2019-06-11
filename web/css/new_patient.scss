@@ -25,8 +25,8 @@ html {
   box-sizing: border-box;
   border-radius: 5px;
 
-  h1{
-      text-align: center;
+  h1 {
+    text-align: center;
   }
   form {
     margin-top: 20px;
@@ -226,6 +226,7 @@ html {
       max-height: 100px;
       width: auto;
       transition: 0.3s;
+      border-radius: 50%;
     }
     h3 {
       font-style: bold;
@@ -237,6 +238,7 @@ html {
     display: block;
     transition: 0.3s;
     color: rgba(62, 59, 59, 255);
+    margin-top: 20%;
   }
 
   a:hover {

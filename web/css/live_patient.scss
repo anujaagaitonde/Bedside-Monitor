@@ -14,6 +14,11 @@ html {
   }
 }
 
+.dr_profile {
+  border-radius: 50%;
+}
+
+
 #main {
   transition: margin-left 0.5s;
 
@@ -308,6 +313,7 @@ html {
 
     img {
       max-height: 100px;
+      border-radius:50%;
       width: auto;
       transition: 0.3s;
     }
@@ -321,6 +327,7 @@ html {
     display: block;
     transition: 0.3s;
     color: rgba(62, 59, 59, 255);
+        margin-top: 20%;
   }
 
   a:hover {

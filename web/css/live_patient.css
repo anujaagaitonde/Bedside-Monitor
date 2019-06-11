@@ -12,6 +12,10 @@ html a {
   text-decoration: none;
 }
 
+.dr_profile {
+  border-radius: 50%;
+}
+
 #main {
   -webkit-transition: margin-left 0.5s;
   transition: margin-left 0.5s;
@@ -432,6 +436,7 @@ html a {
 
 .sidenav #dr_profile img {
   max-height: 100px;
+  border-radius: 50%;
   width: auto;
   -webkit-transition: 0.3s;
   transition: 0.3s;
@@ -448,6 +453,7 @@ html a {
   -webkit-transition: 0.3s;
   transition: 0.3s;
   color: #3e3b3b;
+  margin-top: 20%;
 }
 
 .sidenav a:hover {
