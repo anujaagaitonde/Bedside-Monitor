@@ -159,7 +159,7 @@ class GUI():
         except:
             pass
         try:
-            hr=self.prq.get_nowait()
+            hr=self.hrq.get_nowait()
             if hr == -1:
                 self.hr_info2.configure(text="N/A")
             else:

@@ -125,7 +125,10 @@ def calculate_HR(IR, lowcut, highcut, fs=100.0, order=6):
         sum += 60/ms_dist
     # for i in range(len(hr_interval)):
         # heart_rate.append(60/hr_interval[i])
-    hr = sum/cnt
+    if cnt == 0:
+        return 0
+    else:
+        hr = sum/cnt
     # print('heart rate (beats/min) = ',heart_rate)
     # hr_peaktime = [time[x] for x in newpeaklist] # peak time for heart rate
     # plt.figure()
@@ -137,7 +140,7 @@ def calculate_HR(IR, lowcut, highcut, fs=100.0, order=6):
     #
     # print("the mean of heart rate is {} beats/min.\n".format(np.mean(heart_rate)))
     # plt.show()
-    return (hr)
+    return (int(hr))
 
 
 def calculate_RR(IR, lowcut, highcut, fs=100, order=5):

@@ -62,32 +62,37 @@ def PPGTempread (PPGirq,PPGredq,PPGirguiq,Tempq,db,user):
           #print_time(self.name, 5, self.counter)
           
 def PPGprocess (PPGirq,PPGredq,prq,rrq,spo2q,db,user):
-   ppgirprocess = []
+   ppgir = []
+   ppgirpr = []
+   ppgred = []
    while True:
-      ppgir = []
-      ppgred = []
+      ppgirtmp = []
       qsizeir = PPGirq.qsize()
       for i in range(qsizeir):
-          ppgir.extend(PPGirq.get())
-      ppgirprocess.extend(ppgir)
+          ppgirtmp.extend(PPGirq.get())
+      ppgir.extend(ppgirtmp)
+      ppgirpr.extend(ppgirtmp)
       qsizered = PPGredq.qsize()
       for i in range(qsizered):
           ppgred.extend(PPGredq.get())
       #db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ppgir)
-      if len(ppgirprocess) > 700:
-         pr=ppg.calculate_HR(ppgirprocess,20.00,2.50,fs=100.0)
+      if len(ppgirpr) >= 700:
+         pr=ppg.calculate_HR(ppgirpr,20.00,2.50,fs=100.0)
          if pr > 30 and pr < 150:
-            ppgirprocess = ppgirprocess[-700:]
+            ppgirpr = ppgirpr[-700:]
             prq.put(pr)
          else:
-            ppgirprocess = []
+            ppgirpr = []
             prq.put(-1)
       #rr=ppg.calculate_RR(ppgir,20.00,2.50,fs=100.0,order=1)
-      _, _, spo2, spo2_valid=hrcalc.calc_hr_and_spo2(ppgir,ppgred)
-      if spo2_valid:
-         spo2q.put(spo2)
-      else:
-         spo2q.put(-1)
+      if len(ppgir) >= 500:
+         _, _, spo2, spo2_valid=hrcalc.calc_hr_and_spo2(ppgir[-500:],ppgred[-500:])
+         if spo2_valid:
+            spo2q.put(int(spo2))
+         else:
+            spo2q.put(-1)
+            ppgir = []
+            ppgred = []
       rrq.put(50)
       time.sleep(1)
 
