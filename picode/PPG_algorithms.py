@@ -218,6 +218,8 @@ def calculate_RR(IR, lowcut, highcut, fs=100, order=5):
     return (respiration_rate)
 
 
+#again calculate this from ppg_ir and ppg_red 
+
 def calculate_SPO2(IR, RED, lc_ir, hc_ir, lc_red, hc_red, fs=50, order=5, pk_min = 1, pk_max = -1):
 
     #plt.figure()
