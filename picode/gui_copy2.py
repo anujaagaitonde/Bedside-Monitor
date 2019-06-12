@@ -140,7 +140,7 @@ class GUI():
         self.report_button.flash()
         critical = True
         critical_time = dt.datetime.utcnow()
-        #db.child("/"+user['localId']+"/critical/user"+str(round(time.time()*1000))).set(critical)
+        self.db.child("/critical"+self.user['localId']+str(round(time.time()*1000))).set("user triggered")
         self.report_button.configure(bg="gray", activebackground = "gray")
 
 
