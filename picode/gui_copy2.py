@@ -4,6 +4,7 @@ from matplotlib.figure import Figure
 import matplotlib.animation as animation
 import datetime as dt
 import time
+from time import gmtime, strftime
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import math
 import sched
@@ -27,10 +28,14 @@ class GUI():
         self.user=user
         #Displaying Patient-Doctor info
         dob_obj = dt.datetime.strptime(self.dob_str, '%d%m%y')
-        patient_info = tk.Label(self.root, text = "Name: "+self.patient_name+"  DOB: "+dt.datetime.strftime(dob_obj, '%d/%m/%y'), fg="white", bg="black")
+        patient_info = tk.Label(self.root, text = "Name: "+self.patient_name+"\tDOB: "+dt.datetime.strftime(dob_obj, '%d/%m/%y')+"\tDoctor: "+self.doctor_name, fg="white", bg="black")
         patient_info.grid(row=0, column=0, sticky='W')
-        doctor_info = tk.Label(self.root, text = "Doctor: "+self.doctor_name, fg="white", bg="black")
-        doctor_info.grid(row=0, column=1, sticky='W')
+        #doctor_info = tk.Label(self.root, text = "Doctor: "+self.doctor_name, fg="white", bg="black")
+        #doctor_info.grid(row=0, column=1, sticky='W')
+        self.time_tag = tk.Label(self.root, text = "", fg="white", bg="black")
+        self.time_tag.grid(row=0, column=1, sticky='W')
+        lifeline_tag = tk.Label(self.root, text = "© LIFELINE 2019", fg="white", bg="black")
+        lifeline_tag.grid(row=0, column=2, sticky='W')
         #Heart Rate Digital Initilisation
         self.hr_info1 = tk.Label(self.root, text = "Heart Rate:", fg="green", bg="black", font=("Arial",10))
         self.hr_info2 = tk.Label(self.root, text = "--", fg="green", bg="black", font=("Arial", 25))
@@ -140,7 +145,7 @@ class GUI():
         self.report_button.flash()
         critical = True
         critical_time = dt.datetime.utcnow()
-        self.db.child("/critical"+self.user['localId']+str(round(time.time()*1000))).set("user triggered")
+        self.db.child("/critical/"+self.user['localId']+"/"+str(round(time.time()*1000))).set("user triggered")
         self.report_button.configure(bg="gray", activebackground = "gray")
 
 
@@ -180,6 +185,7 @@ class GUI():
             self.resp_info2.configure(text=str(rr))
         except:
             pass
+        self.time_tag.configure(text=dt.datetime.now().strftime('%Y-%m-%d %H:%M'))
         
     def set_fullscreen(self, event=None):
         self.root.attributes('-fullscreen', True)
@@ -202,6 +208,10 @@ class GUI():
             y_ppg.extend(self.PPGirq.get()) 
         y_ppg = y_ppg[-self.ppg_len:]
         self.ppg_line.set_ydata(y_ppg)
+        maximum = max(y_ppg)
+        minimum = min(y_ppg)
+        diff = maximum-minimum
+        self.ax_ppg.set_ylim(minimum-diff/10, maximum+diff/10)
         
         qsize = self.edrq.qsize()
         for i in range(qsize):

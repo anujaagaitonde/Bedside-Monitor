@@ -13,7 +13,7 @@ import datetime
 #libraries for TEMP Sensor
 import os
 import glob
-#from read_temp import read_temp_init,read_temp_raw,read_temp
+from read_temp import read_temp_init,read_temp_raw,read_temp
 
 #libraries required for PPG Sensor
 import max30102_doug as max30102
@@ -34,7 +34,7 @@ exitFlag = 0
 import resp_processing as resp
 
 
-def PPGTempread (PPGirq,PPGredq,PPGirguiq,Tempq,db,user):
+def PPGread (PPGirq,PPGredq,PPGirguiq,db,user):
       #print ("Starting " + self.name)
       m=max30102.MAX30102() #sensor initilisation
       #time.sleep(10)
@@ -43,14 +43,6 @@ def PPGTempread (PPGirq,PPGredq,PPGirguiq,Tempq,db,user):
       ppgir=[]
       ppgred=[]
       print("PPG Sensor Initialised")
-
-      #base_dir = '/sys/bus/w1/devices/'
-      #device_folder = glob.glob(base_dir + '28*')[0]
-      #device_file = device_folder + '/w1_slave'
-      #print ("Starting " + self.name)
-      #read_temp_init()
-      #print("Temp Sensor Initialised")
-      
       while True:
           red, ir = m.read_sequential(nread)
           ppgir.extend(ir)
@@ -58,13 +50,21 @@ def PPGTempread (PPGirq,PPGredq,PPGirguiq,Tempq,db,user):
           PPGirq.put(ir)
           PPGirguiq.put(ir)
           PPGredq.put(red)
-
-          #temp = str(read_temp())
-          #print(temp)
-          #db.child("/"+user['localId']+"/temperatureSensor/"+str(round(time.time()*1000))).set(str(temp))
-          Tempq.put(37)
           #print_time(self.name, 5, self.counter)
           
+def Tempprocess (Tempq,db,user):
+      base_dir = '/sys/bus/w1/devices/'
+      device_folder = glob.glob(base_dir + '28*')[0]
+      device_file = device_folder + '/w1_slave'
+      read_temp_init()
+      print("Temp Sensor Initialised")
+      while True:
+          temp = str(round(read_temp(), 1))
+          db.child("/"+user['localId']+"/temperatureSensor/"+str(round(time.time()*1000))).set(str(temp))
+          Tempq.put(temp)
+          time.sleep(1)
+      
+
 def PPGprocess (PPGirq,PPGredq,prq,rrq,spo2q,db,user):
    ppgir = []
    ppgirpr = []
@@ -80,10 +80,10 @@ def PPGprocess (PPGirq,PPGredq,prq,rrq,spo2q,db,user):
       for i in range(qsizered):
           ppgred.extend(PPGredq.get())
       #db.child("/"+user['localId']+"/ppgSensor/"+str(round(time.time()*1000))).set(ppgir)
-      if len(ppgirpr) >= 700:
+      if len(ppgirpr) >= 1500:
          pr=ppg.calculate_HR(ppgirpr,20.00,2.50,fs=100.0)
          if pr > 30 and pr < 150:
-            ppgirpr = ppgirpr[-700:]
+            ppgirpr = ppgirpr[-1500:]
             prq.put(pr)
             #db.child("/"+user['localId']+"/pulserate/"+str(round(time.time()*1000))).set(str(pr))
          else:
@@ -108,7 +108,6 @@ def ECGprocess(ecgrawq,ecgfiltq,db,user):
    print("reading ecG")
    e=ecgread.ECG()
    print("reading ecgG")
-
    while True:
       ecgarray=[]
       for i in range(300):
@@ -195,13 +194,14 @@ if __name__=='__main__':
    edrq=manager.Queue()
    rrq=manager.Queue()
 
-   ppgtempread=pool.apply_async(PPGTempread, (PPGirq,PPGredq,PPGirguiq,Tempq,db,user))
+   ppgtempread=pool.apply_async(PPGread, (PPGirq,PPGredq,PPGirguiq,db,user))
    ppgprocessp=pool.apply_async(PPGprocess, (PPGirq,PPGredq,prq,rrq,spo2q,db,user))
    ecgprocess=pool.apply_async(ECGprocess, (ecgrawq,ecgfiltq,db,user))
    respprocess=pool.apply_async(Respirationprocess, (ecgrawq,edrq,rrq,hrq,db,user))
+   tempprocess=pool.apply_async(Tempprocess, (Tempq,db,user))
    
    print("GUI entered")
-   g=gui.GUI("Omar Muttawa",'010100',"XXX YYY",Tempq,PPGirguiq,PPGredq,prq,hrq,edrq,rrq,spo2q,ecgfiltq,db,user)
+   g=gui.GUI("Omar Muttawa",'140398',"Mark Thomas",Tempq,PPGirguiq,PPGredq,prq,hrq,edrq,rrq,spo2q,ecgfiltq,db,user)
    print("GUI Initilised")
    ani1 = animation.FuncAnimation(g.fig_ecg, g.animate, fargs = (g.y_ecg, g.y_ppg, g.y_rr,), interval=0,blit=True) # animate graph every 20 ms
    g.root.mainloop()

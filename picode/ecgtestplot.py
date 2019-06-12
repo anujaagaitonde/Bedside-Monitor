@@ -93,7 +93,7 @@ edr=[]
 def animate(i, ys):
     global x
     ecgarray=[]
-    for i in range(600):
+    for i in range(9000):
     # Read temperature (Celsius) from TMP102
     #temp_c = round(tmp102.read_temp(), 2)
     #for i in range(100):
@@ -101,11 +101,13 @@ def animate(i, ys):
       ecgarray.append(output)
       sleep(0.00333)
     ecgarray2=np.asarray(ecgarray)
-    #np.savetxt("ecg_data.csv",ecgarray2,delimiter=",")
-    print("Done")
     filtered_butter=realtime_butter(ecgarray,35,0,300,5)
+    np.savetxt("ecg_data.csv",filtered_butter,delimiter=",")
+    print("Done")
+    #filtered_butter=realtime_butter(ecgarray,35,0,300,5)
     #ts,filtered, rpeaks, templates_ts , templates ,heart_rate_ts , heart_rate = ecg(ecgarray, 300, False)
     ys.extend(filtered_butter)
+    print("done")
     #ecgarray
     #ys.append(math.sin(x/2*math.pi)) 
 
