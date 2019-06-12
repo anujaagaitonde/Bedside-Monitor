@@ -268,7 +268,7 @@ html a {
 }
 
 #main .content .patient_block .profpicwrap {
-  height: 200%;
+  height: 150px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

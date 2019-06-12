@@ -158,12 +158,12 @@ function updateChartList(label, value, id,displaylength) {
 }
 
 function getChartData() {
-  initChart("tempChart", "Temperature Chart", "#3cd82c", "°C");
+  initChart("respChart", "Respiration Chart", "#3cd82c", "bpm");
   initChart("ecgChart", "ECG Chart", "#59eaed", "mV");
   initChart("ppgChart", "PPG Chart", "#f51a18", "ppg vals");
-  var temperatureref = firebase
+  var respref = firebase
     .database()
-    .ref(userUID + "/temperatureSensor");
+    .ref(userUID + "/respSensor");
   var ecgref = firebase
     .database()
     .ref(userUID + "/ecgSensor");
@@ -171,7 +171,7 @@ function getChartData() {
     .database()
     .ref(userUID + "/ppgSensor");
 
-  temperatureref.limitToLast(500).once("value", function (snapshot) {
+  respref.limitToLast(500).once("value", function (snapshot) {
     try {
       var last500 = Object.values(snapshot.val()).slice(-500)
       updateChartList(1, last500, "tempChart", 50);
@@ -195,8 +195,8 @@ function getChartData() {
     } catch {}
   
   });
-  temperatureref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
-    updateChart(prevChildKey, ret.val(), "tempChart");
+  respref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
+    updateChart(prevChildKey, ret.val(), "respChart");
   });
   ppgref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
     updateChartList(prevChildKey, ret.val(), "ecgChart",500);
