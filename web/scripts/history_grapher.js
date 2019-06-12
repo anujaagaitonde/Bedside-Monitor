@@ -33,7 +33,7 @@ Date.prototype.toShortFormat = function () {
 
 firebase
   .database()
-  .ref("/")
+  .ref("/Patients")
   .once("value", function (snapshot) {
     let patientInfo = snapshot.val()[userUID]["patientInfo"];
     document.getElementById("patient_info").innerHTML += PatientHTMLGenerator(

@@ -11,7 +11,7 @@ var temperaturevalue = document.getElementById('temperaturevalue');
 
 firebase
   .database()
-  .ref("/")
+  .ref("/Patients")
   .once("value", function (snapshot) {
     let patientInfo = snapshot.val()[userUID]["patientInfo"];
     document.getElementById("patient_info").innerHTML += PatientHTMLGenerator(
@@ -171,32 +171,37 @@ function getChartData() {
     .database()
     .ref(userUID + "/ppgSensor");
 
-  temperatureref.once("value", function (snapshot) {
+  temperatureref.limitToLast(500).once("value", function (snapshot) {
     try {
       var last500 = Object.values(snapshot.val()).slice(-500)
       updateChartList(1, last500, "tempChart", 50);
     } catch {
-
     }
-    
     document.getElementsByClassName("loader")[0].style.display = "none";
     document.getElementsByClassName("chartContainer")[0].style.display = "flex";
     document.getElementsByClassName("livestats")[0].style.display = "flex";
   });
-
-  ppgref.once("value", function (snapshot) {
+  ppgref.limitToLast(500).once("value", function (snapshot) {
     try{
       var last500 = Object.values(snapshot.val()).slice(-5).reduce((acc, val) => acc.concat(val))
       updateChartList(1, last500, "ppgChart", 125);
     } catch {}
   
   });
-
+  ecgref.limitToLast(500).once("value", function (snapshot) {
+    try{
+      var last500 = Object.values(snapshot.val()).slice(-5).reduce((acc, val) => acc.concat(val))
+      updateChartList(1, last500, "ecgChart", 125);
+    } catch {}
+  
+  });
   temperatureref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
     updateChart(prevChildKey, ret.val(), "tempChart");
   });
- 
   ppgref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
+    updateChartList(prevChildKey, ret.val(), "ecgChart",500);
+  });
+  ecgref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
     updateChartList(prevChildKey, ret.val(), "ppgChart",500);
   });
 }

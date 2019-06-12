@@ -14,7 +14,6 @@
   <body>
     <!-- Side Navigation Bar -->
     <div id="mySidenav" class="sidenav">
-      <!-- Replace with doctor info from DB -->
       <div id="dr_profile">
         <img src="images/dr_profile_pic.jpg" class="dr_profile" />
         <h3>Dr. Mark Thomas</h3>
@@ -59,46 +58,49 @@
       <div class="content">
         <div class="loader"></div>
 
-        <div class="chartContainer" style="display: none">
-          <div class="chartRow">
-            <div class="titlewrap">
-              <h1>Temperature</h1>
+        <div class="wrapper">
+          <div class="chartContainer" style="display: none">
+            <div class="chartRow">
+              <div class="titlewrap">
+                <h1>ECG</h1>
+              </div>
+              <div class="chartwrap">
+                <canvas id="ecgChart"></canvas>
+              </div>
             </div>
-            <div class="chartwrap">
-              <canvas id="tempChart"></canvas>
+            <div class="chartRow">
+              <div class="titlewrap">
+                <h1>PPG</h1>
+              </div>
+              <div class="chartwrap">
+                <canvas id="ppgChart"></canvas>
+              </div>
+            </div>
+            <div class="chartRow">
+              <div class="titlewrap">
+                <h1>Respiration</h1>
+              </div>
+              <div class="chartwrap">
+                <canvas id="respChart"></canvas>
+              </div>
             </div>
           </div>
-          <div class="chartRow">
-            <div class="titlewrap">
-              <h1>ECG</h1>
+          <div class="livestats" style="display: none">
+            <div>
+              <p>SpO2 (%) : <p class="spo2 value"> 99</p> </p>
             </div>
-            <div class="chartwrap">
-              <canvas id="ecgChart"></canvas>
+            <div>
+              <p> Temperature (°C) : <p class="temperature value">35</p> </p>
             </div>
-          </div>
-          <div class="chartRow">
-            <div class="titlewrap">
-              <h1>PPG</h1>
+            <div>
+              <p>Heart Rate (bpm) : <p class="heartrate value">101</p> </p>
             </div>
-            <div class="chartwrap">
-              <canvas id="ppgChart"></canvas>
+            <div>
+              <p>Pulse (bpm) : <p class="pulse value">60</p> </p>
             </div>
-          </div>
-        </div>
-        <div class="livestats" style="display: none">
-          <div>
-            <h2>SpO2</h2>
-            <p id="spo2value">99</p>
-            <p></p>
-          </div>
-
-          <div>
-            <h2>Temperature (°C)</h2>
-            <p id="temperaturevalue"></p>
-          </div>
-          <div>
-            <h2>Heart Rate</h2>
-            <p id="heartratevalue">101</p>
+            <div>
+              <p>Respiration Rate : <p class="respiration value">40</p> </p>
+            </div>
           </div>
         </div>
       </div>

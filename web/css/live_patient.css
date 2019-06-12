@@ -5,6 +5,7 @@ html {
   background-color: #d2d6d9;
   background-size: cover;
   background-attachment: fixed;
+  overflow-y: hidden;
 }
 
 body a,
@@ -305,8 +306,17 @@ html a {
   }
 }
 
-#main .content .livestats {
-  width: 20%;
+#main .content .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+#main .content .wrapper .livestats {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -315,30 +325,47 @@ html a {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-}
-
-#main .content .livestats div {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  padding: 5%;
   background-color: white;
   -webkit-box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
           box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
-  margin: 8px;
+  overflow: auto;
 }
 
-#main .content .livestats p {
-  font-size: 5em;
+#main .content .wrapper .livestats div {
+  height: 20%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  line-height: 60%;
+}
+
+#main .content .wrapper .livestats div p {
+  font-size: 2em;
+  width: 100%;
   text-align: center;
 }
 
-#main .content .chartContainer {
+#main .content .wrapper .livestats div .value {
+  font-weight: bold;
+  font-size: 3em;
+}
+
+#main .content .wrapper .chartContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 80%;
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
   height: 100%;
   top: 15%;
   bottom: 0;
@@ -348,7 +375,7 @@ html a {
           flex-direction: column;
 }
 
-#main .content .chartContainer .chartRow {
+#main .content .wrapper .chartContainer .chartRow {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -363,15 +390,16 @@ html a {
   -webkit-box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
           box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
-  margin: 8px;
+  margin-bottom: 8px;
+  margin-right: 8px;
   padding: 5px 20px;
 }
 
-#main .content .chartContainer .chartRow .titlewrap {
+#main .content .wrapper .chartContainer .chartRow .titlewrap {
   height: 20%;
 }
 
-#main .content .chartContainer .chartRow .titlewrap h1 {
+#main .content .wrapper .chartContainer .chartRow .titlewrap h1 {
   text-align: left;
   font-size: 1.5em;
   font-weight: bold;
@@ -381,8 +409,12 @@ html a {
   margin-left: 1%;
 }
 
-#main .content .chartContainer .chartRow .chartwrap {
+#main .content .wrapper .chartContainer .chartRow .chartwrap {
   height: 80%;
+}
+
+#main .content .wrapper .chartContainer .chartRow:last-child {
+  margin-bottom: 0;
 }
 
 .sidenav {

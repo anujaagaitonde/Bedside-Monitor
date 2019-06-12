@@ -8,6 +8,7 @@ html {
   background-color: $background-color;
   background-size: cover;
   background-attachment: fixed;
+  overflow-y: hidden;
 
   a {
     text-decoration: none;
@@ -17,7 +18,6 @@ html {
 .dr_profile {
   border-radius: 50%;
 }
-
 
 #main {
   transition: margin-left 0.5s;
@@ -45,15 +45,16 @@ html {
         display: flex;
         justify-content: center;
         align-content: center;
-        top:50%;
-        left:50%;
+        top: 50%;
+        left: 50%;
         width: 40%;
         h1 {
           color: white;
-          margin:auto;
+          margin: auto;
           line-height: 100%;
           vertical-align: middle;
           font-size: 5em;
+          // font-family: "Gobold Bold";
         }
       }
       #patient_info {
@@ -88,7 +89,7 @@ html {
           #patientname {
             font-size: 1.5em;
             font-weight: 700;
-            line-height:120%;
+            line-height: 120%;
           }
 
           ul {
@@ -97,7 +98,7 @@ html {
             margin: 0;
             list-style-type: none;
             text-align: left;
-            line-height:120%;
+            line-height: 120%;
 
             li {
               padding-bottom: 10px;
@@ -180,14 +181,13 @@ html {
   .content {
     position: absolute;
     width: 100%;
-     box-sizing: border-box;
+    box-sizing: border-box;
     top: 15%;
     bottom: 0;
     margin: 0 auto;
     padding: 20px 50px 20px 50px;
     display: flex;
     flex-direction: row;
-    // background-color: red;
 
     .loader {
       border: 10px solid #f3f3f3;
@@ -221,62 +221,79 @@ html {
         transform: rotate(360deg);
       }
     }
-
-    .livestats {
-      width: 20%;
-      height: 100%;
+    .wrapper {
       display: flex;
-      flex-direction: column;
+      width:100%;
 
-      div {
-        flex: 1;
-        padding: 5%;
-        background-color: rgba(255, 255, 255, 1);
-        box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
-        border-radius: 10px;
-        margin: 8px;
-      }
-
-      p {
-        font-size: 5em;
-        text-align: center;
-      }
-    }
-
-    .chartContainer {
-      display: flex;
-      width: 80%;
-      height: 100%;
-      top: 15%;
-      bottom: 0;
-      flex-direction: column;
-
-      .chartRow {
+      .livestats {
+        flex:1;
+        height:100%;
         display: flex;
         flex-direction: column;
-        flex: 1;
         background-color: rgba(255, 255, 255, 1);
         box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
         border-radius: 10px;
-        margin: 8px;
-        padding: 5px 20px;
+        overflow: auto;
 
-        .titlewrap {
-          height: 20%;
-
-          h1 {
-            text-align: left;
-            font-size: 1.5em;
-            font-weight: bold;
-            color: black;
-            position: relative;
+        div {
+          height:20%;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          text-align: center;
+          line-height: 60%;
+          p {
+            font-size: 2em;
             width: 100%;
-            margin-left: 1%;
+            text-align: center;
+          }
+          .value {
+            font-weight: bold;
+            font-size:3em;
+          }
+        }
+      }
+
+      .chartContainer {
+        display: flex;
+        flex: 4;
+        height: 100%;
+        top: 15%;
+        bottom: 0;
+        flex-direction: column;
+
+        .chartRow {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          background-color: rgba(255, 255, 255, 1);
+          box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+          border-radius: 10px;
+          margin-bottom: 8px;
+          margin-right: 8px;
+          padding: 5px 20px;
+
+          .titlewrap {
+            height: 20%;
+
+            h1 {
+              text-align: left;
+              font-size: 1.5em;
+              font-weight: bold;
+              color: black;
+              position: relative;
+              width: 100%;
+              margin-left: 1%;
+            }
+          }
+
+          .chartwrap {
+            height: 80%;
           }
         }
 
-        .chartwrap {
-          height: 80%;
+        .chartRow:last-child {
+          margin-bottom:0;
         }
       }
     }
@@ -313,7 +330,7 @@ html {
 
     img {
       max-height: 100px;
-      border-radius:50%;
+      border-radius: 50%;
       width: auto;
       transition: 0.3s;
     }
@@ -327,7 +344,7 @@ html {
     display: block;
     transition: 0.3s;
     color: rgba(62, 59, 59, 255);
-        margin-top: 20%;
+    margin-top: 20%;
   }
 
   a:hover {

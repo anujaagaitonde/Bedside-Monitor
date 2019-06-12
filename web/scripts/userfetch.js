@@ -42,7 +42,7 @@ function addPatientHTML() {
   `
 }
 
-let ref = firebase.database().ref("/")
+let ref = firebase.database().ref("/Patients")
 let listref = document.getElementsByClassName("patientlist")[0]
 listtype = listref.id
 
