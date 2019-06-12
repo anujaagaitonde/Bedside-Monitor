@@ -183,6 +183,7 @@ class GUI():
         try:
             rr=self.rrq.get_nowait()
             self.resp_info2.configure(text=str(rr))
+            #db.child("/"+user['localId']+"/rr/"+str(round(time.time()*1000))).set(rr)
         except:
             pass
         self.time_tag.configure(text=dt.datetime.now().strftime('%Y-%m-%d %H:%M'))
@@ -198,10 +199,13 @@ class GUI():
     def animate(self, i, y_ecg, y_ppg, y_resp):
             
         qsize = self.ecgfiltq.qsize()
+        ecg_filtered = []
         for i in range(qsize):
-            y_ecg.extend(self.ecgfiltq.get()) 
+            ecg_filtered.extend(self.ecgfiltq.get())
+        y_ecg.extend(ecg_filtered)
         y_ecg = y_ecg[-self.ecg_len:]
         self.ecg_line.set_ydata(y_ecg)
+        self.db.child("/"+self.user['localId']+"/ecgSensor/"+str(round(time.time()*1000))).set(ecg_filtered)
 
         qsize = self.PPGirq.qsize()
         for i in range(qsize):
