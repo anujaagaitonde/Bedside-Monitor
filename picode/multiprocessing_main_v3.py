@@ -21,13 +21,17 @@ import hrcalc
 import matplotlib.pyplot as plt
 import PPG_algorithms as ppg
 import numpy as np
-
+#libraries required for animation
 import gui_copy2 as gui
 import matplotlib.animation as animation
-
-import ecg_lib as ecg
+#libraries required for ecg
+import ecg_lib as ecgread
+import ecg_processing as ecgprocess
 
 exitFlag = 0
+
+#libraries required for respiration
+import resp_processing as resp
 
 
 def PPGTempread (PPGirq,PPGredq,PPGirguiq,Tempq,db,user):
@@ -81,25 +85,30 @@ def PPGprocess (PPGirq,PPGredq,prq,rrq,spo2q,db,user):
          if pr > 30 and pr < 150:
             ppgirpr = ppgirpr[-700:]
             prq.put(pr)
+            #db.child("/"+user['localId']+"/pulserate/"+str(round(time.time()*1000))).set(str(pr))
          else:
-            ppgirpr = []
             prq.put(-1)
+            #db.child("/"+user['localId']+"/pulserate/"+str(round(time.time()*1000))).set("N/A")
+            ppgirpr = []
       #rr=ppg.calculate_RR(ppgir,20.00,2.50,fs=100.0,order=1)
       if len(ppgir) >= 500:
          _, _, spo2, spo2_valid=hrcalc.calc_hr_and_spo2(ppgir[-500:],ppgred[-500:])
          if spo2_valid:
+            spo2 = round(spo2, 2)
             spo2q.put(int(spo2))
+            #db.child("/"+user['localId']+"/spo2/"+str(round(time.time()*1000))).set(str(spo2))
          else:
             spo2q.put(-1)
+            #db.child("/"+user['localId']+"/spo2/"+str(round(time.time()*1000))).set("N/A")
             ppgir = []
             ppgred = []
-      rrq.put(50)
       time.sleep(1)
 
-def ECGprocess(ecgfiltq, db, user):
+def ECGprocess(ecgrawq,ecgfiltq,db,user):
    print("reading ecG")
-   e=ecg.ECG()
+   e=ecgread.ECG()
    print("reading ecgG")
+
    while True:
       ecgarray=[]
       for i in range(300):
@@ -111,13 +120,44 @@ def ECGprocess(ecgfiltq, db, user):
          time.sleep(0.00333)
       #y_ecg.extend(e.read_store(300,600))
       #print("reading ecgG")
-      filtered_butter=e.realtime_butter(ecgarray,35,0,300,5)
-      outputarray=filtered_butter.tolist()
-      db.child("/"+user['localId']+"/ecgSensor/"+str(round(time.time()*1000))).set(outputarray)
-      ecgfiltq.put(filtered_butter) #filtered_butter
+      ecgarray=ecgprocess.volts(ecgarray)
+      ecgrawq.put(ecgarray)
+      ecg_filtered=e.realtime_butter(ecgarray,35,0,300,5)
+      ecgfiltq.put(ecg_filtered)
+      #db.child("/"+user['localId']+"/ecg/"+str(round(time.time()*1000))).set(ecg_filtered)
       #time.sleep(1)
 
-
+def Respirationprocess(ecgrawq,edrq,rrq,hrq,db,user):
+   count = 0
+   lastPeak = None
+   edr_array = []
+   sampling_rate=300
+   resp_time=5
+   rr_time=10
+   ecgraw = []
+   ecgrawtmp = []
+   while True:
+      qsize = ecgrawq.qsize()
+      for i in range(qsize):
+          ecgraw.extend(ecgrawq.get())
+      if len(ecgraw) >= resp_time*sampling_rate:
+            edr, hr, count, lastPeak = resp.get_respiration(ecgraw[-1500:],sampling_rate, count, lastPeak)
+            edrq.put(edr)
+            hrq.put(hr)
+            #db.child("/"+user['localId']+"/edr/"+str(round(time.time()*1000))).set(edr)
+            edr_array.extend(edr)
+            ecgrawtmp.extend(ecgraw)
+            ecgraw = []
+            if len(ecgrawtmp) >= rr_time*sampling_rate:
+                  rr=resp.get_rr(edr_array,10)
+                  rr = int(rr)
+                  rrq.put(rr)
+                  #db.child("/"+user['localId']+"/rr/"+str(round(time.time()*1000))).set(rr)
+                  edr_array=[]
+                  ecgrawtmp=[]
+                  
+            
+      
 if __name__=='__main__':
    #Firebase configuration and sign in
 
@@ -151,16 +191,17 @@ if __name__=='__main__':
    rrq=manager.Queue()
    spo2q=manager.Queue()
    ecgfiltq=manager.Queue()
+   ecgrawq=manager.Queue()
+   edrq=manager.Queue()
+   rrq=manager.Queue()
 
-
-   #guiprocessp=pool.apply_async(GUIprocess, ("Omar Muttawa",'010100',"XXX YYY",Tempq,PPGirq,PPGredq,hrq,rrq,spo2q,ecgrawq,ecgfiltq))
    ppgtempread=pool.apply_async(PPGTempread, (PPGirq,PPGredq,PPGirguiq,Tempq,db,user))
    ppgprocessp=pool.apply_async(PPGprocess, (PPGirq,PPGredq,prq,rrq,spo2q,db,user))
-   ecgprocess=pool.apply_async(ECGprocess, (ecgfiltq,db,user))
-   #guiprocessp=pool.apply_async(GUIprocess, ("Omar Muttawa",'010100',"XXX YYY",Tempq,PPGirq,PPGredq,hrq,rrq,spo2q,ecgrawq,ecgfiltq))   
+   ecgprocess=pool.apply_async(ECGprocess, (ecgrawq,ecgfiltq,db,user))
+   respprocess=pool.apply_async(Respirationprocess, (ecgrawq,edrq,rrq,hrq,db,user))
+   
    print("GUI entered")
-   #g=gui.GUI("Omar Muttawa",'010100',"XXX YYY",Tempq,PPGirguiq,PPGredq,hrq,rrq,spo2q,ecgfiltq)
-   g=gui.GUI("Omar Muttawa",'010100',"XXX YYY",Tempq,PPGirguiq,PPGredq,prq,hrq,rrq,spo2q,ecgfiltq)
+   g=gui.GUI("Omar Muttawa",'010100',"XXX YYY",Tempq,PPGirguiq,PPGredq,prq,hrq,edrq,rrq,spo2q,ecgfiltq,db,user)
    print("GUI Initilised")
    ani1 = animation.FuncAnimation(g.fig_ecg, g.animate, fargs = (g.y_ecg, g.y_ppg, g.y_rr,), interval=0,blit=True) # animate graph every 20 ms
    g.root.mainloop()

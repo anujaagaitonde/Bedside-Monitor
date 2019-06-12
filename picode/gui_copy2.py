@@ -10,7 +10,7 @@ import sched
 import queue
 
 class GUI():
-    def __init__(self, patient_name, dob_str, doctor_name,Tempq,PPGirq,PPGredq,prq,hrq,rrq,spo2q,ecgfiltq):
+    def __init__(self, patient_name, dob_str, doctor_name,Tempq,PPGirq,PPGredq,prq,hrq,edrq,rrq,spo2q,ecgfiltq,db,user):
         self.root = tk.Tk()
         self.root.configure(bg = "black")
         self.root.geometry("800x480")
@@ -23,6 +23,8 @@ class GUI():
         self.dob_str=dob_str
         self.doctor_name=doctor_name
         self.connected=True
+        self.db=db
+        self.user=user
         #Displaying Patient-Doctor info
         dob_obj = dt.datetime.strptime(self.dob_str, '%d%m%y')
         patient_info = tk.Label(self.root, text = "Name: "+self.patient_name+"  DOB: "+dt.datetime.strftime(dob_obj, '%d/%m/%y'), fg="white", bg="black")
@@ -67,7 +69,7 @@ class GUI():
         #Graphs Initilisation
         self.ecg_len=600
         self.ppg_len=200
-        self.rr_len=200
+        self.rr_len=100
         self.x_rr1=0
         self.x_ecg=list(range(0,self.ecg_len))
         self.x_ppg=list(range(0,self.ppg_len))
@@ -83,7 +85,7 @@ class GUI():
         self.graph_ecg = FigureCanvasTkAgg(self.fig_ecg, master=self.root)
         self.graph_ecg.get_tk_widget().grid(row=1, column=0, columnspan=2, rowspan=5)
         self.ecg_line, =self.ax_ecg.plot(self.x_ecg, self.y_ecg, color="#59eaed")
-        self.ax_ecg.set_ylim([000,700])
+        self.ax_ecg.set_ylim([-3.5,3.5])
         # PPG Graph pane
         self.fig_ppg = Figure(figsize=(6.7,1.3), tight_layout=True)
         self.ax_ppg = self.fig_ppg.add_subplot(111)
@@ -111,6 +113,7 @@ class GUI():
         self.PPGredq=PPGredq
         self.prq=prq
         self.hrq=hrq
+        self.edrq=edrq
         self.rrq=rrq
         self.spo2q=spo2q
         self.ecgfiltq=ecgfiltq
@@ -137,6 +140,7 @@ class GUI():
         self.report_button.flash()
         critical = True
         critical_time = dt.datetime.utcnow()
+        #db.child("/"+user['localId']+"/critical/user"+str(round(time.time()*1000))).set(critical)
         self.report_button.configure(bg="gray", activebackground = "gray")
 
 
@@ -187,26 +191,24 @@ class GUI():
 
     def animate(self, i, y_ecg, y_ppg, y_resp):
             
-        global x_ecg
-        y_ecg.extend(self.ecgfiltq.get()) 
+        qsize = self.ecgfiltq.qsize()
+        for i in range(qsize):
+            y_ecg.extend(self.ecgfiltq.get()) 
         y_ecg = y_ecg[-self.ecg_len:]
         self.ecg_line.set_ydata(y_ecg)
 
-        global x_ppg
         qsize = self.PPGirq.qsize()
         for i in range(qsize):
             y_ppg.extend(self.PPGirq.get()) 
         y_ppg = y_ppg[-self.ppg_len:]
         self.ppg_line.set_ydata(y_ppg)
         
-
-        global x_resp
-        y_resp.append(math.sin(self.x_rr1/2*math.pi)) 
+        qsize = self.edrq.qsize()
+        for i in range(qsize):
+            y_resp.extend(self.edrq.get())
         y_resp = y_resp[-self.rr_len:]
-        self.x_rr1 += 1
-        if (self.x_rr1/(2*math.pi))==1:
-            self.x_rr1=0
         self.rr_line.set_ydata(y_resp)
+        
         self.updateDigital()
 
         return self.ecg_line, self.ppg_line, self.rr_line,

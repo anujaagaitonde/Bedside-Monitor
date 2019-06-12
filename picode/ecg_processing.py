@@ -24,6 +24,12 @@ import scipy.signal as ss
 import tools as st
 import plotting, utils
 
+def volts(data):
+  volts = []
+  for x in data:
+    volts.append(((x-511) * 3.3) / 1023)
+  return volts
+
 
 def ecg(signal=None, sampling_rate=1000, show=True,corr_rpeaks=True,calc_heartrate=False):
     """Process a raw ECG signal and extract relevant signal features using
