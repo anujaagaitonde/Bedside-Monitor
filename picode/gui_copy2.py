@@ -90,7 +90,7 @@ class GUI():
         self.graph_ecg = FigureCanvasTkAgg(self.fig_ecg, master=self.root)
         self.graph_ecg.get_tk_widget().grid(row=1, column=0, columnspan=2, rowspan=5)
         self.ecg_line, =self.ax_ecg.plot(self.x_ecg, self.y_ecg, color="#59eaed")
-        self.ax_ecg.set_ylim([-3.5,3.5])
+        self.ax_ecg.set_ylim([-2.5,2.5])
         # PPG Graph pane
         self.fig_ppg = Figure(figsize=(6.7,1.3), tight_layout=True)
         self.ax_ppg = self.fig_ppg.add_subplot(111)
@@ -98,7 +98,7 @@ class GUI():
         self.graph_ppg = FigureCanvasTkAgg(self.fig_ppg, master=self.root)
         self.graph_ppg.get_tk_widget().grid(row=6, column=0, columnspan=2, rowspan=5)
         self.ppg_line, =self.ax_ppg.plot(self.x_ppg, self.y_ppg, color="#f51a18")
-        self.ax_ppg.set_ylim([0,35000])
+        #self.ax_ppg.set_ylim([0,35000])
         # Respiration Graph pane
         self.fig_resp = Figure(figsize=(6.7,1.3), tight_layout=True)
         self.ax_resp = self.fig_resp.add_subplot(111)
@@ -199,13 +199,10 @@ class GUI():
     def animate(self, i, y_ecg, y_ppg, y_resp):
             
         qsize = self.ecgfiltq.qsize()
-        ecg_filtered = []
         for i in range(qsize):
-            ecg_filtered.extend(self.ecgfiltq.get())
-        y_ecg.extend(ecg_filtered)
+            y_ecg.extend(self.ecgfiltq.get())
         y_ecg = y_ecg[-self.ecg_len:]
         self.ecg_line.set_ydata(y_ecg)
-        self.db.child("/"+self.user['localId']+"/ecgSensor/"+str(round(time.time()*1000))).set(ecg_filtered)
 
         qsize = self.PPGirq.qsize()
         for i in range(qsize):
