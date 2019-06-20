@@ -4,7 +4,7 @@ from numpy import interp	# To scale values
 from time import sleep	# To add delay
 import RPi.GPIO as GPIO	# To use GPIO pins
 from scipy.signal import detrend
-from ecg_processing import ecg
+import ecg_processing
 from scipy.interpolate import splrep, splev, interp1d
 import numpy as np
 from scipy.signal import butter, lfilter, freqz,cheby2,sosfilt,lfilter_zi
@@ -54,6 +54,6 @@ class ECG():
 
     #filters array of data returning filtered signal, heart rate and rpeaks
     def filter(data,sample_rate,show=False):
-        ts,filtered, rpeaks, templates_ts , templates ,heart_rate_ts , heart_rate = ecg(ecgarray, 300, False)
+        ts,filtered, rpeaks, templates_ts , templates ,heart_rate_ts , heart_rate = ecg_processing.ecg(ecgarray, 300, False)
         return ts,filtered, rpeaks, templates_ts , templates ,heart_rate_ts , heart_rate
     
