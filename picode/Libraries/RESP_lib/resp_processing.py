@@ -1,12 +1,12 @@
 
-import ecg_lib as ecgread
-import ecg_processing as ecgprocess
+import Libraries.ECG_lib.ecg_lib as ecgread
+import Libraries.ECG_lib.ecg_processing as ecgprocess
 import time
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.interpolate import splrep, splev
 from scipy.signal import detrend
-import tools as st
+import Libraries.ECG_lib.tools as st
 from scipy.signal import butter, lfilter, freqz,cheby2,sosfilt,lfilter_zi
 from Libraries.PPG_lib.hrcalc import PeakFinder
 
