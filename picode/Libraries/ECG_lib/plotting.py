@@ -24,7 +24,7 @@ import matplotlib.gridspec as gridspec
 import numpy as np
 
 # local
-import Libraries.ECG_lib.utils
+import Libraries.ECG_lib.utils as utils
 import Libraries.ECG_lib.tools as st
 
 # Globals
