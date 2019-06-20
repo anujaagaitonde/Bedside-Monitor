@@ -160,13 +160,18 @@ def Respirationprocess(ecgrawq,edrq,rrq,hrq,dbedrq,dbhrq,dbrrq,db,user):
                   ecgrawtmp=[]
 
 def DBprocess(dbTempq,dbPPGirq,dbprq,dbhrq,dbrrq,dbspo2q,dbecgfiltq,dbedrq):
+      temp_high = False
       while True:
             qsize = dbTempq.qsize()
             if qsize > 0:
                   tmp = []
                   for i in range(qsize):
                         tmp.append(dbTempq.get())
+                  #curr_time = str(round(time.time()*1000))
                   db.child("/"+user['localId']+"/temperatureSensor/"+str(round(time.time()*1000))).set(str(tmp[-1]))
+                  #if tmp[-1] > 31 and not temp_high:
+                        #temp_high = True
+                        #db.child("/critical/"+user['localId']+"/"+str(round(time.time()*1000))).set("temperature high")
             qsize = dbPPGirq.qsize()
             if qsize > 0:
                   tmp = []
