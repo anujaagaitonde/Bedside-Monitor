@@ -16,7 +16,7 @@ from Libraries.TEMP_lib.read_temp import read_temp_init,read_temp_raw,read_temp
 
 #libraries required for PPG Sensor
 from Libraries.PPG_lib import max30102, hrcalc
-from Libraries.PPG-lib import PPG_algorithms as ppg
+from Libraries.PPG_lib import PPG_algorithms as ppg
 import numpy as np
 
 #libraries required for ecg
