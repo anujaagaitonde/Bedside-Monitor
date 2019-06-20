@@ -24,8 +24,8 @@ import matplotlib.gridspec as gridspec
 import numpy as np
 
 # local
-import utils
-import tools as st
+import Libraries.ECG_lib.utils
+import Libraries.ECG_lib.tools as st
 
 # Globals
 MAJOR_LW = 2.5
