@@ -26,7 +26,7 @@ from Libraries.ECG_lib import ecg_lib,ecg_processing
 from Libraries.RESP_lib import resp_processing as resp
 
 #libraries required for animation
-import Libraries.GUI_lib.gui
+import Libraries.GUI_lib.gui as gui
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 
