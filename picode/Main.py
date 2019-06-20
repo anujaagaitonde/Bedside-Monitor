@@ -20,7 +20,7 @@ from Libraries.PPG_lib import PPG_algorithms as ppg
 import numpy as np
 
 #libraries required for ecg
-from Libraries.ECG_lib import ecgread,ecgprocess
+from Libraries.ECG_lib import ecg_lib,ecg_processing
 
 #libraries required for respiration
 from Libraries.RESP_lib import resp_processing as resp
@@ -107,7 +107,7 @@ def PPGprocess (PPGirq,PPGredq,prq,rrq,spo2q,dbprq,dbspo2q,db,user):
 
 def ECGprocess(ecgrawq,ecgfiltq,dbecgfiltq,db,user):
    print("reading ecG")
-   e=ecgread.ECG()
+   e=ecg_lib.ECG()
    print("reading ecgG")
    while True:
       ecgarray=[]
@@ -120,7 +120,7 @@ def ECGprocess(ecgrawq,ecgfiltq,dbecgfiltq,db,user):
          time.sleep(0.00333)
       #y_ecg.extend(e.read_store(300,600))
       #print("reading ecgG")
-      ecgarray=ecgprocess.volts(ecgarray)
+      ecgarray=ecg_processing.volts(ecgarray)
       ecgrawq.put(ecgarray)
       ecg_filtered=e.realtime_butter(ecgarray,35,0,300,5)
       ecgfiltq.put(ecg_filtered)
