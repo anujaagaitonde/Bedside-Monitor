@@ -22,8 +22,8 @@ import scipy.signal as ss
 
 # local
 import Libraries.ECG_lib.tools as st
-import Libraries.ECG_lib.utils
-import Libraries.ECG_lib.plotting
+import Libraries.ECG_lib.utils as utils
+import Libraries.ECG_lib.plotting as plotting
 
 def volts(data):
   volts = []
