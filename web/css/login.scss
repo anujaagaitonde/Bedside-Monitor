@@ -31,6 +31,7 @@ body, html {
     left: 50%;
     transform: translate(-50%, -50%);
     box-sizing: border-box;
+    border-radius: 5px;
 
     .toplinks{ 
         height: 15%;
@@ -39,6 +40,8 @@ body, html {
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
 
         .link {
             width: 50%;
@@ -106,6 +109,7 @@ body, html {
             color: #FFF;
             width: 100%;
             outline: none;
+            border-radius: 5px;
             border: none;
             font-size: 30px;
             height: 50px;

@@ -6,12 +6,13 @@ livebutton.href = "./live_patient.html?UserID=" + userUID
 var historybutton = document.getElementById('historybutton');
 historybutton.href = "./patient_history.html?UserID=" + userUID
 
+var temperaturevalue = document.getElementById('temperaturevalue');
 
 
 firebase
   .database()
-  .ref("/")
-  .on("value", function (snapshot) {
+  .ref("/Patients")
+  .once("value", function (snapshot) {
     let patientInfo = snapshot.val()[userUID]["patientInfo"];
     document.getElementById("patient_info").innerHTML += PatientHTMLGenerator(
       patientInfo
@@ -20,11 +21,11 @@ firebase
 
 function PatientHTMLGenerator(patientinfo) {
   return `
-    <img src="images/profile_pic.png" class="profile_pic">
+    <img src="${patientinfo.imageURL}" class="profile_pic">
                     
     <div class="patient_id">
         <ul>
-            <li><b>Name: </b>${patientinfo.Name}</li>
+            <li id="patientname"></b>${patientinfo.Name}</li>
             <li><b>DOB: </b>${patientinfo.DOB}</li>
         </ul>
     </div>
@@ -32,6 +33,7 @@ function PatientHTMLGenerator(patientinfo) {
         <ul>
             <li><b>Abnormality detected: </b>${patientinfo.Abnormality}</li>
             <li><b>Condition: </b>${patientinfo.Condition} </li>
+            <li><b>Contact Number: </b>028362391723 </li>
         </ul>
     </div>
     `;
@@ -63,7 +65,7 @@ function initChart(id, title, primarycolor, yaxislabel) {
         pointHitRadius: 10,
         data: [],
         spanGaps: false,
-        borderWidth: 6
+        borderWidth: 1
       }
     ]
   };
@@ -72,6 +74,9 @@ function initChart(id, title, primarycolor, yaxislabel) {
   var ctx = document.getElementById(id).getContext("2d");
   var options = {
     maintainAspectRatio: false,
+    animation: {
+      duration: 0
+    },
     tooltips: {
       enabled: false
     },
@@ -95,6 +100,7 @@ function initChart(id, title, primarycolor, yaxislabel) {
         }
       ],
       yAxes: [
+
         {
           scaleLabel: {
             display: true,
@@ -117,7 +123,7 @@ function initChart(id, title, primarycolor, yaxislabel) {
 }
 
 function updateChart(label, value, id) {
-  if (RefArray[id].data.labels.length < 500) {
+  if (RefArray[id].data.labels.length < 10) {
     RefArray[id].data.labels.push(label);
     RefArray[id].data.datasets.forEach(dataset => {
       dataset.data.push(value);
@@ -131,15 +137,14 @@ function updateChart(label, value, id) {
   // console.log(RefArray[id].data)
   RefArray[id].update();
 }
-function updateChartList(label, value, id) {
+function updateChartList(label, value, id,displaylength) {
   for (var index in value) {
-    if (RefArray[id].data.datasets[0].data.length < 5000) {
-      RefArray[id].data.labels.push(label + index);
+    if (RefArray[id].data.datasets[0].data.length < displaylength) {
+      RefArray[id].data.labels = [...Array(displaylength).keys()]
       RefArray[id].data.datasets.forEach(dataset => {
         dataset.data.push(...value);
       });
     } else {
-
       // RefArray[id].data.labels.shift(label + index);
       RefArray[id].data.datasets.forEach(dataset => {
         dataset.data.shift(...value);
@@ -153,28 +158,52 @@ function updateChartList(label, value, id) {
 }
 
 function getChartData() {
-  initChart("tempChart", "Temperature Chart", "#3cd82c", "°C");
+  initChart("respChart", "Respiration Chart", "#3cd82c", "bpm");
   initChart("ecgChart", "ECG Chart", "#59eaed", "mV");
   initChart("ppgChart", "PPG Chart", "#f51a18", "ppg vals");
-  var limitlist = []
-  var temperatureref = firebase
+  var respref = firebase
     .database()
-    .ref(userUID + "/temperatureSensor");
-  temperatureref.on("child_added", function (ret, prevChildKey) {
-    updateChart(prevChildKey, ret.val(), "tempChart");
-  });
+    .ref(userUID + "/respSensor");
   var ecgref = firebase
     .database()
     .ref(userUID + "/ecgSensor");
-  ecgref.on("child_added", function (ret, prevChildKey) {
-    updateChart(prevChildKey, ret.val(), "ecgChart");
-  });
   var ppgref = firebase
     .database()
     .ref(userUID + "/ppgSensor");
-  ppgref.on("child_added", function (ret, prevChildKey) {
-    updateChartList(prevChildKey, ret.val(), "ppgChart");
-  });
 
+  respref.limitToLast(500).once("value", function (snapshot) {
+    try {
+      var last500 = Object.values(snapshot.val()).slice(-500)
+      updateChartList(1, last500, "tempChart", 50);
+    } catch {
+    }
+    document.getElementsByClassName("loader")[0].style.display = "none";
+    document.getElementsByClassName("chartContainer")[0].style.display = "flex";
+    document.getElementsByClassName("livestats")[0].style.display = "flex";
+  });
+  ppgref.limitToLast(500).once("value", function (snapshot) {
+    try{
+      var last500 = Object.values(snapshot.val()).slice(-5).reduce((acc, val) => acc.concat(val))
+      updateChartList(1, last500, "ppgChart", 125);
+    } catch {}
+  
+  });
+  ecgref.limitToLast(500).once("value", function (snapshot) {
+    try{
+      var last500 = Object.values(snapshot.val()).slice(-5).reduce((acc, val) => acc.concat(val))
+      updateChartList(1, last500, "ecgChart", 125);
+    } catch {}
+  
+  });
+  respref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
+    updateChart(prevChildKey, ret.val(), "respChart");
+  });
+  ppgref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
+    updateChartList(prevChildKey, ret.val(), "ecgChart",500);
+  });
+  ecgref.limitToLast(1).on("child_added", function (ret, prevChildKey) {
+    updateChartList(prevChildKey, ret.val(), "ppgChart",500);
+  });
 }
 window.onload = getChartData();
+

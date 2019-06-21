@@ -1,15 +1,17 @@
+$background-color: #d2d6d9;
+
 body,
 html {
   font-family: "Montserrat", sans-serif;
   margin: 0;
-  background-image: url("../images/bg_image.png");
-  background-attachment: fixed;
-  background-size: cover;
+  background-color: $background-color;
 
   a {
     text-decoration: none;
   }
 }
+
+
 
 #main {
   transition: margin-left 0.5s;
@@ -19,10 +21,20 @@ html {
     height: 15%;
     z-index: 1;
     position: fixed;
-    background: rgba(62, 59, 59, 255);
+    background: $background-color;
     display: flex;
     flex-direction: column;
-    color: white;
+    color: black;
+
+    .link_button {
+      opacity: 0.4;
+      
+    }
+
+    .active {
+      opacity: 1;
+      font-size: 1em;
+    }
 
     .header_top {
       height: 80%;
@@ -36,6 +48,8 @@ html {
         order: 2;
         width: 80%;
         font-size: 50px;
+        // font-family: "Gobold Bold";
+
       }
 
       #menu_button_container {
@@ -93,7 +107,7 @@ html {
           font-size: 17px;
 
           a {
-            color: #fff;
+            color: black;
           }
         }
 
@@ -107,6 +121,23 @@ html {
     }
   }
 
+  .plusbuttonwrapper {
+    width: 150px;
+    height: 150px;
+    // margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    // background-color: red;
+    // border-radius:100%;
+
+    .plusbutton {
+      width: 100%;
+      opacity: 0.8;
+    }
+  }
+
   .content {
     position: absolute;
     width: 100%;
@@ -114,34 +145,66 @@ html {
     padding-top: 20px;
     height: 100%;
     overflow-x: auto;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
     .patient_block {
       position: relative;
-      width: calc(100vw * 0.9);
+      width: calc(100vw * 0.8);
       max-height: 80px;
-      margin: 2% 5% 2% 5%;
-      padding: 1% 1% 1% 1%;
+      margin: 3% 0% 3% 0%;
+      padding: 1% 1% 1% 5%;
       background-color: rgba(5, 5, 5, 0.32);
       display: flex;
       flex-direction: row;
-      justify-content: space-evenly;
+      justify-content: flex-start;
       align-items: flex-start;
       color: #fff;
+      border-radius: 5px;
 
-      .profile_pic {
-        max-height: 72px;
-        align-items: flex-start;
+      > div {
+        flex: 3;
+      }
+
+      #starwrap {
+        flex: 1;
+        height: 100%;
+        display: flex;
         justify-content: center;
-        padding-bottom: 10px;
+        align-content: center;
+      }
+      .profpicwrap {
+        height: 150px;
+        display: flex;
+        align-self: center;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        max-width: 10%;
+        // background-color: red;
+        .profile_pic {
+          max-height: 100%;
+          border-radius: 50%;
+          border: 5px solid white;
+        }
+
+        .critical {
+          border: 5px solid red;
+        }
       }
 
       .patient_id {
         height: 100%;
-        width: auto;
-        align-items: flex-start;
-        justify-content: center;
+        display: flex;
+        justify-content: flex-start;
+        align-content: center;
         padding-bottom: 10px;
-
+        flex: 4;
+        li:first-child {
+          font-size: 28px;
+        }
         ul {
           font-size: 16px;
           padding-left: 10%;
@@ -154,8 +217,9 @@ html {
       .patient_status {
         height: 100%;
         width: auto;
-        align-items: flex-start;
-        justify-content: center;
+        display: flex;
+        justify-content: flex-start;
+        align-content: center;
         padding-bottom: 10px;
 
         ul {
@@ -181,22 +245,76 @@ html {
         cursor: pointer;
       }
 
-      .view_btn {
-        align-self: center;
-        margin-left: 10px;
-        height: 30px;
-        width: 120px;
-        text-align: center;
-        background: linear-gradient(
-          rgba(51, 80, 141, 255),
-          rgba(96, 115, 155, 1)
-        );
+      #viewbtnwrap {
+        height: 100%;
+        display: flex;
+        align-content: center;
+        justify-content: center;
 
         a {
-          color: #fff;
+          color: #666666;
+        }
+        .view_btn {
+          box-shadow: inset 0px 8px 0px 0px #ffffff;
+          background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0);
+          background-color: #ffffff;
+          border-radius: 6px;
+          border: 1px solid #dcdcdc;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: #666666;
           font-size: 20px;
+          font-weight: bold;
+          padding: 6px 24px;
+          text-decoration: none;
+          text-shadow: 0px 1px 0px #ffffff;
+        }
+        .view_btn:hover {
+          background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0);
+          background-color: #f6f6f6;
+        }
+        .view_btn:active {
+          position: relative;
+          top: 1px;
         }
       }
+    }
+  }
+
+  #wrapper {
+    top: 0;
+  }
+  .loader {
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid grey;
+    margin: auto;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 }
@@ -233,6 +351,7 @@ html {
       max-height: 100px;
       width: auto;
       transition: 0.3s;
+      border-radius:50%;
     }
     h3 {
       font-style: bold;
@@ -244,6 +363,7 @@ html {
     display: block;
     transition: 0.3s;
     color: rgba(62, 59, 59, 255);
+    margin-top: 20%;
   }
 
   a:hover {

@@ -1,22 +1,17 @@
 
 
-function validPatientFilter(listtype,patientInfo){
-  if ((listtype=="patientlistcritical")&&!patientInfo.Critical){
-    return false;
-  } else if ((listtype=="patientliststarred")&&!patientInfo.Starred){
-    return false;
-  }
-  return true;
+activetab = "patientlistall"
 
-}
 
 function generateHTML(patientInfo, userID) {
-    return `
+  return `
 <div class="patient_block" id="patient">
-  <img src="images/profile_pic.png" class="profile_pic">
+  <div class="profpicwrap">
+    <img src="${patientInfo.imageURL}" class="profile_pic ${patientInfo.Critical ? "critical" : ""} ">
+  </div>
   <div class="patient_id">
     <ul>
-      <li><b>Name: </b>${patientInfo.Name}</li>
+      <li><b>${patientInfo.Name} ${patientInfo.Critical ? " - <font color=\"red\"> Critical</font> " : ""}  </b></li>
       <li><b>DOB: </b>${patientInfo.DOB}</li>
     </ul>
     <p id="demo"></p>
@@ -24,29 +19,106 @@ function generateHTML(patientInfo, userID) {
   <div class="patient_status">
     <ul>
       <li><b>Abnormality detected: </b>${patientInfo.Abnormality}</li>
-      <li><b>Condition: </b>${patientInfo.Condition} </li>
-      <li><b>Connection status: </b>XXX</li>
+      <li><b>Condition: </b>${patientInfo.Condition} </li> 
+      ${patientInfo.Critical ? "<li class=\"critical\"><b>Critical </b></li>" : ""} 
     </ul>
   </div>
   <!-- only top star changes - check-->
-  <div id="star${userID}" class=${(patientInfo.Starred ? "starred" : "unstarred")} onclick="toggleStar(this.id)"></div>
-  <div class = "view_btn"><a href="live_patient.html?UserID=${userID}">VIEW</a></div>
+  <div id="starwrap">
+    <div id="star${userID}" class=${(patientInfo.Starred ? "starred" : "unstarred")} onclick="toggleStar(this.id)"></div>
+  </div>
+  <div id="viewbtnwrap">
+    <div class = "view_btn"><a href="live_patient.html?UserID=${userID}">VIEW</a></div>
+  </div>
 </div>
  `
 }
 
-let ref = firebase.database().ref("/")
+function addPatientHTML() {
+  return `
+    <div class="plusbuttonwrapper">
+      <img src="images/plus.png" class="plusbutton" onclick="location.href = './new_patient.html'">
+    </div>
+  `
+}
+
+let ref = firebase.database().ref("/Patients")
 let listref = document.getElementsByClassName("patientlist")[0]
 listtype = listref.id
 
-ref.on("value", function (snapshot) {
-  listref.innerHTML = ""
+patients = {};
+
+//function run on page load
+(function () {
+  ref.once("value", function (snapshot) {
+    listref.innerHTML = ""
+
     for (var userID in snapshot.val()) {
+      if (userID != "critical"){
         let patientInfo = snapshot.val()[userID]['patientInfo']
-        if (validPatientFilter(listref.id,patientInfo)){
-          listref.innerHTML += generateHTML(patientInfo, userID);
-        }
+        patients[userID] = patientInfo
+      }
+
     }
-}, function (errorObject) {
+    document.getElementsByClassName("loader")[0].style.display = "none";
+    showTab(null, "patientlistall")
+  }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
-});
+  });
+})();
+
+
+// ref.on("value", function (snapshot) {
+//   listref.innerHTML = ""
+//   for (var userID in snapshot.val()) {
+//     let patientInfo = snapshot.val()[userID]['patientInfo']
+//     patients[userID] = patientInfo
+//   }
+//   showTab(null, activetab)
+// }, function (errorObject) {
+//   console.log("The read failed: " + errorObject.code);
+// });
+
+
+function showTab(evt, patienttype) {
+  activetab = patienttype;
+  var i, tabcontent, tablinks;
+
+  tabcontent = document.getElementsByClassName("patientlist");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  tablinks = document.getElementsByClassName("link_button");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  currenttab = document.getElementById(patienttype)
+  currenttab.style.display = "flex";
+
+  if (patienttype == "patientlistcritical") {
+    currenttab.innerHTML = "";
+    for (var userID in Object.keys(patients)) {
+      if (Object.values(patients)[userID].Critical) {
+        currenttab.innerHTML += generateHTML(Object.values(patients)[userID], Object.keys(patients)[userID]);
+      }
+    }
+  } else if (patienttype == "patientliststarred") {
+    currenttab.innerHTML = "";
+    for (var userID in Object.keys(patients)) {
+      if (Object.values(patients)[userID].Starred) {
+        currenttab.innerHTML += generateHTML(Object.values(patients)[userID], Object.keys(patients)[userID]);
+      }
+    }
+  } else {
+    currenttab.innerHTML = "";
+    for (var userID in Object.keys(patients)) {
+      currenttab.innerHTML += generateHTML(Object.values(patients)[userID], Object.keys(patients)[userID]);
+    }
+  }
+  try {
+    evt.currentTarget.className += " active";
+  } catch{
+
+  }
+}

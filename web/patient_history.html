@@ -1,77 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PATIENT HISTORY</title>
-    <link rel="stylesheet" href="css/history_patient.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" /> 
-    <script src="scripts/authentication.js"></script>
-    <script src="scripts/history_grapher.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PATIENT HISTORY</title>
+  <link rel="stylesheet" href="css/history_patient.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
+  <script src="scripts/authentication.js"></script>
+  <script src="scripts/history_grapher.js"></script>
 
 </head>
 
 <body>
-    <div id="mySidenav" class="sidenav">
+  <div class="loader"></div>
+  <div id="mySidenav" class="sidenav">
 
-        <!-- Replace with doctor info from DB -->
-        <div id="dr_profile">
-            <img src="images/dr_profile_pic.png" class="dr_profile">
-            <h3>Dr. XXX YYY</h3>
-        </div>
-        <a href="critical_patient_dashboard.html">Patient Dashboard</a>
-        <div ><button onclick="logoutUser()">Logout</button></div>
+    <!-- Replace with doctor info from DB -->
+    <div id="dr_profile">
+      <img src="images/dr_profile_pic.jpg" class="dr_profile">
+      <h3>Dr. Mark Thomas</h3>
     </div>
+    <a href="all_patient_dashboard.html">Patient Dashboard</a>
+    <a class="logoutlink" onclick="logoutUser()">Logout</a>
+  </div>
 
-    <!-- Full screen excluding navigation menu -->
-    <div id="main">
-        <div class="header">
-            <div class = "header_top">
-                <div id="menu_button_container">
-                    <img src="images/menu.png" class="menu-btn" onclick="toggleSidenav()">
-                </div>
-                <div id="patient_info" ></div>
-            </div>
-            <div class = "header_bottom">
-                <div class="link">
-                    <div class="link_title"><a id="livebutton" href="">LIVE FEED</a></div>
-                </div>
-                <div class="link">
-                    <div class="link_title"><a id="historybutton" href="">HISTORY</a></div>
-                    <div id="active_link"></div>
-                </div>
-    
-            </div>
+  <!-- Full screen excluding navigation menu -->
+  <div id="main">
+    <div class="header">
+      <div class="header_left">
+        <div id="menu_button_container">
+          <img src="images/menu.png" class="menu-btn" onclick="toggleSidenav()" />
+        </div>
+        <div class="titlewrap">
+          <h1>LifeLine</h1>
         </div>
 
-        <!-- Display graph data from DB-->
-        <div class="content">
-            <div class="chartContainer">
-                <div class = "chartRow">
-                    <h1>Temperature</h1>
-                    <div id="tempChart" style="height:100%; width:100%"></div>
-                </div>
-                <div class = "chartRow">
-                    <h1>spO2</h1>
-                    <div id="spO2Chart" style="height:100%; width:100%"></div>
-                </div>
-                <div class = "chartRow">
-                    <h1>PPG</h1>
-                    <div id="ppgChart" style="height:100%; width:100%"></div>
-                </div>
-                
-                </div>
-            </div>
+        <div id="patient_info"></div>
+      </div>
+      <div class="header_right">
+        <div class="link">
+          <div class="link_title">
+            <a id="livebutton" href="">Live Patient View</a>
+          </div>
+        </div>
+        <div class="link">
+          <div class="link_title">
+            <a id="historybutton" href="">History</a>
+          </div>
+          <div id="active_link"></div>
         </div>
       </div>
-
     </div>
+
+    <!-- Display graph data from DB-->
+    <div class="content">
+      <div class="chartContainer">
+
+        <div class="chartRow">
+          <h1>Temperature</h1>
+          <div id="tempChart" style="height:100%; width:100%"></div>
+        </div>
+        <div class="chartRow">
+          <h1>ECG</h1>
+          <div id="spO2Chart" style="height:100%; width:100%"></div>
+        </div>
+        <div class="chartRow">
+          <h1>PPG</h1>
+          <div id="ppgChart" style="height:100%; width:100%"></div>
+        </div>
+      </div>
+      <div id="criticalTimes">
+        <h1>Critical Events</h1>
+      </div>
+    </div>
+    <!-- <h3>You can click and drag to zoom. Double-clicking will zoom you back out. Shift-drag will pan. </h3> -->
+
+  </div>
+  </div>
+
+  </div>
 
 </body>
 
@@ -82,5 +96,5 @@
 
 
 <script src="scripts/sidebar.js"></script>
-  
+
 </html>

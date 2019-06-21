@@ -1,5 +1,5 @@
 // Initialize Firebase
-var config = {
+config = {
   apiKey: "AIzaSyB3OD82TJeIDHOwiys2Cy_iD8wj5KxBvwU",
   authDomain: "mfbedside.firebaseapp.com",
   databaseURL: "https://mfbedside.firebaseio.com",
@@ -16,13 +16,12 @@ const auth = firebase.auth();
 
 //Add login Click event
 function loginUser() {
-  const btnLogin = document.getElementById("login_submit");
   const email = document.getElementById("EmailInput").value;
   const pass = document.getElementById("PasswordInput").value;
   //Sign in
   auth
     .signInWithEmailAndPassword(email, pass)
-    .then(e => window.location.replace("./all_patient_dashboard.html"))
+    .then(() => window.location.replace("./all_patient_dashboard.html"))
     .catch(e => window.alert(e));
 }
 function logoutUser() {
@@ -49,12 +48,21 @@ function createUser() {
   } else {
     auth
       .createUserWithEmailAndPassword(doctoremail, doctorpass)
-      .signInWithEmailAndPassword(doctoremail, doctorpass)
-      .then(function() { window.location.replace("./critical_patient_dashboard.html")})
+      .then(function() { window.location.replace("./all_patient_dashboard.html")})
       .catch(function(error) {
         window.alert(error.message);
       });
   }
 }
 
-
+firebase
+  .database()
+  .ref("/critical")
+  .on("child_changed", function (ret,prevChildKey) {
+    var criticalUserID= ret.ref.key
+    var date = new Date(parseInt(Object.values(ret.val())[0]))
+    var eventType = Object.keys(ret.val())[0]
+    if (window.confirm("A critical " + eventType +" event has occured at time:\n "+date + "\nGo to Live View?")){
+      window.location.replace("./live_patient.html?UserID="+criticalUserID)
+    }
+  });

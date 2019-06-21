@@ -1,283 +1,432 @@
-body, html {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    background-image: url('../images/bg_image.png');
-    background-size: cover;
-    background-attachment: fixed;
+$shadow-color: lighten(#5f5f5f, 10%);
+$background-color: #d2d6d9;
 
-    a {
-        text-decoration: none;
-    }
+body,
+html {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  background-color: $background-color;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-y: hidden;
+
+  a {
+    text-decoration: none;
+  }
 }
 
+.dr_profile {
+  border-radius: 50%;
+}
 
 #main {
-    transition: margin-left .5s;
+  transition: margin-left 0.5s;
 
-    .header {
-        width: 100%;
-        height: 15%;
-        z-index: 1;
-        position: fixed;
-        background:rgba(62,59,59,255);
-        display: flex;
-        flex-direction: column;
-        color: white;
-    
-        .header_top{ 
-            height: 80%;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            
-    
-            #patient_info {
-                width:90%;
-                order: 2;
-                height: 100%;
-                padding: 3% 10% 0% 0%;
-                display: flex;
-                flex-direction: row;
-                align-items: flex-start;
-                justify-content: center;
-        
-                .profile_pic {
-                    max-height: 72px;
-                    align-items: flex-start;
-                    justify-content: center;
-                }
-    
-                .patient_id {
-                    height: 100%;
-                    width: auto;
-                    align-items: flex-start;
-                    justify-content: center;
-    
-                    ul {
-                        font-size: 15px;
-                        padding-left: 10%;
-                        margin: 0;
-                        list-style-type: none;
-                        text-align: left;
-                    }
-                }
-    
-                .patient_status {
-                    height: 100%;
-                    width: auto;
-                    align-items: flex-start;
-                    justify-content: center;
-    
-                    ul {
-                        font-size: 12px;
-                        padding-left: 10%;
-                        margin: 0;
-                        list-style-type: none;
-                        text-align: left;
-                    }
-                }
-            }
-        
-            #menu_button_container {
-                width:10%;
-                order: 1;
-                height: 100%;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: center;
-        
-                .menu-btn {
-                    max-height: 20px;
-                    align-items: flex-start;
-                    cursor: pointer;
-                }
-            }
-        }
-    
-        .header_bottom{ 
-            height: 20%;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-    
-            .link {
-                width: 50%;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                text-align: center;
-                cursor: pointer;
-    
-                .link_title {
-                    height: 80%;
-                    font-size: 100%;
-
-                    a {
-                        color: #FFF;
-                    }
-                }
-        
-                #active_link {
-                    height: 20%;
-                    width: 100%;
-                    display: block;
-                    background: rgba(51,80,141,255);
-                }
-            }
-    
-        
-        }
-        
-        
-        
-    }
-    
-    .content {
-        position: absolute;
-        width: 100%;
-        top: 15%;
-        bottom:0;
-        height: auto;
-        margin: 0 auto;
-        padding: 20px 50px 20px 50px;
-       
-
-        .chartContainer{
-            display: flex;
-            width:100%;
-            height:100%;
-            top: 15%;
-            bottom:0;
-            flex-direction: column;
-
-            .chartRow{
-                display: flex;
-                flex-direction: column;
-                flex:1;
-                background-color: rgba(5,5,5,0.32);
-                border-radius: 2px;
-                margin: 2px;
-                padding: 5px 20px; 
-
-
-                .titlewrap {
-                    height:20%;
-
-                    h1{
-                        text-align: left;
-                        font-size: 1.5em;
-                        color: white;
-                        position: relative;
-                        width:100%;
-                        margin-left: 1%;
-                    }
-                }
-                
-                .chartwrap {
-                    height: 80%;
-                }
-            }
-
-        }
-
-    }
-
-   
-
-
-}
-
-.sidenav {
-    height: 100%;
-    width: 0;
+  .header {
+    width: 100%;
+    height: 15%;
+    z-index: 1;
     position: fixed;
-    z-index: 2;
-    top: 0;
-    left: 0;
-    background-color: rgba(255,255,255,0.5);
-    font-size: 20px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    transition: 0.5s;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    background: $background-color;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    text-align: center;
-    color: rgba(62,59,59,255);
-    
+    flex-direction: row;
+    justify-content: space-between;
+    color: black;
 
-    #dr_profile {
+    .header_left {
+      flex: 1;
+      height: 100%;
+      line-height: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+
+      .titlewrap {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        top: 50%;
+        left: 50%;
+        width: 40%;
+        h1 {
+          color: white;
+          margin: auto;
+          line-height: 100%;
+          vertical-align: middle;
+          font-size: 5em;
+          // font-family: "Gobold Bold";
+        }
+      }
+      #patient_info {
+        min-width: 30%;
+        height: 80%;
+        padding-top: 1%;
+        background-color: white;
+        border-bottom-right-radius: 5px;
+        box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+        border-bottom-left-radius: 5px;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+        position: absolute;
+        margin-left: 35%;
+        margin-right: 35%;
+
+        .profile_pic {
+          max-height: 80px;
+          align-items: flex-start;
+          justify-content: center;
+          border-radius: 50%;
+        }
+
+        .patient_id {
+          height: 100%;
+          width: auto;
+          align-items: flex-start;
+          justify-content: center;
+
+          #patientname {
+            font-size: 1.5em;
+            font-weight: 700;
+            line-height: 120%;
+          }
+
+          ul {
+            font-size: 15px;
+            padding-left: 10%;
+            margin: 0;
+            list-style-type: none;
+            text-align: left;
+            line-height: 120%;
+
+            li {
+              padding-bottom: 10px;
+            }
+          }
+        }
+
+        .patient_status {
+          height: 100%;
+          width: auto;
+          align-items: flex-start;
+          justify-content: center;
+
+          ul {
+            font-size: 15px;
+            padding-left: 10%;
+            margin: 0;
+            list-style-type: none;
+            text-align: left;
+          }
+        }
+      }
+
+      #menu_button_container {
+        width: 10%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        .menu-btn {
+          max-height: 20px;
+          align-items: flex-start;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .header_right {
+      width: 35%;
+      right: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      padding-right: 5%;
+
+      .link {
+        width: 25%;
         height: 40%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
+        justify-content: flex-start;
+        text-align: center;
+        cursor: pointer;
 
-        img {
-            max-height: 100px;
-            width: auto;
-            transition: 0.3s;
+        .link_title {
+          height: 80%;
+          font-size: 100%;
+
+          a {
+            color: black;
+            font-size: 16px;
+          }
         }
-        h3 {
-            font-style: bold;
-            transition: 0.3s;
+
+        #active_link {
+          height: 20%;
+          width: 100%;
+          display: block;
+          background: rgba(51, 80, 141, 255);
         }
+      }
+    }
+  }
+
+  .content {
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    top: 15%;
+    bottom: 0;
+    margin: 0 auto;
+    padding: 20px 50px 20px 50px;
+    display: flex;
+    flex-direction: row;
+
+    .loader {
+      border: 10px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 10px solid grey;
+      margin: auto;
+      position: fixed; /* or absolute */
+      top: 50%;
+      left: 47.5%;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite; /* Safari */
+      animation: spin 2s linear infinite;
     }
 
-    a {
-        display: block;
-        transition: 0.3s;
-        color: rgba(62,59,59,255);
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
     }
 
-    a:hover {
-        color: rgba(51,80,141,255);
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
+    .wrapper {
+      display: flex;
+      width:100%;
 
-    .links {
-        height: 50%;
-    }
+      .livestats {
+        flex:1;
+        height:100%;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        overflow: auto;
 
-    #logout {
-        height: 10%;
-        position: absolute;
-        bottom: 10px;      
+        div {
+          height:20%;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          text-align: center;
+          line-height: 60%;
+          p {
+            font-size: 2em;
+            width: 100%;
+            text-align: center;
+          }
+          .value {
+            font-weight: bold;
+            font-size:3em;
+          }
+        }
+      }
+
+      .chartContainer {
+        display: flex;
+        flex: 4;
+        height: 100%;
+        top: 15%;
+        bottom: 0;
+        flex-direction: column;
+
+        .chartRow {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          background-color: rgba(255, 255, 255, 1);
+          box-shadow: 5px 5px 32px 0px rgba(0, 0, 0, 0.4);
+          border-radius: 10px;
+          margin-bottom: 8px;
+          margin-right: 8px;
+          padding: 5px 20px;
+
+          .titlewrap {
+            height: 20%;
+
+            h1 {
+              text-align: left;
+              font-size: 1.5em;
+              font-weight: bold;
+              color: black;
+              position: relative;
+              width: 100%;
+              margin-left: 1%;
+            }
+          }
+
+          .chartwrap {
+            height: 80%;
+          }
+        }
+
+        .chartRow:last-child {
+          margin-bottom:0;
+        }
+      }
     }
+  }
 }
 
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  transition: 0.5s;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  color: rgba(62, 59, 59, 255);
+
+  #dr_profile {
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      max-height: 100px;
+      border-radius: 50%;
+      width: auto;
+      transition: 0.3s;
+    }
+    h3 {
+      font-style: bold;
+      transition: 0.3s;
+    }
+  }
+
+  a {
+    display: block;
+    transition: 0.3s;
+    color: rgba(62, 59, 59, 255);
+    margin-top: 20%;
+  }
+
+  a:hover {
+    color: rgba(51, 80, 141, 255);
+  }
+
+  .links {
+    height: 50%;
+  }
+
+  #logout {
+    height: 10%;
+    position: absolute;
+    bottom: 10px;
+  }
+}
 
 // Responsive scaling for smaller screens
 @media screen and (max-height: 600px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav {font-size: 15px;}
-    .sidenav #dr_profile img {max-height: 50px;}
-    .sidenav #logout {bottom: 15px;}
-    #main .header .header_top #patient_info .profile_pic {max-height: 50px;}
-    #main .header .header_top #patient_info .patient_id ul {font-size: 12px;}
-    #main .header .header_top #patient_info .patient_status ul {font-size: 10px;}
-    #main .header .header_top #menu_button_container .menu-btn {max-height: 15px;}
-    #main .header {height: 120px;}
-    #main .content {top: 120px; padding-top: 10px;}
-
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav {
+    font-size: 15px;
+  }
+  .sidenav #dr_profile img {
+    max-height: 50px;
+  }
+  .sidenav #logout {
+    bottom: 15px;
+  }
+  #main .header .header_top #patient_info .profile_pic {
+    max-height: 50px;
+  }
+  #main .header .header_top #patient_info .patient_id ul {
+    font-size: 12px;
+  }
+  #main .header .header_top #patient_info .patient_status ul {
+    font-size: 10px;
+  }
+  #main .header .header_top #menu_button_container .menu-btn {
+    max-height: 15px;
+  }
+  #main .header {
+    height: 120px;
+  }
+  #main .content {
+    top: 120px;
+    padding-top: 10px;
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav {font-size: 15px;}
-    .sidenav #dr_profile img {max-height: 50px;}
-    .sidenav #logout {bottom: 15px;}
-    #main .header .header_top #patient_info .profile_pic {max-height: 50px;}
-    #main .header .header_top #patient_info .patient_id ul {font-size: 12px;}
-    #main .header .header_top #patient_info .patient_status ul {font-size: 10px;}
-    #main .header .header_top #menu_button_container .menu-btn {max-height: 15px;}
-    #main .header {height: 120px;}
-    #main .content {top: 120px; padding-top: 10px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav {
+    font-size: 15px;
+  }
+  .sidenav #dr_profile img {
+    max-height: 50px;
+  }
+  .sidenav #logout {
+    bottom: 15px;
+  }
+  #main .header .header_top #patient_info .profile_pic {
+    max-height: 50px;
+  }
+  #main .header .header_top #patient_info .patient_id ul {
+    font-size: 12px;
+  }
+  #main .header .header_top #patient_info .patient_status ul {
+    font-size: 10px;
+  }
+  #main .header .header_top #menu_button_container .menu-btn {
+    max-height: 15px;
+  }
+  #main .header {
+    height: 120px;
+  }
+  #main .content {
+    top: 120px;
+    padding-top: 10px;
+  }
 }
-

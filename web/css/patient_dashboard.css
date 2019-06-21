@@ -2,9 +2,7 @@ body,
 html {
   font-family: "Montserrat", sans-serif;
   margin: 0;
-  background-image: url("../images/bg_image.png");
-  background-attachment: fixed;
-  background-size: cover;
+  background-color: #d2d6d9;
 }
 
 body a,
@@ -15,6 +13,7 @@ html a {
 #main {
   -webkit-transition: margin-left 0.5s;
   transition: margin-left 0.5s;
+  /* Safari */
 }
 
 #main .header {
@@ -22,7 +21,7 @@ html a {
   height: 15%;
   z-index: 1;
   position: fixed;
-  background: #3e3b3b;
+  background: #d2d6d9;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -30,7 +29,16 @@ html a {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  color: white;
+  color: black;
+}
+
+#main .header .link_button {
+  opacity: 0.4;
+}
+
+#main .header .active {
+  opacity: 1;
+  font-size: 1em;
 }
 
 #main .header .header_top {
@@ -160,7 +168,7 @@ html a {
 }
 
 #main .header .header_bottom .link .link_title a {
-  color: #fff;
+  color: black;
 }
 
 #main .header .header_bottom .link #active_link {
@@ -170,6 +178,28 @@ html a {
   background: #33508d;
 }
 
+#main .plusbuttonwrapper {
+  width: 150px;
+  height: 150px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#main .plusbuttonwrapper .plusbutton {
+  width: 100%;
+  opacity: 0.8;
+}
+
 #main .content {
   position: absolute;
   width: 100%;
@@ -177,14 +207,27 @@ html a {
   padding-top: 20px;
   height: 100%;
   overflow-x: auto;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 #main .content .patient_block {
   position: relative;
-  width: calc(100vw * 0.9);
+  width: calc(100vw * 0.8);
   max-height: 80px;
-  margin: 2% 5% 2% 5%;
-  padding: 1% 1% 1% 1%;
+  margin: 3% 0% 3% 0%;
+  padding: 1% 1% 1% 5%;
   background-color: rgba(5, 5, 5, 0.32);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -193,36 +236,84 @@ html a {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
   color: #fff;
+  border-radius: 5px;
 }
 
-#main .content .patient_block .profile_pic {
-  max-height: 72px;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+#main .content .patient_block > div {
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
+}
+
+#main .content .patient_block #starwrap {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding-bottom: 10px;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+#main .content .patient_block .profpicwrap {
+  height: 150px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-item-align: center;
+      align-self: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  max-width: 10%;
+}
+
+#main .content .patient_block .profpicwrap .profile_pic {
+  max-height: 100%;
+  border-radius: 50%;
+  border: 5px solid white;
+}
+
+#main .content .patient_block .profpicwrap .critical {
+  border: 5px solid red;
 }
 
 #main .content .patient_block .patient_id {
   height: 100%;
-  width: auto;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-line-pack: center;
+      align-content: center;
   padding-bottom: 10px;
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
+}
+
+#main .content .patient_block .patient_id li:first-child {
+  font-size: 28px;
 }
 
 #main .content .patient_block .patient_id ul {
@@ -236,12 +327,14 @@ html a {
 #main .content .patient_block .patient_status {
   height: 100%;
   width: auto;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-line-pack: center;
+      align-content: center;
   padding-bottom: 10px;
 }
 
@@ -271,21 +364,95 @@ html a {
   cursor: pointer;
 }
 
-#main .content .patient_block .view_btn {
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
-  margin-left: 10px;
-  height: 30px;
-  width: 120px;
-  text-align: center;
-  background: -webkit-gradient(linear, left top, left bottom, from(#33508d), to(#60739b));
-  background: linear-gradient(#33508d, #60739b);
+#main .content .patient_block #viewbtnwrap {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-#main .content .patient_block .view_btn a {
-  color: #fff;
+#main .content .patient_block #viewbtnwrap a {
+  color: #666666;
+}
+
+#main .content .patient_block #viewbtnwrap .view_btn {
+  -webkit-box-shadow: inset 0px 8px 0px 0px #ffffff;
+          box-shadow: inset 0px 8px 0px 0px #ffffff;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #ffffff), to(#f6f6f6));
+  background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0);
+  background-color: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #dcdcdc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+  color: #666666;
   font-size: 20px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #ffffff;
+}
+
+#main .content .patient_block #viewbtnwrap .view_btn:hover {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #f6f6f6), to(#ffffff));
+  background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0);
+  background-color: #f6f6f6;
+}
+
+#main .content .patient_block #viewbtnwrap .view_btn:active {
+  position: relative;
+  top: 1px;
+}
+
+#main #wrapper {
+  top: 0;
+}
+
+#main .loader {
+  border: 10px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 10px solid grey;
+  margin: auto;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 
 .sidenav {
@@ -342,6 +509,7 @@ html a {
   width: auto;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  border-radius: 50%;
 }
 
 .sidenav #dr_profile h3 {
@@ -355,6 +523,7 @@ html a {
   -webkit-transition: 0.3s;
   transition: 0.3s;
   color: #3e3b3b;
+  margin-top: 20%;
 }
 
 .sidenav a:hover {

@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>MFMonitor - Live Patient View</title>
     <link rel="stylesheet" href="css/live_patient.css" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
       rel="stylesheet"
@@ -15,19 +14,18 @@
   <body>
     <!-- Side Navigation Bar -->
     <div id="mySidenav" class="sidenav">
-      <!-- Replace with doctor info from DB -->
       <div id="dr_profile">
-        <img src="images/dr_profile_pic.png" class="dr_profile" />
-        <h3>Dr. XXX YYY</h3>
+        <img src="images/dr_profile_pic.jpg" class="dr_profile" />
+        <h3>Dr. Mark Thomas</h3>
       </div>
-      <a href="critical_patient_dashboard.html">Patient Dashboard</a>
-      <div><button onclick="logoutUser()">Logout</button></div>
+      <a href="all_patient_dashboard.html">Patient Dashboard</a>
+      <a class="logoutlink" onclick="logoutUser()">Logout</a>
     </div>
 
     <!-- Full screen excluding navigation menu -->
     <div id="main">
       <div class="header">
-        <div class="header_top">
+        <div class="header_left">
           <div id="menu_button_container">
             <img
               src="images/menu.png"
@@ -35,51 +33,73 @@
               onclick="toggleSidenav()"
             />
           </div>
+          <div class="titlewrap">
+            <h1>LifeLine</h1>
+          </div>
 
-          <!-- Replace all with patient info from DB -->
           <div id="patient_info"></div>
         </div>
-        <div class="header_bottom">
+        <div class="header_right">
           <div class="link">
             <div class="link_title">
-              <a id="livebutton" href="">LIVE FEED</a>
+              <a id="livebutton" href="">Live Patient View</a>
             </div>
             <div id="active_link"></div>
           </div>
           <div class="link">
             <div class="link_title">
-              <a id="historybutton" href="">HISTORY</a>
+              <a id="historybutton" href="">History</a>
             </div>
-            
           </div>
         </div>
       </div>
 
       <!-- Display graph data from DB-->
       <div class="content">
-        <div class="chartContainer">
-          <div class="chartRow">
-            <div class="titlewrap">
-              <h1>Temperature</h1>
+        <div class="loader"></div>
+
+        <div class="wrapper">
+          <div class="chartContainer" style="display: none">
+            <div class="chartRow">
+              <div class="titlewrap">
+                <h1>ECG</h1>
+              </div>
+              <div class="chartwrap">
+                <canvas id="ecgChart"></canvas>
+              </div>
             </div>
-            <div class="chartwrap">
-              <canvas id="tempChart"></canvas>
+            <div class="chartRow">
+              <div class="titlewrap">
+                <h1>PPG</h1>
+              </div>
+              <div class="chartwrap">
+                <canvas id="ppgChart"></canvas>
+              </div>
+            </div>
+            <div class="chartRow">
+              <div class="titlewrap">
+                <h1>Respiration</h1>
+              </div>
+              <div class="chartwrap">
+                <canvas id="respChart"></canvas>
+              </div>
             </div>
           </div>
-          <div class="chartRow">
-            <div class="titlewrap">
-              <h1>ECG</h1>
+          <div class="livestats" style="display: none">
+            <div>
+              <p>SpO2 (%) : <p class="spo2 value"> 99</p> </p>
             </div>
-            <div class="chartwrap">
-              <canvas id="ecgChart"></canvas>
+            <div>
+              <p> Temperature (°C) : <p class="temperature value">35</p> </p>
             </div>
-          </div>
-          <div class="chartRow">
-            <div class="titlewrap">
-              <h1>PPG</h1>
+            <div>
+              <p>Heart Rate (bpm) : <p class="heartrate value">101</p> </p>
             </div>
-            <div class="chartwrap">
-              <canvas id="ppgChart"></canvas>
+            <div>
+              <p>Pulse (bpm) : <p class="pulse value">60</p> </p>
+            </div>
+            <div>
+              <p>Respiration Rate : <p class="respiration value">40</p> </p>
             </div>
           </div>
         </div>
