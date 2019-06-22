@@ -1,0 +1,15 @@
+[Unit]
+Description=Lifeline Main script
+After=graphical.target
+
+[Service]
+Type=idle
+
+User=pi
+ExecStart=/usr/bin/python3 /home/pi/Bedside-Monitor/Main.py
+
+Restart=always
+RestartSec=0
+
+[Install]
+WantedBy=multi-user.target
