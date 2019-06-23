@@ -2,25 +2,17 @@
 import os
 import glob
 
-
+'''
 # Finds the correct device file that holds the temperature data
 base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
-
-
+'''
 
 # Initialize the GPIO Pins
 def read_temp_init():
   os.system('modprobe w1-gpio')  # Turns on the GPIO module
   os.system('modprobe w1-therm') # Turns on the Temperature module
-
-'''
-# Finds the correct device file that holds the temperature data
-base_dir = '/sys/bus/w1/devices/'
-device_folder = glob.glob(base_dir + '28*')[0]
-device_file = device_folder + '/w1_slave'
-'''
 
 # A function that reads the sensors data
 def read_temp_raw():
