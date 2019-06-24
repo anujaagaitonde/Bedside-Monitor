@@ -19,8 +19,8 @@ For setup and installation please see the Getting Started page of the Wiki:
 ## The following libraries have been created:
 
 ### PPG Sensor and processing:
-- max30102.py adapted from 
-- hrcalc.py adapted from
+- max30102.py adapted from [Doug Burell's repo](https://github.com/doug-burrell/max30102/max30102.py)
+- hrcalc.py adapted from 
 - PPG_algorithms adapted from 
 
 ### ECG Sensor and processing:
@@ -34,5 +34,5 @@ For setup and installation please see the Getting Started page of the Wiki:
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTI0ODIyODQ4XX0=
+eyJoaXN0b3J5IjpbMTI0ODUyMDI4MV19
 -->
