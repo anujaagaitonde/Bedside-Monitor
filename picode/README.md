@@ -31,9 +31,10 @@ For setup and installation please see the Getting Started page of the Wiki:
 ### Respiration processing:
 - Resp_processing.py adapted from: [Raphaelvallat's gist](https://gist.github.com/raphaelvallat/55624e2eb93064ae57098dd96f259611)
 
-
+###NOTE:
+As detailed on the Getting started page of the repo No libraries need to be manually installed 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1ODI3MjMwNTMsNzQ0ODEyMzM4XX0=
+eyJoaXN0b3J5IjpbLTY0NzQ5MTMzNyw3NDQ4MTIzMzhdfQ==
 -->
