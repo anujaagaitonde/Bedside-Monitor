@@ -8,7 +8,7 @@ For further information about this project, visit our [wiki](https://github.com/
 * [Getting Started](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Getting-Started)
 * [Innovation](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Innovation)
 * [Meeting Records](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Meeting-Records)
-* [Product Design History](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Product-Design-History)
+* [Product Design History](https://github.com/anujaagaProductionitonde/Bedside-Monitor/wiki/Product-Design-History)
 * [Report of Ethical Consequences](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Report-of-Ethical-Consequences)
 * [Sustainability Report](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Sustainability-Report)
 * [Testing](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Testing)
@@ -26,6 +26,6 @@ For further information about this project, visit our [wiki](https://github.com/
 * **Gasim Ahmed:** *Firmware and Machine Learning Developer*
 * **Yasmin Baba:** *Hardware Designer*
 * **Anuja Gaitonde:** *Web / GUI Developer and Print Promotion Designer*
-* **Dayan Graham:** *Web / Cloud Developer and Casing Production*
+* **Dayan Graham:** *Web / Cloud Developer and Casing Designer*
 * **Prithvi Menon:** *Machine Learning Developer*
 * **Omar Muttawa:** *Firmware Developer*
