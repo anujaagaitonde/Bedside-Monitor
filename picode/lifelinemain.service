@@ -1,15 +1,15 @@
 [Unit]
 Description=Lifeline Main script
-After=graphical.target
+After=network-online.target
 
 [Service]
-Type=idle
+Type=forking
 
 User=pi
 ExecStart=/usr/bin/python3 /home/pi/Bedside-Monitor/Main.py
 
 Restart=always
-RestartSec=0
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
