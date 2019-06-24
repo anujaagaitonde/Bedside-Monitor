@@ -31,11 +31,11 @@ For setup and installation please see the Getting Started page of the Wiki:
 ### Respiration processing:
 - Resp_processing.py adapted from: [Raphaelvallat's gist](https://gist.github.com/raphaelvallat/55624e2eb93064ae57098dd96f259611)
 
-###NOTE:
+### NOTE:
 As detailed on the [
 Getting Started](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Getting-Started)  page of the repo no libraries need to be manually installed, the setup script will install them automatically
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU5ODYyNzIxMiw3NDQ4MTIzMzhdfQ==
+eyJoaXN0b3J5IjpbMTU4OTg0NTU1Niw3NDQ4MTIzMzhdfQ==
 -->
