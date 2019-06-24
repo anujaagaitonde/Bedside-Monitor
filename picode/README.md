@@ -1,7 +1,8 @@
 ## Introduction
 This folder contains all the firmware and software required in order to setup a lifeline monitor on a Raspberry Pi:
 
-For setup and installation please see the Getting Started page of the Wiki:
+For setup and installation please see the [Getting-Started
+](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Getting-Started) page of the Wiki:
 
 ## The following external public libraries are utilised:
 
@@ -37,5 +38,5 @@ Getting Started](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Getting-
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQzOTkyMjc2LDc0NDgxMjMzOF19
+eyJoaXN0b3J5IjpbMTQxMTUxODQ3NSw3NDQ4MTIzMzhdfQ==
 -->
