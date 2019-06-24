@@ -25,15 +25,15 @@ For setup and installation please see the Getting Started page of the Wiki:
 ](https://github.com/Christine0313/CS244Fall2017) 
 
 ### ECG Sensor and processing:
-- ECG_lib.py adapted from [PIA-gro](https://github.com/PIA-Group/BioSPPy)
+- ECG_lib.py adapted from [PIA-Group's repo](https://github.com/PIA-Group/BioSPPy)
 - ECG_processing.py
 
 ### Respiration processing:
-- Resp_processing.py adapted from:
+- Resp_processing.py adapted from: [Raphaelvallat's gist](https://gist.github.com/raphaelvallat/55624e2eb93064ae57098dd96f259611)
 
 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3MDEyMzE0ODQsNzQ0ODEyMzM4XX0=
+eyJoaXN0b3J5IjpbLTE1ODI3MjMwNTMsNzQ0ODEyMzM4XX0=
 -->
