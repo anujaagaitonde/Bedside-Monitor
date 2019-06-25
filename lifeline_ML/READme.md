@@ -1,13 +1,13 @@
-Lifeline – AF detection ML model
+# Lifeline – AF detection ML model
 
-About
+## About
 
 As part of the lifeline product, a model that could conduct real time Atrial fibrillation was deemed necessary. To conduct such a classification, two items were required: 
 1.	Dataset 
 2.	Model
 Keeping this is mind, the first step was to find ECG datasets that classified AF from other heartbeat ECGs. Once this was obtained from the MIT website, the next step was to build a ML model for prediction. A shallow resnet model was determined to be the best fit. 
 
-Installation
+## Installation
 
 To run the model, clone: 
 
