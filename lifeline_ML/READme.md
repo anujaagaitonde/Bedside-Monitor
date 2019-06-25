@@ -37,7 +37,7 @@ Keeping this is mind, the first step was to find ECG datasets that classified AF
 5. To conduct inference on the ML model, the shape of the input must be 1,9000,1 and the path in the script should be changed such that it points to the path where the data-file exists.
 
 Once the inference is complete, the prediction for that particular input is outputted:
-(Bedside-Monitor/lifeline_ML/image.png)
+[Output for Atrial fibrillation](Bedside-Monitor/lifeline_ML/image.png)
 
 
 
