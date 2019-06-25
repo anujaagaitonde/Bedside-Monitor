@@ -14,7 +14,7 @@ Keeping this is mind, the first step was to find ECG datasets that classified AF
 
 1. To run the model, clone:
 
-''' https://github.com/anujaagaitonde/Bedside-Monitor.git '''
+``` https://github.com/anujaagaitonde/Bedside-Monitor.git ```
 
 2. Once cloned, go to the following folder:
 
