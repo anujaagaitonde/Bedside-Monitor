@@ -12,29 +12,29 @@ Keeping this is mind, the first step was to find ECG datasets that classified AF
 
 **Installation**
 
-To run the model, clone:
+1. To run the model, clone:
 
 https://github.com/anujaagaitonde/Bedside-Monitor.git
 
-Once cloned, go to the following folder:
+2. Once cloned, go to the following folder:
 
  cd lifeline\_ML
 
-Install the following libraries:
+3. Install the following libraries:
 
- pip install scipy
+. pip install scipy
 
- pip install requests
+. pip install requests
 
- pip install numpy
+.pip install numpy
 
- pip install matplotlib
+.pip install matplotlib
 
-Run the script file:
+4. Run the script file:
 
  python3 script\_final.py
 
-To conduct inference on the ML model, the shape of the input must be 1,9000,1 and the path in the script should be changed such that it points to the path where the data-file exists.
+5. To conduct inference on the ML model, the shape of the input must be 1,9000,1 and the path in the script should be changed such that it points to the path where the data-file exists.
 
 Once the inference is complete, the prediction for that particular input is outputted:
 
