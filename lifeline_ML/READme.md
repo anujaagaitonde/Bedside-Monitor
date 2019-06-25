@@ -38,3 +38,5 @@ Keeping this is mind, the first step was to find ECG datasets that classified AF
 
 Once the inference is complete, the prediction for that particular input is outputted:
 
+
+
