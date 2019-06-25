@@ -10,7 +10,7 @@ User=pi
 ExecStart=/usr/bin/python3 /home/pi/Bedside-Monitor/picode/Main.py
 
 Restart=always
-RestartSec=0
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
