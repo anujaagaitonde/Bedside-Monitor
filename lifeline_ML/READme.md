@@ -18,11 +18,11 @@ Keeping this is mind, the first step was to find ECG datasets that classified AF
 
 2. Once cloned, go to the following folder:
 
- cd lifeline\_ML
+``` cd lifeline\_ML ```
 
 3. Install the following libraries:
 
-* pip install scipy
+ ``` * pip install scipy ```
 
 * pip install requests
 
