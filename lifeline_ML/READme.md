@@ -22,7 +22,7 @@ Keeping this is mind, the first step was to find ECG datasets that classified AF
 
 3. Install the following libraries:
 
- ``` * pip install scipy ```
+* pip install scipy
 
 * pip install requests
 
@@ -32,7 +32,7 @@ Keeping this is mind, the first step was to find ECG datasets that classified AF
 
 4. Run the script file:
 
- python3 script\_final.py
+ ```python3 script\_final.py ```
 
 5. To conduct inference on the ML model, the shape of the input must be 1,9000,1 and the path in the script should be changed such that it points to the path where the data-file exists.
 
