@@ -22,13 +22,13 @@ https://github.com/anujaagaitonde/Bedside-Monitor.git
 
 3. Install the following libraries:
 
-. pip install scipy
+⋅⋅* pip install scipy
 
-. pip install requests
+⋅⋅* pip install requests
 
-.pip install numpy
+⋅⋅* pip install numpy
 
-.pip install matplotlib
+⋅⋅* pip install matplotlib
 
 4. Run the script file:
 
