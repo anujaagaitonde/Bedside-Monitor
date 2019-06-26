@@ -1,6 +1,6 @@
 # Product Design History-Firmware
 
-## Design History
+## Concept
 
 ### Initial Design Choices
 3 ideas were pitched to the client ranging from a low price point ( £25 ) to a higher price point (£160). The main decisions revolved around which platform the monitor should be based around, dependent upon computing power requirements. The choices varied from :
@@ -20,6 +20,6 @@ Once all of the sensor choices were finalised, a Raspberry Pi hat was made. The 
 ### Testing Procedure and Scope for Improvement 
 After the PCB was designed and manufactured in China, it was tested thoroughly. It was decided since the first meeting with the client that the device we make must have an LCD, not only does this allow the possibility for doctors to view the vital signs should they be physically close to the patient, it also gives the patient piece of mind that the device is working properly as they can view the signals. This is important as the ECG electrodes must be positioned properly to give useful signals and this allows the patient to evaluate the quality of the placement by the quality of the signals. However, due to the physical limitations of the headphone jack contacts, it was found that inserting some of the sensors whilst the Raspberry Pi was powered could lead to the sensor being damaged as improper insertion can cause short circuiting of the contacts. Future designs must ensure that this cannot happen, this may be mitigated by a 3.5mm switching jack socket.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzAyMDc4OSw4MDgyNjQ0NTYsMTQxMTUxOD
-Q3NSw3NDQ4MTIzMzhdfQ==
+eyJoaXN0b3J5IjpbMTI1ODEzMjAwNywzMDIwNzg5LDgwODI2ND
+Q1NiwxNDExNTE4NDc1LDc0NDgxMjMzOF19
 -->
