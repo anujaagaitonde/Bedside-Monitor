@@ -1,4 +1,4 @@
-# Documentation - Product Design History
+#  Product Design History-
 
 ## Design History
 
@@ -20,6 +20,6 @@ Once all of the sensor choices were finalised, a Raspberry Pi hat was made. The 
 ### Testing Procedure and Scope for Improvement 
 After the PCB was designed and manufactured in China, it was tested thoroughly. It was decided since the first meeting with the client that the device we make must have an LCD, not only does this allow the possibility for doctors to view the vital signs should they be physically close to the patient, it also gives the patient piece of mind that the device is working properly as they can view the signals. This is important as the ECG electrodes must be positioned properly to give useful signals and this allows the patient to evaluate the quality of the placement by the quality of the signals. However, due to the physical limitations of the headphone jack contacts, it was found that inserting some of the sensors whilst the Raspberry Pi was powered could lead to the sensor being damaged as improper insertion can cause short circuiting of the contacts. Future designs must ensure that this cannot happen, this may be mitigated by a 3.5mm switching jack socket.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODA4MjY0NDU2LDE0MTE1MTg0NzUsNzQ0OD
-EyMzM4XX0=
+eyJoaXN0b3J5IjpbLTE2NzQxNTE5NDIsODA4MjY0NDU2LDE0MT
+E1MTg0NzUsNzQ0ODEyMzM4XX0=
 -->
