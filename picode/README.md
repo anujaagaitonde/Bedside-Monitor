@@ -22,8 +22,8 @@ As the device is intended to be used modularly where the patient may only have o
 
 The following processes were defined:
 **Tempprocess:** Responsible for reading temperature data from the DS18B20 sensor and pushing it to queues for displaying and pushing to the database. This is in a completely seperate process so that it is only run if the temperature sensor is plugged in and will not effect other processes if not plugged in.
-**PPGread**: Responsible for reading PPG data from the MAX30102 sensor  and pushing it to queues for displaying, processing  and pushing to the database. This is in a completely seperate process so that it is only run if the MAX30102 sensor is plugged in. 
-**PPGprocess:** Responsible for processing raw PPG data pushed from the PPGread queue 
+**PPGread**: Responsible for reading PPG data from the MAX30102 sensor  and pushing into to queues for displaying localy, processing  and pushing to the database. This is in a completely seperate process so that it is only run if the MAX30102 sensor is plugged in. 
+**PPGprocess:** Responsible for processing raw PPG data pushed from the PPGread queue and outputting spo2 and pulse rate values that are then pushed into queus 
 **ECGprocess:**
 **Respirationprocess:**
 **DBprocess:**
@@ -35,7 +35,7 @@ Once all of the sensor choices were finalised, a Raspberry Pi hat was made. The 
 ### Testing Procedure and Scope for Improvement 
 After the PCB was designed and manufactured in China, it was tested thoroughly. It was decided since the first meeting with the client that the device we make must have an LCD, not only does this allow the possibility for doctors to view the vital signs should they be physically close to the patient, it also gives the patient piece of mind that the device is working properly as they can view the signals. This is important as the ECG electrodes must be positioned properly to give useful signals and this allows the patient to evaluate the quality of the placement by the quality of the signals. However, due to the physical limitations of the headphone jack contacts, it was found that inserting some of the sensors whilst the Raspberry Pi was powered could lead to the sensor being damaged as improper insertion can cause short circuiting of the contacts. Future designs must ensure that this cannot happen, this may be mitigated by a 3.5mm switching jack socket.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTcwMjczMTA3LC05NjU3Mjk1MTQsMTI1OD
-EzMjAwNywzMDIwNzg5LDgwODI2NDQ1NiwxNDExNTE4NDc1LDc0
-NDgxMjMzOF19
+eyJoaXN0b3J5IjpbLTIwNzI3MTUxMDAsLTk2NTcyOTUxNCwxMj
+U4MTMyMDA3LDMwMjA3ODksODA4MjY0NDU2LDE0MTE1MTg0NzUs
+NzQ0ODEyMzM4XX0=
 -->
