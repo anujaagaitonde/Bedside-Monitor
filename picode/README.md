@@ -18,7 +18,7 @@ In regards to the PPG sensor, we initially tried to repurpose a commercial PPG s
 ## Implementation and Build
 
 ### Modular Sensor Interface
-Once all of the sensor choices were finalised, a Raspberry Pi hat was made. The PCB is designed to sit atop the Raspberry Pi and host the interface to the 3 sensors. Please see the following folder for an outline of all  A key focus in the design of the device was the modularity, as it would allow the user to only plug in the sensors that are required for their specific application, driving down the costs. In pursuit of this goal, 3.5mm headphone jacks were placed on the PCB to allow the three different sensors to be detached as necessary. A 4-pole jack connector was used for all sensors. The PPG sensor initially required 5 wires however this requirement was trimmed down to 4 wires after some software tricks allowed the removal of an interrupt wire. 
+Once all of the sensor choices were finalised, a Raspberry Pi hat was made. The PCB is designed to sit atop the Raspberry Pi and host the interface to the 3 sensors. Please see the Hardware folder for a detailed outline of all hardware implemented. of all the A key focus in the design of the device was the modularity, as it would allow the user to only plug in the sensors that are required for their specific application, driving down the costs. In pursuit of this goal, 3.5mm headphone jacks were placed on the PCB to allow the three different sensors to be detached as necessary. A 4-pole jack connector was used for all sensors. The PPG sensor initially required 5 wires however this requirement was trimmed down to 4 wires after some software tricks allowed the removal of an interrupt wire. 
 
 
 ### Modular Software Design
@@ -36,7 +36,7 @@ As the device is intended to be used modularly where the patient may only have o
 ### Scope for Improvement 
 After the PCB was designed and manufactured in China, it was tested thoroughly. It was decided since the first meeting with the client that the device we make must have an LCD, not only does this allow the possibility for doctors to view the vital signs should they be physically close to the patient, it also gives the patient piece of mind that the device is working properly as they can view the signals. This is important as the ECG electrodes must be positioned properly to give useful signals and this allows the patient to evaluate the quality of the placement by the quality of the signals. However, due to the physical limitations of the headphone jack contacts, it was found that inserting some of the sensors whilst the Raspberry Pi was powered could lead to the sensor being damaged as improper insertion can cause short circuiting of the contacts. Future designs must ensure that this cannot happen, this may be mitigated by a 3.5mm switching jack socket.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU3NTkzMDA4LC05NjU3Mjk1MTQsMTI1OD
-EzMjAwNywzMDIwNzg5LDgwODI2NDQ1NiwxNDExNTE4NDc1LDc0
-NDgxMjMzOF19
+eyJoaXN0b3J5IjpbMTQxNDg0NDQ4MiwtOTY1NzI5NTE0LDEyNT
+gxMzIwMDcsMzAyMDc4OSw4MDgyNjQ0NTYsMTQxMTUxODQ3NSw3
+NDQ4MTIzMzhdfQ==
 -->
