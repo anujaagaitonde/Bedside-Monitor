@@ -17,8 +17,6 @@ In regards to the PPG sensor, we initially tried to repurpose a commercial PPG s
 
 ## Implementation and Build
 
-### High Level Design Description of Picode
-
 
 ### Modular Sensor Interface
 Once all of the sensor choices were finalised, a Raspberry Pi hat was made. The PCB is designed to sit atop the Raspberry Pi devices and host the interface to the 3 sensors. A key focus in the design of the device was the modularity, as it would allow the user to only plug in the sensors that are required for their specific application, driving down the costs. In pursuit of this goal, 3.5mm headphone jacks were placed on the PCB to allow the three different sensors to be detached as necessary. A 4-pole jack connector was used for all sensors. The PPG sensor initially required 5 wires however this requirement was trimmed down to 4 wires after some software tricks allowed the removal of an interrupt wire. 
@@ -26,7 +24,7 @@ Once all of the sensor choices were finalised, a Raspberry Pi hat was made. The 
 ### Testing Procedure and Scope for Improvement 
 After the PCB was designed and manufactured in China, it was tested thoroughly. It was decided since the first meeting with the client that the device we make must have an LCD, not only does this allow the possibility for doctors to view the vital signs should they be physically close to the patient, it also gives the patient piece of mind that the device is working properly as they can view the signals. This is important as the ECG electrodes must be positioned properly to give useful signals and this allows the patient to evaluate the quality of the placement by the quality of the signals. However, due to the physical limitations of the headphone jack contacts, it was found that inserting some of the sensors whilst the Raspberry Pi was powered could lead to the sensor being damaged as improper insertion can cause short circuiting of the contacts. Future designs must ensure that this cannot happen, this may be mitigated by a 3.5mm switching jack socket.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTc4MzIzMjIxOCwxMjU4MTMyMDA3LDMwMj
-A3ODksODA4MjY0NDU2LDE0MTE1MTg0NzUsNzQ0ODEyMzM4XX0=
+eyJoaXN0b3J5IjpbMTYyNjcwODg4LDEyNTgxMzIwMDcsMzAyMD
+c4OSw4MDgyNjQ0NTYsMTQxMTUxODQ3NSw3NDQ4MTIzMzhdfQ==
 
 -->
