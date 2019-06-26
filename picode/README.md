@@ -29,13 +29,13 @@ As the device is intended to be used modularly where the patient may only have o
 **PPGprocess:** Responsible for processing raw PPG data pushed from the PPGread queue and outputting spo2 and pulse rate values that are then pushed into queues for displaying locallyy and pushing to the database. This is done in a completely seperate process from PPGread such that not to hinder the reading of the raw values from the MAX30102 with the intensive algorithms used to compute SPO2 and pulse rate. This process will only run if data has been pushed to the PPG raw queues and hence  only if the MAX30102 sensor is plugged in.
 **ECGprocess:** Responsible for reading ECG data from the MCP3008 ADC which in turn is reading from the analogue AD8232 sensor. The raw data is then filtered in real time and pushed to queues to be locally displayed and pushed to the database. This is done in a completely seperate process so that it is only run if the ECG 3-lead electrode cable is plugged in.
 **Respirationprocess:** Responsible for processing raw ECG data pushed into ECGraw queue and estimating heart rate, respiration and respiration rate which are then pushed to be locally displayed and pushed to the database. This is done in a completely seperate process so that not to hinder the reading of ECG data from the ADC with intensive algorithms to for RR peak detection, heart rate calculation and respiration interpolation. This process will only run if data has been pushed to the ECGraw queue and hence  only if the ECG 3-lead electrode cable is plugged in.
-**DBprocess:** Responsible for pushing all values to be displayed remotely onto the database. This process will only push from non empty queues hence will only push data for the vital signs being measured. It is in a seperate process 
+**DBprocess:** Responsible for pushing all values to be displayed remotely onto the database. This process will only push from non empty queues hence will only push data for the vital signs being measured. It is in a seperate process to not hinder the reading or computation of any of the vital signs and allow the device to continue running offline if t
 
 
 ### Scope for Improvement 
 After the PCB was designed and manufactured in China, it was tested thoroughly. It was decided since the first meeting with the client that the device we make must have an LCD, not only does this allow the possibility for doctors to view the vital signs should they be physically close to the patient, it also gives the patient piece of mind that the device is working properly as they can view the signals. This is important as the ECG electrodes must be positioned properly to give useful signals and this allows the patient to evaluate the quality of the placement by the quality of the signals. However, due to the physical limitations of the headphone jack contacts, it was found that inserting some of the sensors whilst the Raspberry Pi was powered could lead to the sensor being damaged as improper insertion can cause short circuiting of the contacts. Future designs must ensure that this cannot happen, this may be mitigated by a 3.5mm switching jack socket.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MjU3MjEzNTUsLTk5NDQ2MjA1NywxND
-E0ODQ0NDgyLC05NjU3Mjk1MTQsMTI1ODEzMjAwNywzMDIwNzg5
-LDgwODI2NDQ1NiwxNDExNTE4NDc1LDc0NDgxMjMzOF19
+eyJoaXN0b3J5IjpbLTk4NTAxMTMwMywtOTk0NDYyMDU3LDE0MT
+Q4NDQ0ODIsLTk2NTcyOTUxNCwxMjU4MTMyMDA3LDMwMjA3ODks
+ODA4MjY0NDU2LDE0MTE1MTg0NzUsNzQ0ODEyMzM4XX0=
 -->
