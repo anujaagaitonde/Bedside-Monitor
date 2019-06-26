@@ -17,6 +17,10 @@ In regards to the PPG sensor, we initially tried to repurpose a commercial PPG s
 
 ## Implementation and Build
 
+### Modular Sensor Interface
+Once all of the sensor choices were finalised, a Raspberry Pi hat was made. The PCB is designed to sit atop the Raspberry Pi and host the interface to the 3 sensors. Please see the following folder for an outline of all  A key focus in the design of the device was the modularity, as it would allow the user to only plug in the sensors that are required for their specific application, driving down the costs. In pursuit of this goal, 3.5mm headphone jacks were placed on the PCB to allow the three different sensors to be detached as necessary. A 4-pole jack connector was used for all sensors. The PPG sensor initially required 5 wires however this requirement was trimmed down to 4 wires after some software tricks allowed the removal of an interrupt wire. 
+
+
 ### Modular Software Design
 As the device is intended to be used modularly where the patient may only have one or two of the three available sensors plugged in to measure only some of their vital signs. All Software for the device had to be designed to allow for this functionality. To do so the multiprocessing library was split the software into processes for each sensor that run concurrently and make use of the raspberry pi's four cores. The following processes were defined:
 
@@ -25,16 +29,14 @@ As the device is intended to be used modularly where the patient may only have o
 **PPGprocess:** Responsible for processing raw PPG data pushed from the PPGread queue and outputting spo2 and pulse rate values that are then pushed into queues for displaying locallyy and pushing to the database. This is in a completely seperate process from PPGread such that not to hinder the reading of the raw values from the MAX30102 with the intensive algorithms used to compute SPO2 and pulse rate. They will only run if data has been pushed to the PPG raw queues and hence  only if the MAX30102 sensor is plugged 
 **ECGprocess:** Responsible for reading ECG data from the MCP3008 ADC which in turn is reading from the analogue AD8232 sensor. The raw data is then filtered in real time and pushed to queues to be locally displayed and pushed to the database.
 **Respirationprocess:**
+
 **DBprocess:**
 
 
-### Modular Sensor Interface
-Once all of the sensor choices were finalised, a Raspberry Pi hat was made. The PCB is designed to sit atop the Raspberry Pi and host the interface to the 3 sensors. A key focus in the design of the device was the modularity, as it would allow the user to only plug in the sensors that are required for their specific application, driving down the costs. In pursuit of this goal, 3.5mm headphone jacks were placed on the PCB to allow the three different sensors to be detached as necessary. A 4-pole jack connector was used for all sensors. The PPG sensor initially required 5 wires however this requirement was trimmed down to 4 wires after some software tricks allowed the removal of an interrupt wire. 
-
-### Testing Procedure and Scope for Improvement 
+### Scope for Improvement 
 After the PCB was designed and manufactured in China, it was tested thoroughly. It was decided since the first meeting with the client that the device we make must have an LCD, not only does this allow the possibility for doctors to view the vital signs should they be physically close to the patient, it also gives the patient piece of mind that the device is working properly as they can view the signals. This is important as the ECG electrodes must be positioned properly to give useful signals and this allows the patient to evaluate the quality of the placement by the quality of the signals. However, due to the physical limitations of the headphone jack contacts, it was found that inserting some of the sensors whilst the Raspberry Pi was powered could lead to the sensor being damaged as improper insertion can cause short circuiting of the contacts. Future designs must ensure that this cannot happen, this may be mitigated by a 3.5mm switching jack socket.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM5NjI5MzkzNSwtOTY1NzI5NTE0LDEyNT
-gxMzIwMDcsMzAyMDc4OSw4MDgyNjQ0NTYsMTQxMTUxODQ3NSw3
-NDQ4MTIzMzhdfQ==
+eyJoaXN0b3J5IjpbLTU3NTkzMDA4LC05NjU3Mjk1MTQsMTI1OD
+EzMjAwNywzMDIwNzg5LDgwODI2NDQ1NiwxNDExNTE4NDc1LDc0
+NDgxMjMzOF19
 -->
