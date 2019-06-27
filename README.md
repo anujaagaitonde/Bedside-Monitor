@@ -18,13 +18,13 @@ For further information about this project, visit our [wiki](https://github.com/
 
 ## About this Repository
 
-* **3D Printed Case:** Contains 3D print and laser cut files for casing.
-* **GUI Mockups:** Contains mockups for bedside LCD GUI.
-* **Hardware:** Contains PCB design files for PPG sensor and custom Raspberry Pi Hat,
-* **Machine Learning:** Contains illness prediction scripts.
-* **Pi:** Contains the files to be run on the device Raspberry Pi and its associated libraries.
-* **Print:** Contains poster, leaflet and slideshow files used during demonstration.
-* **Web:** Contains webapp mockups and source files.
+* **[3D Printed Case:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/3D%20Printed%20Case)** Contains 3D print and laser cut files for casing.
+* **[GUI Mockups:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/GUI%20Mockups)** Contains mockups for bedside LCD GUI.
+* **[Hardware:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/Hardware)** Contains PCB design files for PPG sensor and custom Raspberry Pi Hat.
+* **[Machine Learning:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/Machine%20Learning)** Contains illness prediction scripts.
+* **[Pi:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/Pi)** Contains the files to be run on the device Raspberry Pi and its associated libraries.
+* **[Print:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/Print)** Contains poster, leaflet and slideshow files used during demonstration.
+* **[Web:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/Web)** Contains webapp mockups and source files.
 
 ## The Project Team
 
