@@ -19,11 +19,12 @@ For further information about this project, visit our [wiki](https://github.com/
 ## About this Repository
 
 * **3D Printed Case:** Contains 3D print and laser cut files for casing.
+* **GUI Mockups:** Contains mockups for bedside LCD GUI.
 * **Hardware:** Contains PCB design files for PPG sensor and custom Raspberry Pi Hat,
-* **gui mockups:** Contains mockups for bedside LCD GUI.
-* **picode:** Contains the files to be run on the device Raspberry Pi and its associated libraries.
-* **print:** Contains poster, leaflet and slideshow files used during demonstration.
-* **web:** Contains webapp mockups and source files.
+* **Machine Learning:** Contains illness prediction scripts.
+* **Pi:** Contains the files to be run on the device Raspberry Pi and its associated libraries.
+* **Print:** Contains poster, leaflet and slideshow files used during demonstration.
+* **Web:** Contains webapp mockups and source files.
 
 ## The Project Team
 
