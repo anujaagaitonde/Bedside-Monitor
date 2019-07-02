@@ -5,7 +5,7 @@ from time import sleep	# To add delay
 import RPi.GPIO as GPIO	# To use GPIO pins
 import matplotlib.pyplot as plt
 from scipy.signal import detrend
-from ecg_processing import ecg
+from Libraries.ECG_lib.ecg_processing import ecg
 from scipy.interpolate import splrep, splev, interp1d
 from scipy.signal import butter, lfilter, freqz,cheby2,sosfilt,lfilter_zi
 import numpy as np
@@ -58,7 +58,7 @@ def calcresp(ecgarray,rpeaks):
 
 # Parameters
 x_len = 400         # Number of points to display
-y_range = [0, 800]  # Range of possible Y values to display
+y_range = [600, 1200]  # Range of possible Y values to display
 
 
 

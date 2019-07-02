@@ -23,7 +23,7 @@ from scipy import interpolate, optimize
 from scipy.stats import stats
 
 # local
-import utils
+from Libraries.ECG_lib import utils
 
 
 def _norm_freq(frequency=None, sampling_rate=1000.):
