@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>MFMonitor - Live Patient View</title>
+    <link rel="stylesheet" href="css/live_patient.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Side Navigation Bar -->
+    <div id="mySidenav" class="sidenav">
+      <div id="dr_profile">
+        <img src="images/dr_profile_pic.jpg" class="dr_profile" />
+        <h3>Dr. Mark Thomas</h3>
+      </div>
+      <a href="all_patient_dashboard.html">Patient Dashboard</a>
+      <a class="logoutlink" onclick="logoutUser()">Logout</a>
+    </div>
+
+    <!-- Full screen excluding navigation menu -->
+    <div id="main">
+      <div class="header">
+        <div class="header_left">
+          <div id="menu_button_container">
+            <img
+              src="images/menu.png"
+              class="menu-btn"
+              onclick="toggleSidenav()"
+            />
+          </div>
+          <div class="titlewrap">
+            <h1>LifeLine</h1>
+          </div>
+
+          <div id="patient_info"></div>
+        </div>
+        <div class="header_right">
+          <div class="link">
+            <div class="link_title">
+              <a id="livebutton" href="">Live Patient View</a>
+            </div>
+            <div id="active_link"></div>
+          </div>
+          <div class="link">
+            <div class="link_title">
+              <a id="historybutton" href="">History</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Display graph data from DB-->
+      <div class="content">
+        <div class="loader"></div>
+
+        <div class="wrapper">
+          <div class="chartContainer" style="display: none">
+            <div class="chartRow">
+              <div class="titlewrap">
+                <h1>ECG</h1>
+              </div>
+              <div class="chartwrap">
+                <canvas id="ecgChart"></canvas>
+              </div>
+            </div>
+            <div class="chartRow">
+              <div class="titlewrap">
+                <h1>PPG</h1>
+              </div>
+              <div class="chartwrap">
+                <canvas id="ppgChart"></canvas>
+              </div>
+            </div>
+            <div class="chartRow">
+              <div class="titlewrap">
+                <h1>Respiration</h1>
+              </div>
+              <div class="chartwrap">
+                <canvas id="respChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="livestats" style="display: none">
+            <div>
+              <p>SpO2 (%) : <p class="spo2 value"> 99</p> </p>
+            </div>
+            <div>
+              <p> Temperature (°C) : <p class="temperature value">35</p> </p>
+            </div>
+            <div>
+              <p>Heart Rate (bpm) : <p class="heartrate value">101</p> </p>
+            </div>
+            <div>
+              <p>Pulse (bpm) : <p class="pulse value">60</p> </p>
+            </div>
+            <div>
+              <p>Respiration Rate : <p class="respiration value">40</p> </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
+  <script src="scripts/authentication.js"></script>
+  <script src="scripts/sidebar.js"></script>
+  <script src="scripts/live_grapher.js"></script>
+</html>

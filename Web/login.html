@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="css/login.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <img src="images/MFTechLogo.png" class="logo" />
+    <div class="loginbox">
+      <div class="toplinks">
+        <div class="link">
+          <div class="link_title"><a href="#">SIGN IN</a></div>
+          <div id="active_link"></div>
+        </div>
+        <div class="link">
+          <div class="link_title"><a href="signup.html">SIGN UP</a></div>
+        </div>
+      </div>
+      <form action="#">
+        <img src="images/User_Symbol.png" class="form_icon" />
+        <input
+          type="text"
+          id="EmailInput"
+          name="username"
+          placeholder="Username"
+          required
+        /><br />
+        <img src="images/Password_Symbol.png" class="form_icon" />
+        <input
+          type="password"
+          id="PasswordInput"
+          name="password"
+          placeholder="Password"
+          required
+        /><br />
+        <input onclick="loginUser()" id="confirmbutton" value="CONTINUE" />
+      </form>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
+    <script src="scripts/authentication.js"></script>
+  </body>
+</html>
