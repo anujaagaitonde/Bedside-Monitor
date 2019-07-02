@@ -21,8 +21,9 @@ import numpy as np
 import scipy.signal as ss
 
 # local
-import tools as st
-import plotting, utils
+from Libraries.ECG_lib import tools as st
+from Libraries.ECG_lib import plotting
+from Libraries.ECG_lib import utils
 
 def volts(data):
   volts = []
