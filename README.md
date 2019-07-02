@@ -5,21 +5,26 @@ LifeLine is a low-cost Internet-of-Things vital sign monitor with real-time illn
 ## Documentation
 
 For further information about this project, visit our [wiki](https://github.com/anujaagaitonde/Bedside-Monitor/wiki):
-* [Getting Started](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Getting-Started)
-* [Innovation](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Innovation)
-* [Meeting Records](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Meeting-Records)
-* [Product Design History](https://github.com/anujaagaProductionitonde/Bedside-Monitor/wiki/Product-Design-History)
-* [Report of Ethical Consequences](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Report-of-Ethical-Consequences)
-* [Sustainability Report](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Sustainability-Report)
-* [Testing](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/Testing)
+* [1. Home](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/1.-Home)
+* [2. Product Design History](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/2.-Product-Design-History)
+* [2.1 Hardware and Firmware](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/2.1-Hardware-and-Firmware)
+* [2.2 Web App](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/2.2-Web-App)
+* [2.4 Deep Learning Model](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/2.3-Deep-Learning-Model)
+* [3. Meeting Records](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/3.-Meeting-Records)
+* [4. Innovation](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/4.-Innovation)
+* [5. Report of Ethical Consequences and Sustainability](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/5.-Report-of-Ethical-Consequences-and-Sustainability)
+* [6. Testing](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/6.-Testing)
+* [7. Getting Started](https://github.com/anujaagaitonde/Bedside-Monitor/wiki/7.-Getting-Started)
 
 ## About this Repository
 
-* **hardware:** Contains PCB design files for PPG sensor and custom Raspberry Pi Hat.
-* **gui mockups:** Contains mockups for bedside LCD GUI.
-* **picode:** Contains the files to be run on the device Raspberry Pi and its associated libraries.
-* **print:** Contains poster, leaflet and slideshow files used during demonstration.
-* **web:** Contains webapp mockups and source files.
+* **[3D Printed Case:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/3D%20Printed%20Case)** Contains 3D print and laser cut files for casing.
+* **[GUI Mockups:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/GUI%20Mockups)** Contains mockups for bedside LCD GUI.
+* **[Hardware:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/Hardware)** Contains PCB design files for PPG sensor and custom Raspberry Pi Hat.
+* **[Machine Learning:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/Machine%20Learning)** Contains illness prediction scripts.
+* **[Pi:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/Pi)** Contains the files to be run on the device Raspberry Pi and its associated libraries.
+* **[Print:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/Print)** Contains poster, leaflet and slideshow files used during demonstration.
+* **[Web:](https://github.com/anujaagaitonde/Bedside-Monitor/tree/master/Web)** Contains webapp mockups and source files.
 
 ## The Project Team
 
