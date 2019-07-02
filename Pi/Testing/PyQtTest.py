@@ -122,7 +122,7 @@ if __name__ == '__main__':
     def update():
         global p, i_ecg, j_ecg, ecg_x, ecg_y, ecg_data, i_ppg, j_ppg, ppg_x, ppg_y, ppg_data
 
-        ecg_y[j_ecg:j_ecg + 3] = ecg_data[j_ecg + i_ecg*3000:j_ecg + i_ecg*3000 + 3]
+        ecg_y[j_ecg:j_ecg + 6] = ecg_data[j_ecg + i_ecg*3000:j_ecg + i_ecg*3000 + 6]
         p.trace("ecg", ecg_x, ecg_y)
 
         if j_ecg < 15 or j_ecg > 2985:
@@ -132,7 +132,7 @@ if __name__ == '__main__':
             ecg_marker_x = np.arange((j_ecg - 15)/300, (j_ecg + 14.99)/300, 1/300)
             p.trace("ecg_marker", ecg_marker_x, ecg_marker_y)
 
-        ppg_y[j_ppg] = ppg_data[j_ppg + i_ppg*500]
+        ppg_y[j_ppg:j_ppg + 2] = ppg_data[j_ppg + i_ppg*500:j_ppg + i_ppg*500 + 2]
         p.trace("ppg", ppg_x, ppg_y)
 
         if j_ppg < 5 or j_ppg > 495:
@@ -149,8 +149,8 @@ if __name__ == '__main__':
         min_ppg = [min_ppg] * 250
         p.trace("min_ppg", extrema_ppg_x, min_ppg)
 
-        j_ecg += 3
-        j_ppg += 1
+        j_ecg += 6
+        j_ppg += 2
         if j_ecg == 3000:
             j_ecg = 0
             if i_ecg == 2:
