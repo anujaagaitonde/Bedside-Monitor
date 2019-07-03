@@ -128,25 +128,25 @@ if __name__ == '__main__':
         print(start - prev_start)
         prev_start = start
 
-        ecg_y[j_ecg:j_ecg + 6] = ecg_data[j_ecg + i_ecg*3000:j_ecg + i_ecg*3000 + 6]
+        ecg_y[j_ecg:j_ecg + 150] = ecg_data[j_ecg + i_ecg*3000:j_ecg + i_ecg*3000 + 150]
         p.trace("ecg", ecg_x, ecg_y)
 
-        if j_ecg < 15 or j_ecg > 2985:
-            pass
-        else:
-            ecg_marker_y = ecg_y[j_ecg - 15:j_ecg + 15]
-            ecg_marker_x = np.arange((j_ecg - 15)/300, (j_ecg + 14.99)/300, 1/300)
-            p.trace("ecg_marker", ecg_marker_x, ecg_marker_y)
+        # if j_ecg < 15 or j_ecg > 2985:
+        #     pass
+        # else:
+        #     ecg_marker_y = ecg_y[j_ecg - 15:j_ecg + 15]
+        #     ecg_marker_x = np.arange((j_ecg - 15)/300, (j_ecg + 14.99)/300, 1/300)
+        #     p.trace("ecg_marker", ecg_marker_x, ecg_marker_y)
 
-        ppg_y[j_ppg:j_ppg + 2] = ppg_data[j_ppg + i_ppg*1500:j_ppg + i_ppg*1500 + 2]
+        ppg_y[j_ppg:j_ppg + 50] = ppg_data[j_ppg + i_ppg*1500:j_ppg + i_ppg*1500 + 50]
         p.trace("ppg", ppg_x, ppg_y)
 
-        if j_ppg < 5 or j_ppg > 1495:
-            pass
-        else:
-            ppg_marker_y = ppg_y[j_ppg - 5:j_ppg + 5]
-            ppg_marker_x = np.arange((j_ppg - 5)/100, (j_ppg + 4.99)/100, 1/100)
-            p.trace("ppg_marker", ppg_marker_x, ppg_marker_y)
+        # if j_ppg < 5 or j_ppg > 1495:
+        #     pass
+        # else:
+        #     ppg_marker_y = ppg_y[j_ppg - 5:j_ppg + 5]
+        #     ppg_marker_x = np.arange((j_ppg - 5)/100, (j_ppg + 4.99)/100, 1/100)
+        #     p.trace("ppg_marker", ppg_marker_x, ppg_marker_y)
 
         max_ppg = max(ppg_y)
         max_ppg = [max_ppg] * 750
@@ -155,8 +155,8 @@ if __name__ == '__main__':
         min_ppg = [min_ppg] * 750
         p.trace("min_ppg", extrema_ppg_x, min_ppg)
 
-        j_ecg += 6
-        j_ppg += 2
+        j_ecg += 150
+        j_ppg += 50
         if j_ecg == 3000:
             j_ecg = 0
             if i_ecg == 5:
@@ -173,5 +173,5 @@ if __name__ == '__main__':
 
     timer = QtCore.QTimer()
     timer.timeout.connect(update)
-    timer.start(20)
+    timer.start(500)
     p.start()
