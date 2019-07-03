@@ -19,9 +19,7 @@ class Plot2D():
 
         # header
         self.patient_name_canvas = self.win.addLabel(text="Patient: Omar Muttawa", row=0, col=0, rowspan=1, color='#FFFFFF')
-        self.patient_dob_canvas = self.win.addLabel(text="DOB: 14/11/1997", row=0, col=1, rowspan=1,
-                                                     color='#FFFFFF')
-        self.doctor_name_canvas = self.win.addLabel(text="Doctor: Mark Thompson", row=0, col=2, rowspan=1,
+        self.doctor_name_canvas = self.win.addLabel(text="Doctor: Mark Thompson", row=0, col=1, rowspan=1,
                                                      color='#FFFFFF')
         self.lifeline_tag_canvas = self.win.addLabel(text="© LifeLine 2019", row=0, col=6, rowspan=1,
                                                      color='#FFFFFF')
@@ -74,10 +72,14 @@ class Plot2D():
         else:
             if name == "ecg":
                 self.traces[name] = self.ecg_canvas.plot(pen='#418934')
+            elif name == "ecg_marker":
+                self.traces[name] = self.ecg_canvas.plot(pen='#000000', style=QtCore.Qt.SolidLine)
             elif name == "ppg":
                 self.traces[name] = self.ppg_canvas.plot(pen='#4AA1A4')
+            elif name == "ppg_marker":
+                self.traces[name] = self.ppg_canvas.plot(pen='#000000', style=QtCore.Qt.SolidLine)
             elif name == "max_ppg" or "min_ppg":
-                self.traces[name] = self.ppg_canvas.plot(pen='#4AA1A4', connect="pairs")
+                self.traces[name] = self.ppg_canvas.plot(pen=pg.mkPen(color='#4AA1A4', style=QtCore.Qt.DotLine))
             else:
                 self.traces[name] = self.ppg_canvas.plot(pen='#BAB01C')
 
@@ -108,43 +110,57 @@ if __name__ == '__main__':
     p = Plot2D()
     i_ecg = 0
     j_ecg = 0
-    ecg_x = np.arange(0, 5.0, 1/300)
-    ecg_y = [0]*1500
+    ecg_x = np.arange(0, 10.0, 1/300)
+    ecg_y = [0]*3000
 
     i_ppg = 0
     j_ppg = 0
     ppg_x = np.arange(0, 5.0, 1/100)
     ppg_y = [0]*500
-    extrema_ppg_x = np.arange(0, 5.0, 1/80)
+    extrema_ppg_x = np.arange(0, 5.0, 1/50)
 
     def update():
         global p, i_ecg, j_ecg, ecg_x, ecg_y, ecg_data, i_ppg, j_ppg, ppg_x, ppg_y, ppg_data
 
-        ecg_y[j_ecg:j_ecg + 3] = ecg_data[j_ecg + i_ecg*1500:j_ecg + i_ecg*1500 + 3]
+        ecg_y[j_ecg:j_ecg + 6] = ecg_data[j_ecg + i_ecg*3000:j_ecg + i_ecg*3000 + 6]
         p.trace("ecg", ecg_x, ecg_y)
 
-        ppg_y[j_ppg] = ppg_data[j_ppg + i_ppg*500]
+        if j_ecg < 15 or j_ecg > 2985:
+            pass
+        else:
+            ecg_marker_y = ecg_y[j_ecg - 15:j_ecg + 15]
+            ecg_marker_x = np.arange((j_ecg - 15)/300, (j_ecg + 14.99)/300, 1/300)
+            p.trace("ecg_marker", ecg_marker_x, ecg_marker_y)
+
+        ppg_y[j_ppg:j_ppg + 2] = ppg_data[j_ppg + i_ppg*500:j_ppg + i_ppg*500 + 2]
         p.trace("ppg", ppg_x, ppg_y)
 
+        if j_ppg < 5 or j_ppg > 495:
+            pass
+        else:
+            ppg_marker_y = ppg_y[j_ppg - 5:j_ppg + 5]
+            ppg_marker_x = np.arange((j_ppg - 5)/100, (j_ppg + 4.99)/100, 1/100)
+            p.trace("ppg_marker", ppg_marker_x, ppg_marker_y)
+
         max_ppg = max(ppg_y)
-        max_ppg = [max_ppg] * 400
+        max_ppg = [max_ppg] * 250
         p.trace("max_ppg", extrema_ppg_x, max_ppg)
         min_ppg = min(ppg_y)
-        min_ppg = [min_ppg] * 400
+        min_ppg = [min_ppg] * 250
         p.trace("min_ppg", extrema_ppg_x, min_ppg)
 
-        j_ecg += 3
-        j_ppg += 1
-        if j_ecg == 1500:
+        j_ecg += 6
+        j_ppg += 2
+        if j_ecg == 3000:
             j_ecg = 0
-            if i_ecg == 10:
+            if i_ecg == 2:
                 i_ecg = 0
             else:
                 i_ecg += 1
 
         if j_ppg == 500:
             j_ppg = 0
-            if i_ppg == 10:
+            if i_ppg == 5:
                 i_ppg = 0
             else:
                 i_ppg += 1
