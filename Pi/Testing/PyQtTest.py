@@ -120,9 +120,13 @@ if __name__ == '__main__':
     ppg_y = [0]*1500
     extrema_ppg_x = np.arange(0, 15.0, 1/50)
 
+    prev_start = 0
+
     def update():
+        global p, i_ecg, j_ecg, ecg_x, ecg_y, ecg_data, i_ppg, j_ppg, ppg_x, ppg_y, ppg_data, prev_start
         start = time.time()
-        global p, i_ecg, j_ecg, ecg_x, ecg_y, ecg_data, i_ppg, j_ppg, ppg_x, ppg_y, ppg_data
+        print(start - prev_start)
+        prev_start = start
 
         ecg_y[j_ecg:j_ecg + 6] = ecg_data[j_ecg + i_ecg*3000:j_ecg + i_ecg*3000 + 6]
         p.trace("ecg", ecg_x, ecg_y)
@@ -166,10 +170,8 @@ if __name__ == '__main__':
                 i_ppg = 0
             else:
                 i_ppg += 1
-        end = time.time()
-        print(end-start)
 
     timer = QtCore.QTimer()
     timer.timeout.connect(update)
-    timer.start(2)
+    timer.start(20)
     p.start()
