@@ -101,7 +101,7 @@ if __name__ == '__main__':
     ppg_data = ppg_data - np.mean(ppg_data)
     print(np.size(ppg_data))
 
-    # append 5 seconds of zeros to beginning
+    # append 10 seconds of zeros to beginning
     tmp = [0]*3000
     ecg_data = np.concatenate((tmp, ecg_data, ecg_data))
     tmp = [0]*1000
@@ -120,11 +120,15 @@ if __name__ == '__main__':
     ppg_y = [0]*1500
     extrema_ppg_x = np.arange(0, 15.0, 1/50)
 
-    def update():
-        start = time.time()
-        global p, i_ecg, j_ecg, ecg_x, ecg_y, ecg_data, i_ppg, j_ppg, ppg_x, ppg_y, ppg_data
+    prev_start = 0
 
-        ecg_y[j_ecg:j_ecg + 6] = ecg_data[j_ecg + i_ecg*3000:j_ecg + i_ecg*3000 + 6]
+    def update():
+        global p, i_ecg, j_ecg, ecg_x, ecg_y, ecg_data, i_ppg, j_ppg, ppg_x, ppg_y, ppg_data, prev_start
+        start = time.time()
+        print(start - prev_start)
+        prev_start = start
+
+        ecg_y[j_ecg:j_ecg + 15] = ecg_data[j_ecg + i_ecg*3000:j_ecg + i_ecg*3000 + 15]
         p.trace("ecg", ecg_x, ecg_y)
 
         if j_ecg < 15 or j_ecg > 2985:
@@ -134,7 +138,7 @@ if __name__ == '__main__':
             ecg_marker_x = np.arange((j_ecg - 15)/300, (j_ecg + 14.99)/300, 1/300)
             p.trace("ecg_marker", ecg_marker_x, ecg_marker_y)
 
-        ppg_y[j_ppg:j_ppg + 2] = ppg_data[j_ppg + i_ppg*1500:j_ppg + i_ppg*1500 + 2]
+        ppg_y[j_ppg:j_ppg + 5] = ppg_data[j_ppg + i_ppg*1500:j_ppg + i_ppg*1500 + 5]
         p.trace("ppg", ppg_x, ppg_y)
 
         if j_ppg < 5 or j_ppg > 1495:
@@ -151,8 +155,8 @@ if __name__ == '__main__':
         min_ppg = [min_ppg] * 750
         p.trace("min_ppg", extrema_ppg_x, min_ppg)
 
-        j_ecg += 6
-        j_ppg += 2
+        j_ecg += 15
+        j_ppg += 5
         if j_ecg == 3000:
             j_ecg = 0
             if i_ecg == 5:
@@ -166,10 +170,8 @@ if __name__ == '__main__':
                 i_ppg = 0
             else:
                 i_ppg += 1
-        end = time.time()
-        print(end-start)
 
     timer = QtCore.QTimer()
     timer.timeout.connect(update)
-    timer.start(2)
+    timer.start(50)
     p.start()
